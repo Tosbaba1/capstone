@@ -1,4 +1,23 @@
 Rails.application.routes.draw do
+  # Routes for the Followrequest resource:
+
+  # CREATE
+  post("/insert_followrequest", { :controller => "followrequests", :action => "create" })
+          
+  # READ
+  get("/followrequests", { :controller => "followrequests", :action => "index" })
+  
+  get("/followrequests/:path_id", { :controller => "followrequests", :action => "show" })
+  
+  # UPDATE
+  
+  post("/modify_followrequest/:path_id", { :controller => "followrequests", :action => "update" })
+  
+  # DELETE
+  get("/delete_followrequest/:path_id", { :controller => "followrequests", :action => "destroy" })
+
+  #------------------------------
+
   # Routes for the Comment resource:
 
   # CREATE

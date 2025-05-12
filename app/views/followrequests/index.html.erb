@@ -1,0 +1,118 @@
+<div>
+  <div>
+    <h1>
+      List of all followrequests
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new followrequest
+    </h2>
+
+    <form action="/insert_followrequest" method="post">
+      <div>
+        <label for="sender_id_box">
+          Sender
+        </label>
+
+        <input type="text" id="sender_id_box" name="query_sender_id">
+      </div>
+
+      <div>
+        <label for="recipient_id_box">
+          Recipient
+        </label>
+
+        <input type="text" id="recipient_id_box" name="query_recipient_id">
+      </div>
+
+      <div>
+        <label for="status_box">
+          Status
+        </label>
+
+        <input type="text" id="status_box" name="query_status">
+      </div>
+
+      <button>
+        Create followrequest
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Sender
+        </th>
+
+        <th>
+          Recipient
+        </th>
+
+        <th>
+          Status
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_followrequests.each do |a_followrequest| %>
+      <tr>
+        <td>
+          <%= a_followrequest.id %>
+        </td>
+
+        <td>
+          <%= a_followrequest.sender_id %>
+        </td>
+
+        <td>
+          <%= a_followrequest.recipient_id %>
+        </td>
+
+        <td>
+          <%= a_followrequest.status %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_followrequest.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_followrequest.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/followrequests/<%= a_followrequest.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

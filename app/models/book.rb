@@ -15,4 +15,11 @@
 #  library_id  :integer
 #
 class Book < ApplicationRecord
+  #Direct Associations
+  has_many  :posts, class_name: "Post", foreign_key: "book_id", dependent: :destroy
+
+  belongs_to :author, required: true, class_name: "Author", foreign_key: "author_id", counter_cache: true
+
+  #Indirect Associations
+  has_many :readers, through: :posts, source: :creator
 end

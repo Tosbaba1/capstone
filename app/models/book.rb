@@ -16,7 +16,7 @@
 #
 class Book < ApplicationRecord
   #Direct Associations
-  has_many  :posts, class_name: "Post", foreign_key: "book_id", dependent: :destroy
+  has_many  :posts, class_name: "Post", foreign_key: "book_id", dependent: :nullify
 
   belongs_to :author, required: true, class_name: "Author", foreign_key: "author_id", counter_cache: true
 

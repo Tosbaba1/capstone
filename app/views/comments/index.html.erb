@@ -1,0 +1,118 @@
+<div>
+  <div>
+    <h1>
+      List of all comments
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new comment
+    </h2>
+
+    <form action="/insert_comment" method="post">
+      <div>
+        <label for="post_id_box">
+          Post
+        </label>
+
+        <input type="text" id="post_id_box" name="query_post_id">
+      </div>
+
+      <div>
+        <label for="commenter_id_box">
+          Commenter
+        </label>
+
+        <input type="text" id="commenter_id_box" name="query_commenter_id">
+      </div>
+
+      <div>
+        <label for="comment_box">
+          Comment
+        </label>
+
+        <textarea id="comment_box" name="query_comment" rows="3"></textarea>
+      </div>
+
+      <button>
+        Create comment
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Post
+        </th>
+
+        <th>
+          Commenter
+        </th>
+
+        <th>
+          Comment
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_comments.each do |a_comment| %>
+      <tr>
+        <td>
+          <%= a_comment.id %>
+        </td>
+
+        <td>
+          <%= a_comment.post_id %>
+        </td>
+
+        <td>
+          <%= a_comment.commenter_id %>
+        </td>
+
+        <td>
+          <%= a_comment.comment %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_comment.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_comment.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/comments/<%= a_comment.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

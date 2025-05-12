@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users
+  root to: "posts#index"
   # Routes for the Author resource:
 
   # CREATE
@@ -24,7 +26,7 @@ Rails.application.routes.draw do
   post("/insert_post", { :controller => "posts", :action => "create" })
 
   # READ
-  get("/", { :controller => "posts", :action => "index" })
+  # get("/", { :controller => "posts", :action => "index" })
 
   get("/posts", { :controller => "posts", :action => "index" })
 
@@ -114,11 +116,5 @@ Rails.application.routes.draw do
   get("/delete_book/:path_id", { :controller => "books", :action => "destroy" })
 
   #------------------------------
-
-  devise_for :users
-
-  # This is a blank app! Pick your first screen, build out the RCAV, and go from there. E.g.:
-
-  # get "/your_first_screen" => "pages#first"
 
 end

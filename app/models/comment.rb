@@ -10,4 +10,6 @@
 #  post_id      :integer
 #
 class Comment < ApplicationRecord
+  belongs_to :commenter, required: true, class_name: "User", foreign_key: "commenter_id"
+  belongs_to :post, required: true, class_name: "Post", foreign_key: "post_id", counter_cache: true
 end

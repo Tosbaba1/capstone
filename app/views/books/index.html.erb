@@ -1,0 +1,198 @@
+<div>
+  <div>
+    <h1>
+      List of all books
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new book
+    </h2>
+
+    <form action="/insert_book" method="post">
+      <div>
+        <label for="title_box">
+          Title
+        </label>
+
+        <input type="text" id="title_box" name="query_title">
+      </div>
+
+      <div>
+        <label for="image_url_box">
+          Image url
+        </label>
+
+        <input type="text" id="image_url_box" name="query_image_url">
+      </div>
+
+      <div>
+        <label for="author_id_box">
+          Author
+        </label>
+
+        <input type="text" id="author_id_box" name="query_author_id">
+      </div>
+
+      <div>
+        <label for="description_box">
+          Description
+        </label>
+
+        <textarea id="description_box" name="query_description" rows="3"></textarea>
+      </div>
+
+      <div>
+        <label for="page_length_box">
+          Page length
+        </label>
+
+        <input type="text" id="page_length_box" name="query_page_length">
+      </div>
+
+      <div>
+        <label for="year_box">
+          Year
+        </label>
+
+        <input type="text" id="year_box" name="query_year">
+      </div>
+
+      <div>
+        <label for="library_id_box">
+          Library
+        </label>
+
+        <input type="text" id="library_id_box" name="query_library_id">
+      </div>
+
+      <div>
+        <label for="genre_box">
+          Genre
+        </label>
+
+        <input type="text" id="genre_box" name="query_genre">
+      </div>
+
+      <button>
+        Create book
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Title
+        </th>
+
+        <th>
+          Image url
+        </th>
+
+        <th>
+          Author
+        </th>
+
+        <th>
+          Description
+        </th>
+
+        <th>
+          Page length
+        </th>
+
+        <th>
+          Year
+        </th>
+
+        <th>
+          Library
+        </th>
+
+        <th>
+          Genre
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_books.each do |a_book| %>
+      <tr>
+        <td>
+          <%= a_book.id %>
+        </td>
+
+        <td>
+          <%= a_book.title %>
+        </td>
+
+        <td>
+          <%= a_book.image_url %>
+        </td>
+
+        <td>
+          <%= a_book.author_id %>
+        </td>
+
+        <td>
+          <%= a_book.description %>
+        </td>
+
+        <td>
+          <%= a_book.page_length %>
+        </td>
+
+        <td>
+          <%= a_book.year %>
+        </td>
+
+        <td>
+          <%= a_book.library_id %>
+        </td>
+
+        <td>
+          <%= a_book.genre %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_book.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_book.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/books/<%= a_book.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

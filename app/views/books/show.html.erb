@@ -1,0 +1,176 @@
+<div>
+  <div>
+    <h1>
+      Book #<%= @the_book.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/books">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_book/<%= @the_book.id %>">
+          Delete book
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Title
+      </dt>
+      <dd>
+        <%= @the_book.title %>
+      </dd>
+
+      <dt>
+        Image url
+      </dt>
+      <dd>
+        <%= @the_book.image_url %>
+      </dd>
+
+      <dt>
+        Author
+      </dt>
+      <dd>
+        <%= @the_book.author_id %>
+      </dd>
+
+      <dt>
+        Description
+      </dt>
+      <dd>
+        <%= @the_book.description %>
+      </dd>
+
+      <dt>
+        Page length
+      </dt>
+      <dd>
+        <%= @the_book.page_length %>
+      </dd>
+
+      <dt>
+        Year
+      </dt>
+      <dd>
+        <%= @the_book.year %>
+      </dd>
+
+      <dt>
+        Library
+      </dt>
+      <dd>
+        <%= @the_book.library_id %>
+      </dd>
+
+      <dt>
+        Genre
+      </dt>
+      <dd>
+        <%= @the_book.genre %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_book.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_book.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit book
+    </h2>
+
+    <form action="/modify_book/<%= @the_book.id %>"  method="post" >
+      <div>
+        <label for="title_box">
+          Title
+        </label>
+
+        <input type="text" id="title_box" name="query_title" value="<%= @the_book.title %>">
+      </div>
+
+      <div>
+        <label for="image_url_box">
+          Image url
+        </label>
+
+        <input type="text" id="image_url_box" name="query_image_url" value="<%= @the_book.image_url %>">
+      </div>
+
+      <div>
+        <label for="author_id_box">
+          Author
+        </label>
+
+        <input type="text" id="author_id_box" name="query_author_id" value="<%= @the_book.author_id %>">
+      </div>
+
+      <div>
+        <label for="description_box">
+          Description
+        </label>
+
+        <textarea id="description_box" name="query_description"><%= @the_book.description %></textarea>
+      </div>
+
+      <div>
+        <label for="page_length_box">
+          Page length
+        </label>
+
+        <input type="text" id="page_length_box" name="query_page_length" value="<%= @the_book.page_length %>">
+      </div>
+
+      <div>
+        <label for="year_box">
+          Year
+        </label>
+
+        <input type="text" id="year_box" name="query_year" value="<%= @the_book.year %>">
+      </div>
+
+      <div>
+        <label for="library_id_box">
+          Library
+        </label>
+
+        <input type="text" id="library_id_box" name="query_library_id" value="<%= @the_book.library_id %>">
+      </div>
+
+      <div>
+        <label for="genre_box">
+          Genre
+        </label>
+
+        <input type="text" id="genre_box" name="query_genre" value="<%= @the_book.genre %>">
+      </div>
+
+      <button>
+        Update book
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

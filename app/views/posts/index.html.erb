@@ -16,11 +16,7 @@
 
     <form action="/insert_post" method="post">
       <div>
-        <label for="creator_id_box">
-          Creator
-        </label>
-
-        <input type="text" id="creator_id_box" name="query_creator_id">
+        <input type="hidden" id="creator_id_box" name="query_creator_id" value="current_user.id">
       </div>
 
       <div>
@@ -33,7 +29,7 @@
 
       <div>
         <label for="book_id_box">
-          Book
+          Book Title
         </label>
 
         <input type="text" id="book_id_box" name="query_book_id">
@@ -56,7 +52,7 @@
       </div>
 
       <button>
-        Create post
+        Post
       </button>
     </form>
   </div>

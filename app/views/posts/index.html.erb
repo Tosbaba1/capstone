@@ -21,6 +21,11 @@
           prompt: "— no book —" %>
   </div>
 
+  <div class="field">
+    <%= f.label :media, "Attach images/videos (optional)" %><br>
+    <%= f.file_field :media, multiple: true, direct_upload: true %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Post", class: "btn btn-primary" %>
   </div>

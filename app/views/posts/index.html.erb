@@ -6,15 +6,24 @@
   </div>
 </div>
 
-<%= form_with url: insert_post_path, method: :post, local: true do |f| %>
-  <%= f.hidden_field :creator_id, value: current_user.id %>       <!-- no longer needed -->
-  <%= f.text_area    :content, rows: 3, placeholder: "What's happening?" %>
+<%= form_with url: insert_post_path, scope: :post, local: true do |f| %>
+  <%= f.hidden_field :creator_id, value: current_user.id %>
 
-  <%= f.collection_select :book_id, Book.all, :id, :title,
-        prompt: "Attach a book (optional)" %>
+  <div class="field">
+    <%= f.text_area :content,
+          rows: 3,
+          placeholder: "What's happening?" %>
+  </div>
 
-  <!-- later: media upload field -->
-  <%= f.submit "Post" %>
+  <div class="field">
+    <%= f.collection_select :book_id,
+          Book.all, :id, :title,
+          prompt: "— no book —" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Post", class: "btn btn-primary" %>
+  </div>
 <% end %>
 
 

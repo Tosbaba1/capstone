@@ -32,13 +32,9 @@ class PostsController < ApplicationController
 
   # Strong parameters: only allow content, optional book_id, and attachments
   def post_params
-    params.require(:post).permit(
-      :content,
-      :book_id,      # will be nil if the user didn’t pick a book
-      media: []      # for ActiveStorage attachments (see step 3)
-    )
+    params.require(:post)
+          .permit(:content, :book_id, media: [])
   end
-end
 
   def update
     the_id = params.fetch("path_id")
@@ -52,7 +48,7 @@ end
 
     if the_post.valid?
       the_post.save
-      redirect_to("/posts/#{the_post.id}", { :notice => "Post updated successfully."} )
+      redirect_to("/posts/#{the_post.id}", { :notice => "Post updated successfully." })
     else
       redirect_to("/posts/#{the_post.id}", { :alert => the_post.errors.full_messages.to_sentence })
     end
@@ -64,6 +60,6 @@ end
 
     the_post.destroy
 
-    redirect_to("/posts", { :notice => "Post deleted successfully."} )
+    redirect_to("/posts", { :notice => "Post deleted successfully." })
   end
 end

@@ -1,146 +1,52 @@
 <div>
   <div>
     <h1>
-      List of all posts
+      Feed
     </h1>
   </div>
 </div>
 
-<hr>
-
 <div>
   <div>
-    <h2>
-      Add a new post
-    </h2>
-
     <form action="/insert_post" method="post">
       <div>
         <input type="hidden" id="creator_id_box" name="query_creator_id" value="current_user.id">
       </div>
+      <textarea id="content_box" name="query_content" rows="3" placeholder="What's happening"></textarea>
+    </div>
 
-      <div>
-        <label for="content_box">
-          Content
-        </label>
-
-        <textarea id="content_box" name="query_content" rows="3"></textarea>
-      </div>
-
-      <div>
-        <label for="book_id_box">
-          Book Title
-        </label>
-
-        <input type="text" id="book_id_box" name="query_book_id">
-      </div>
-
-      <div>
-        <label for="likes_count_box">
-          Likes count
-        </label>
-
-        <input type="text" id="likes_count_box" name="query_likes_count">
-      </div>
-
-      <div>
-        <label for="comments_count_box">
-          Comments count
-        </label>
-
-        <input type="text" id="comments_count_box" name="query_comments_count">
-      </div>
-
-      <button>
-        Post
-      </button>
-    </form>
-  </div>
+    <button>
+      Post
+    </button>
+  </form>
+</div>
 </div>
 
 <hr>
-<div>
-  <div>
-    <table border="1">
-      <tr>
-        <th>
-          ID
-        </th>
 
-        <th>
-          Creator
-        </th>
-
-        <th>
-          Content
-        </th>
-
-        <th>
-          Book
-        </th>
-
-        <th>
-          Likes count
-        </th>
-
-        <th>
-          Comments count
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_posts.each do |a_post| %>
-      <tr>
-        <td>
-          <%= a_post.id %>
-        </td>
-
-        <td>
-          <%= a_post.creator_id %>
-        </td>
-
-        <td>
-          <%= a_post.content %>
-        </td>
-
-        <td>
-          <%= a_post.book_id %>
-        </td>
-
-        <td>
-          <%= a_post.likes_count %>
-        </td>
-
-        <td>
-          <%= a_post.comments_count %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_post.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_post.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/posts/<%= a_post.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
+<div class="posts-feed">
+  <% @list_of_posts.each do |post| %>
+    <div class="post-card">
+      <div class="post-header">
+        <%= image_tag(post.creator.avatar || 'default_avatar.png', alt: post.creator.name, class: 'avatar') %>
+        <div class="post-user-info">
+          <strong><%= post.creator.name %></strong>
+          <small><%= time_ago_in_words(post.created_at) %> ago</small>
+        </div>
+      </div>
+      <div class="post-body">
+        <p><%= post.content %></p>
+        <% if post.book %>
+          <p class="post-book">
+            Reading: <%= link_to post.book.title, book_path(post.book) %>
+          </p>
+        <% end %>
+      </div>
+      <div class="post-footer">
+        <span><%= pluralize(post.likes_count, 'Like') %></span>
+        <span><%= pluralize(post.comments_count, 'Comment') %></span>
+      </div>
+    </div>
+    <hr>
+  <% end %>
 </div>
-
-<hr>

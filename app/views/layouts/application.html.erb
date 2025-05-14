@@ -10,15 +10,26 @@
     <%= javascript_importmap_tags %>
   </head>
 
+  <style>
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  </style>
+
   <body>
+
     <div style = "color: green">
-    <p class="notice"><%= notice %></p>
+      <p class="notice"><%= notice %></p>
     </div>
 
     <div style = "color: red">
-    <p class="alert"><%= alert %></p>
+      <p class="alert"><%= alert %></p>
     </div>
 
     <%= yield %>
+
   </body>
 </html>

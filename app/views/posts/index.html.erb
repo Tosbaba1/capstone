@@ -41,20 +41,20 @@
         <%= image_tag(post.creator.avatar || 'default_avatar.png', alt: post.creator.name, class: 'avatar') %>
         <div class="post-user-info">
           <strong><%= post.creator.name %></strong>
-          <small><%= time_ago_in_words(post.created_at) %> ago</small>
         </div>
       </div>
-      <div class="post-body">
+      <span class="post-body">
         <p><%= post.content %></p>
         <% if post.book %>
           <p class="post-book">
             Reading: <%= link_to post.book.title, book_path(post.book) %>
           </p>
         <% end %>
-      </div>
+      </span>
       <div class="post-footer">
         <span><%= pluralize(post.likes_count, 'Like') %></span>
         <span><%= pluralize(post.comments_count, 'Comment') %></span>
+        <span><%= time_ago_in_words(post.created_at) %> ago</span>
       </div>
     </div>
     <hr>

@@ -7,18 +7,16 @@
 </div>
 
 <%= form_with url: insert_post_path, method: :post, local: true do |f| %>
-  <%= f.hidden_field :query_creator_id, value: current_user.id %>
+  <%= f.hidden_field :creator_id, value: current_user.id %>       <!-- no longer needed -->
+  <%= f.text_area    :content, rows: 3, placeholder: "What's happening?" %>
 
-  <div class="field">
-    <%= f.text_area :query_content,
-          rows: 3,
-          placeholder: "What is happening?" %>
-  </div>
+  <%= f.collection_select :book_id, Book.all, :id, :title,
+        prompt: "Attach a book (optional)" %>
 
-  <div class="actions">
-    <%= f.submit "Post", class: "btn btn-primary" %>
-  </div>
+  <!-- later: media upload field -->
+  <%= f.submit "Post" %>
 <% end %>
+
 
 <hr>
 

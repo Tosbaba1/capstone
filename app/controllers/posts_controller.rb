@@ -18,20 +18,27 @@ class PostsController < ApplicationController
   end
 
   def create
-    the_post = Post.new
-    the_post.creator_id = params.fetch("query_creator_id")
-    the_post.content = params.fetch("query_content")
-    the_post.book_id = params.fetch("query_book_id")
-    the_post.likes_count = params.fetch("query_likes_count")
-    the_post.comments_count = params.fetch("query_comments_count")
+    # build the post off of the current_user
+    @post = current_user.posts.new(post_params)
 
-    if the_post.valid?
-      the_post.save
-      redirect_to("/posts", { :notice => "Post created successfully." })
+    if @post.save
+      redirect_to posts_path, notice: "Post created successfully."
     else
-      redirect_to("/posts", { :alert => the_post.errors.full_messages.to_sentence })
+      redirect_to posts_path, alert: @post.errors.full_messages.to_sentence
     end
   end
+
+  private
+
+  # Strong parameters: only allow content, optional book_id, and attachments
+  def post_params
+    params.require(:post).permit(
+      :content,
+      :book_id,      # will be nil if the user didn’t pick a book
+      media: []      # for ActiveStorage attachments (see step 3)
+    )
+  end
+end
 
   def update
     the_id = params.fetch("path_id")

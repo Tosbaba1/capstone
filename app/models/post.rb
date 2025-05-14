@@ -17,6 +17,7 @@ class Post < ApplicationRecord
   belongs_to :book, class_name: "Book", foreign_key: "book_id", counter_cache: true
   has_many  :likes, class_name: "Like", foreign_key: "post_id", dependent: :destroy
   has_many  :comments, class_name: "Comment", foreign_key: "post_id", dependent: :destroy
+  has_many_attached :media
 
   #Indirect Associations
   has_many :likeds, through: :likes, source: :liked

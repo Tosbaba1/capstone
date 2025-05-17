@@ -28,14 +28,6 @@ class PostsController < ApplicationController
     end
   end
 
-  private
-
-  # Strong parameters: only allow content, optional book_id, and attachments
-  def post_params
-    params.require(:post)
-          .permit(:content, :book_id, media: [])
-  end
-
   def update
     the_id = params.fetch("path_id")
     the_post = Post.where({ :id => the_id }).at(0)
@@ -61,5 +53,13 @@ class PostsController < ApplicationController
     the_post.destroy
 
     redirect_to("/posts", { :notice => "Post deleted successfully." })
+  end
+
+  private
+
+  # Strong parameters: only allow content, optional book_id, and attachments
+  def post_params
+    params.require(:post)
+          .permit(:content, :book_id, media: [])
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_26_000000) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_01_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -87,17 +87,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_26_000000) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "posts", force: :cascade do |t|
-    t.integer "creator_id"
-    t.text "content"
-    t.integer "book_id"
-    t.integer "likes_count"
-    t.integer "comments_count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.jsonb "poll_data"
-  end
-
   create_table "notifications", force: :cascade do |t|
     t.integer "recipient_id"
     t.integer "actor_id"
@@ -107,6 +96,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_26_000000) do
     t.boolean "read", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.integer "creator_id"
+    t.text "content"
+    t.integer "book_id"
+    t.integer "likes_count"
+    t.integer "comments_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "poll_data"
   end
 
   create_table "users", force: :cascade do |t|

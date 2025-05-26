@@ -1,4 +1,4 @@
-<div class="text-center my-3 tab-container">
+<div class="text-center my-2 tab-container">
   <%= link_to 'Following', posts_path, class: "tab-link mx-3 #{params[:tab] == 'explore' ? '' : 'active'}" %>
   <%= link_to 'Explore', posts_path(tab: 'explore'), class: "tab-link mx-3 #{params[:tab] == 'explore' ? 'active' : ''}" %>
 </div>

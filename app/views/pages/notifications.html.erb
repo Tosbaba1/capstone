@@ -1,3 +1,21 @@
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <%= link_to 'All', notifications_path, class: "nav-link #{params[:tab].blank? ? 'active' : ''}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Likes', notifications_path(tab: 'likes'), class: "nav-link #{params[:tab] == 'likes' ? 'active' : ''}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Comments', notifications_path(tab: 'comments'), class: "nav-link #{params[:tab] == 'comments' ? 'active' : ''}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Follow Requests', notifications_path(tab: 'follow_requests'), class: "nav-link #{params[:tab] == 'follow_requests' ? 'active' : ''}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Milestones', notifications_path(tab: 'milestones'), class: "nav-link #{params[:tab] == 'milestones' ? 'active' : ''}" %>
+  </li>
+</ul>
+
 <ul class="list-unstyled">
   <% @notifications.each do |notification| %>
     <li class="mb-2">

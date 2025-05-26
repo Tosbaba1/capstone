@@ -7,7 +7,7 @@
         🔔
         <% unread_count = current_user.notifications.unread.count %>
         <% if unread_count.positive? %>
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"><%= unread_count %></span>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="transform: scale(0.5); transform-origin: top right;"><%= unread_count %></span>
         <% end %>
       <% end %></li>
       <li class="nav-item"><%= link_to '/profile', class: "nav-link" do %>👤<% end %></li>

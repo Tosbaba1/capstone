@@ -1,14 +1,9 @@
-<div>
-  <div>
-    <h1>Feed</h1>
-    <div class="tabs">
-      <%= link_to 'Following', posts_path, class: (params[:tab] == 'explore' ? '' : 'active') %> |
-      <%= link_to 'Explore', posts_path(tab: 'explore'), class: (params[:tab] == 'explore' ? 'active' : '') %>
-    </div>
-  </div>
+<div class="text-center my-3">
+  <%= link_to 'Following', posts_path, class: "mx-3 #{params[:tab] == 'explore' ? '' : 'fw-bold'}" %>
+  <%= link_to 'Explore', posts_path(tab: 'explore'), class: "mx-3 #{params[:tab] == 'explore' ? 'fw-bold' : ''}" %>
 </div>
 
-<%= form_with url: insert_post_path, scope: :post, local: true, html: {class: "mb-3"} do |f| %>
+<%= form_with url: insert_post_path, scope: :post, local: true, html: {class: "mb-3"}, data: {controller: "post-form"} do |f| %>
   <%= f.hidden_field :creator_id, value: current_user.id %>
 
   <div class="mb-3">
@@ -25,9 +20,20 @@
           class: "form-select" %>
   </div>
 
-  <div class="mb-3">
-    <%= f.label :media, "Attach images/videos (optional)" %><br>
-    <%= f.file_field :media, multiple: true, direct_upload: true, class: "form-control" %>
+  <div class="post-icons mb-2">
+    <span data-action="post-form#attachMedia">🖼️</span>
+    <span data-action="post-form#attachVideo">🎥</span>
+    <span data-action="post-form#togglePoll">📊</span>
+  </div>
+
+  <%= f.file_field :media, multiple: true, direct_upload: true, class: "d-none", data: {post_form_target: "mediaInput"} %>
+
+  <div id="poll-fields" class="d-none" data-post-form-target="poll">
+    <%= text_field_tag :poll_question, nil, placeholder: "Poll question", class: "form-control mb-2" %>
+    <%= text_field_tag :poll_option1, nil, placeholder: "Option 1", class: "form-control mb-2" %>
+    <%= text_field_tag :poll_option2, nil, placeholder: "Option 2", class: "form-control mb-2" %>
+    <%= text_field_tag :poll_option3, nil, placeholder: "Option 3 (optional)", class: "form-control mb-2" %>
+    <%= text_field_tag :poll_option4, nil, placeholder: "Option 4 (optional)", class: "form-control mb-2" %>
   </div>
 
   <div class="mb-3">
@@ -52,6 +58,16 @@
           <p class="post-book">
             Reading: <%= link_to post.book.title, book_path(post.book) %>
           </p>
+        <% end %>
+        <% if post.poll_data.present? %>
+          <div class="mt-2">
+            <p><strong><%= post.poll_data['question'] %></strong></p>
+            <ul>
+              <% post.poll_data.except('question').each_value do |option| %>
+                <li><%= option %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
       </span>
       <div class="post-footer">

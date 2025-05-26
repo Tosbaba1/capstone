@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   def index
+    @page_title = "Feed"
     posts_source = if params[:tab] == "explore"
         current_user.explore_feed
       else
@@ -12,6 +13,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    @page_title = "Post"
     the_id = params.fetch("path_id")
 
     matching_posts = Post.where({ :id => the_id })
@@ -24,6 +26,16 @@ class PostsController < ApplicationController
   def create
     # build the post off of the current_user
     @post = current_user.posts.new(post_params)
+
+    if params[:poll_question].present?
+      @post.poll_data = {
+        question: params[:poll_question],
+        option1: params[:poll_option1],
+        option2: params[:poll_option2],
+        option3: params[:poll_option3],
+        option4: params[:poll_option4]
+      }
+    end
 
     if @post.save
       redirect_to posts_path, notice: "Post created successfully."

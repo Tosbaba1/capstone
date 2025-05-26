@@ -25,11 +25,20 @@ class BooksController < ApplicationController
     the_book.description = params.fetch("query_description")
     the_book.page_length = params.fetch("query_page_length")
     the_book.year = params.fetch("query_year")
-    the_book.library_id = params.fetch("query_library_id")
+    the_book.library_id = current_user.id
     the_book.genre = params.fetch("query_genre")
+
+    share_update = params.fetch("share_update", "0")
 
     if the_book.valid?
       the_book.save
+      if share_update == "1"
+        Post.create(
+          creator: current_user,
+          content: "started reading '#{the_book.title}'",
+          book: the_book
+        )
+      end
       redirect_to("/books", { :notice => "Book created successfully." })
     else
       redirect_to("/books", { :alert => the_book.errors.full_messages.to_sentence })

@@ -33,6 +33,9 @@ Rails.application.routes.draw do
 
   get("/posts", { :controller => "posts", :action => "index" })
 
+  get("/posts/:post_id/likes", { :controller => "posts", :action => "likes", :as => "post_likes" })
+  get("/posts/:post_id/comments", { :controller => "posts", :action => "comments", :as => "post_comments" })
+
   get("/posts/:path_id", { :controller => "posts", :action => "show" })
 
   # UPDATE

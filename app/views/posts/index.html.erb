@@ -71,8 +71,8 @@
         <% end %>
       </span>
         <div class="post-footer mb-2">
-          <span class="me-3"><%= pluralize(post.likes_count, 'Like') %></span>
-          <span class="me-3"><%= pluralize(post.comments_count, 'Comment') %></span>
+          <span class="me-3"><%= link_to pluralize(post.likes_count, 'Like'), post_likes_path(post.id) %></span>
+          <span class="me-3"><%= link_to pluralize(post.comments_count, 'Comment'), post_comments_path(post.id) %></span>
           <span><%= time_ago_in_words(post.created_at) %> ago</span>
         </div>
 

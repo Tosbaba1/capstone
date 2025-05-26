@@ -15,8 +15,12 @@
 */
 
 body {
-  background: linear-gradient(to bottom, #d0e8ff, #6fa8ff, #0050b3);
+  background: linear-gradient(to bottom, #a0ecee, #00bfa6, #006d5b);
   min-height: 100vh;
+}
+
+.bg-teal-gradient {
+  background: linear-gradient(to right, #006d5b, #00bfa6);
 }
 
 .notification-dot {

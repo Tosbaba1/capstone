@@ -5,32 +5,32 @@
 
   <div class="mb-3">
     <%= f.label :name %>
-    <%= f.text_field :name, autofocus: true, class: "form-control" %>
+    <%= f.text_field :name, value: resource.name, autofocus: true, class: "form-control" %>
   </div>
 
   <div class="mb-3">
     <%= f.label :username %>
-    <%= f.text_field :username, class: "form-control" %>
+    <%= f.text_field :username, value: resource.username, class: "form-control" %>
   </div>
 
   <div class="mb-3">
     <%= f.label :email %>
-    <%= f.email_field :email, class: "form-control", autocomplete: "email" %>
+    <%= f.email_field :email, value: resource.email, class: "form-control", autocomplete: "email" %>
   </div>
 
   <div class="mb-3">
     <%= f.label :avatar, "Profile picture URL" %>
-    <%= f.text_field :avatar, class: "form-control" %>
+    <%= f.text_field :avatar, value: resource.avatar, class: "form-control" %>
   </div>
 
   <div class="mb-3">
     <%= f.label :banner, "Banner quote" %>
-    <%= f.text_field :banner, class: "form-control" %>
+    <%= f.text_field :banner, value: resource.banner, class: "form-control" %>
   </div>
 
   <div class="mb-3">
     <%= f.label :bio %>
-    <%= f.text_area :bio, class: "form-control" %>
+    <%= f.text_area :bio, value: resource.bio, class: "form-control" %>
   </div>
 
   <hr>

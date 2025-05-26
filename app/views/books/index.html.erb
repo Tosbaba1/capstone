@@ -14,72 +14,72 @@
       Add a new book
     </h2>
 
-    <form action="/insert_book" method="post">
-      <div>
-        <label for="title_box">
+    <form action="/insert_book" method="post" class="mb-3">
+      <div class="mb-3">
+        <label for="title_box" class="form-label">
           Title
         </label>
 
-        <input type="text" id="title_box" name="query_title">
+        <input type="text" id="title_box" name="query_title" class="form-control">
       </div>
 
-      <div>
-        <label for="image_url_box">
+      <div class="mb-3">
+        <label for="image_url_box" class="form-label">
           Image url
         </label>
 
-        <input type="text" id="image_url_box" name="query_image_url">
+        <input type="text" id="image_url_box" name="query_image_url" class="form-control">
       </div>
 
-      <div>
-        <label for="author_id_box">
+      <div class="mb-3">
+        <label for="author_id_box" class="form-label">
           Author
         </label>
 
-        <input type="text" id="author_id_box" name="query_author_id">
+        <input type="text" id="author_id_box" name="query_author_id" class="form-control">
       </div>
 
-      <div>
-        <label for="description_box">
+      <div class="mb-3">
+        <label for="description_box" class="form-label">
           Description
         </label>
 
-        <textarea id="description_box" name="query_description" rows="3"></textarea>
+        <textarea id="description_box" name="query_description" rows="3" class="form-control"></textarea>
       </div>
 
-      <div>
-        <label for="page_length_box">
+      <div class="mb-3">
+        <label for="page_length_box" class="form-label">
           Page length
         </label>
 
-        <input type="text" id="page_length_box" name="query_page_length">
+        <input type="text" id="page_length_box" name="query_page_length" class="form-control">
       </div>
 
-      <div>
-        <label for="year_box">
+      <div class="mb-3">
+        <label for="year_box" class="form-label">
           Year
         </label>
 
-        <input type="text" id="year_box" name="query_year">
+        <input type="text" id="year_box" name="query_year" class="form-control">
       </div>
 
-      <div>
-        <label for="library_id_box">
+      <div class="mb-3">
+        <label for="library_id_box" class="form-label">
           Library
         </label>
 
-        <input type="text" id="library_id_box" name="query_library_id">
+        <input type="text" id="library_id_box" name="query_library_id" class="form-control">
       </div>
 
-      <div>
-        <label for="genre_box">
+      <div class="mb-3">
+        <label for="genre_box" class="form-label">
           Genre
         </label>
 
-        <input type="text" id="genre_box" name="query_genre">
+        <input type="text" id="genre_box" name="query_genre" class="form-control">
       </div>
 
-      <button>
+      <button class="btn btn-primary">
         Create book
       </button>
     </form>
@@ -89,7 +89,7 @@
 <hr>
 <div>
   <div>
-    <table border="1">
+    <table class="table table-striped">
       <tr>
         <th>
           ID

@@ -1,8 +1,8 @@
-<nav class="navbar">
-  <ul class="navbar-icons">
-    <li><%= link_to root_path do %>🏠<% end %></li>
-    <li><%= link_to '/library' do %>📚<% end %></li>
-    <li><%= link_to '/notifications' do %>🔔<% end %></li>
-    <li><%= link_to '/profile' do %>👤<% end %></li>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row">
+    <li class="nav-item me-3"><%= link_to root_path, class: "nav-link" do %>🏠<% end %></li>
+    <li class="nav-item me-3"><%= link_to '/library', class: "nav-link" do %>📚<% end %></li>
+    <li class="nav-item me-3"><%= link_to '/notifications', class: "nav-link" do %>🔔<% end %></li>
+    <li class="nav-item"><%= link_to '/profile', class: "nav-link" do %>👤<% end %></li>
   </ul>
 </nav>

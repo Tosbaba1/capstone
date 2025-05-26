@@ -14,24 +14,24 @@
       Add a new like
     </h2>
 
-    <form action="/insert_like" method="post">
-      <div>
-        <label for="post_id_box">
+    <form action="/insert_like" method="post" class="mb-3">
+      <div class="mb-3">
+        <label for="post_id_box" class="form-label">
           Post
         </label>
 
-        <input type="text" id="post_id_box" name="query_post_id">
+        <input type="text" id="post_id_box" name="query_post_id" class="form-control">
       </div>
 
-      <div>
-        <label for="liked_id_box">
+      <div class="mb-3">
+        <label for="liked_id_box" class="form-label">
           Liked
         </label>
 
-        <input type="text" id="liked_id_box" name="query_liked_id">
+        <input type="text" id="liked_id_box" name="query_liked_id" class="form-control">
       </div>
 
-      <button>
+      <button class="btn btn-primary">
         Create like
       </button>
     </form>
@@ -41,7 +41,7 @@
 <hr>
 <div>
   <div>
-    <table border="1">
+    <table class="table table-striped">
       <tr>
         <th>
           ID

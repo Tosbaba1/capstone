@@ -101,72 +101,72 @@
       Edit book
     </h2>
 
-    <form action="/modify_book/<%= @the_book.id %>"  method="post" >
-      <div>
-        <label for="title_box">
+    <form action="/modify_book/<%= @the_book.id %>"  method="post" class="mb-3">
+      <div class="mb-3">
+        <label for="title_box" class="form-label">
           Title
         </label>
 
-        <input type="text" id="title_box" name="query_title" value="<%= @the_book.title %>">
+        <input type="text" id="title_box" name="query_title" value="<%= @the_book.title %>" class="form-control">
       </div>
 
-      <div>
-        <label for="image_url_box">
+      <div class="mb-3">
+        <label for="image_url_box" class="form-label">
           Image url
         </label>
 
-        <input type="text" id="image_url_box" name="query_image_url" value="<%= @the_book.image_url %>">
+        <input type="text" id="image_url_box" name="query_image_url" value="<%= @the_book.image_url %>" class="form-control">
       </div>
 
-      <div>
-        <label for="author_id_box">
+      <div class="mb-3">
+        <label for="author_id_box" class="form-label">
           Author
         </label>
 
-        <input type="text" id="author_id_box" name="query_author_id" value="<%= @the_book.author_id %>">
+        <input type="text" id="author_id_box" name="query_author_id" value="<%= @the_book.author_id %>" class="form-control">
       </div>
 
-      <div>
-        <label for="description_box">
+      <div class="mb-3">
+        <label for="description_box" class="form-label">
           Description
         </label>
 
-        <textarea id="description_box" name="query_description"><%= @the_book.description %></textarea>
+        <textarea id="description_box" name="query_description" class="form-control"><%= @the_book.description %></textarea>
       </div>
 
-      <div>
-        <label for="page_length_box">
+      <div class="mb-3">
+        <label for="page_length_box" class="form-label">
           Page length
         </label>
 
-        <input type="text" id="page_length_box" name="query_page_length" value="<%= @the_book.page_length %>">
+        <input type="text" id="page_length_box" name="query_page_length" value="<%= @the_book.page_length %>" class="form-control">
       </div>
 
-      <div>
-        <label for="year_box">
+      <div class="mb-3">
+        <label for="year_box" class="form-label">
           Year
         </label>
 
-        <input type="text" id="year_box" name="query_year" value="<%= @the_book.year %>">
+        <input type="text" id="year_box" name="query_year" value="<%= @the_book.year %>" class="form-control">
       </div>
 
-      <div>
-        <label for="library_id_box">
+      <div class="mb-3">
+        <label for="library_id_box" class="form-label">
           Library
         </label>
 
-        <input type="text" id="library_id_box" name="query_library_id" value="<%= @the_book.library_id %>">
+        <input type="text" id="library_id_box" name="query_library_id" value="<%= @the_book.library_id %>" class="form-control">
       </div>
 
-      <div>
-        <label for="genre_box">
+      <div class="mb-3">
+        <label for="genre_box" class="form-label">
           Genre
         </label>
 
-        <input type="text" id="genre_box" name="query_genre" value="<%= @the_book.genre %>">
+        <input type="text" id="genre_box" name="query_genre" value="<%= @the_book.genre %>" class="form-control">
       </div>
 
-      <button>
+      <button class="btn btn-primary">
         Update book
       </button>
     </form>

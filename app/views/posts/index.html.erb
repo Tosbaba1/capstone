@@ -8,27 +8,29 @@
   </div>
 </div>
 
-<%= form_with url: insert_post_path, scope: :post, local: true do |f| %>
+<%= form_with url: insert_post_path, scope: :post, local: true, html: {class: "mb-3"} do |f| %>
   <%= f.hidden_field :creator_id, value: current_user.id %>
 
-  <div class="field">
+  <div class="mb-3">
     <%= f.text_area :content,
           rows: 3,
-          placeholder: "What's happening?" %>
+          placeholder: "What's happening?",
+          class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="mb-3">
     <%= f.collection_select :book_id,
           Book.all, :id, :title,
-          prompt: "— no book —" %>
+          prompt: "— no book —",
+          class: "form-select" %>
   </div>
 
-  <div class="field">
+  <div class="mb-3">
     <%= f.label :media, "Attach images/videos (optional)" %><br>
-    <%= f.file_field :media, multiple: true, direct_upload: true %>
+    <%= f.file_field :media, multiple: true, direct_upload: true, class: "form-control" %>
   </div>
 
-  <div class="actions">
+  <div class="mb-3">
     <%= f.submit "Post", class: "btn btn-primary" %>
   </div>
 <% end %>

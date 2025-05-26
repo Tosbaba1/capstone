@@ -14,40 +14,40 @@
       Add a new author
     </h2>
 
-    <form action="/insert_author" method="post">
-      <div>
-        <label for="name_box">
+    <form action="/insert_author" method="post" class="mb-3">
+      <div class="mb-3">
+        <label for="name_box" class="form-label">
           Name
         </label>
 
-        <input type="text" id="name_box" name="query_name">
+        <input type="text" id="name_box" name="query_name" class="form-control">
       </div>
 
-      <div>
-        <label for="bio_box">
+      <div class="mb-3">
+        <label for="bio_box" class="form-label">
           Bio
         </label>
 
-        <input type="text" id="bio_box" name="query_bio">
+        <input type="text" id="bio_box" name="query_bio" class="form-control">
       </div>
 
-      <div>
-        <label for="dob_box">
+      <div class="mb-3">
+        <label for="dob_box" class="form-label">
           Dob
         </label>
 
-        <input type="text" id="dob_box" name="query_dob">
+        <input type="text" id="dob_box" name="query_dob" class="form-control">
       </div>
 
-      <div>
-        <label for="books_count_box">
+      <div class="mb-3">
+        <label for="books_count_box" class="form-label">
           Books count
         </label>
 
-        <input type="text" id="books_count_box" name="query_books_count">
+        <input type="text" id="books_count_box" name="query_books_count" class="form-control">
       </div>
 
-      <button>
+      <button class="btn btn-primary">
         Create author
       </button>
     </form>
@@ -57,7 +57,7 @@
 <hr>
 <div>
   <div>
-    <table border="1">
+    <table class="table table-striped">
       <tr>
         <th>
           ID

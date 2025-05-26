@@ -70,12 +70,34 @@
           </div>
         <% end %>
       </span>
-      <div class="post-footer">
-        <span><%= pluralize(post.likes_count, 'Like') %></span>
-        <span><%= pluralize(post.comments_count, 'Comment') %></span>
-        <span><%= time_ago_in_words(post.created_at) %> ago</span>
+        <div class="post-footer mb-2">
+          <span class="me-3"><%= pluralize(post.likes_count, 'Like') %></span>
+          <span class="me-3"><%= pluralize(post.comments_count, 'Comment') %></span>
+          <span><%= time_ago_in_words(post.created_at) %> ago</span>
+        </div>
+
+        <% like = post.likes.find_by(liked: current_user) %>
+        <% if like %>
+          <%= link_to 'Unlike', "/delete_like/#{like.id}", class: 'btn btn-sm btn-link p-0' %>
+        <% else %>
+          <%= link_to 'Like', insert_like_path(query_post_id: post.id, query_liked_id: current_user.id), class: 'btn btn-sm btn-link p-0' %>
+        <% end %>
+
+        <%= form_with url: insert_comment_path, scope: :comment, local: true, class: 'mt-2' do |cf| %>
+          <%= cf.hidden_field :post_id, value: post.id %>
+          <%= cf.hidden_field :commenter_id, value: current_user.id %>
+          <div class="input-group input-group-sm">
+            <%= cf.text_field :comment, class: 'form-control', placeholder: 'Add a comment' %>
+            <button class="btn btn-outline-secondary">Comment</button>
+          </div>
+        <% end %>
+
+        <% post.comments.each do |comment| %>
+          <div class="mt-2 ps-2 border-start">
+            <strong><%= comment.commenter.name %></strong> <%= comment.comment %>
+          </div>
+        <% end %>
       </div>
-    </div>
-    <hr>
-  <% end %>
-</div>
+      <hr>
+    <% end %>
+  </div>

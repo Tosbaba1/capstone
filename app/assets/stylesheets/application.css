@@ -10,17 +10,26 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+*= require_tree .
 *= require_self
 */
 
+:root {
+  --teal: #008080;
+  --charcoal: #36454F;
+  --light-grey: #F5F5F5;
+  --coral: #FF6F61;
+}
+
 body {
-  background: linear-gradient(to bottom, #a0ecee, #00bfa6, #006d5b);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--charcoal);
+  color: var(--light-grey);
   min-height: 100vh;
 }
 
 .bg-teal-gradient {
-  background: linear-gradient(to right, #006d5b, #00bfa6);
+  background: linear-gradient(to right, var(--teal), var(--coral));
 }
 
 .notification-dot {

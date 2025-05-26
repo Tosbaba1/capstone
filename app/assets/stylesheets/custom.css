@@ -9,3 +9,13 @@
   border-color: #3d31a8;
   color: #ffffff;
 }
+
+.nav-tabs .nav-link {
+  color: #ffffff;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #4b3ecf;
+  border-color: #4b3ecf #4b3ecf #fff;
+  color: #ffffff;
+}

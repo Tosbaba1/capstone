@@ -1,9 +1,6 @@
 class CommentsController < ApplicationController
   def create
-    the_comment = Comment.new
-    the_comment.post_id = params.fetch("query_post_id")
-    the_comment.commenter_id = params.fetch("query_commenter_id")
-    the_comment.comment = params.fetch("query_comment")
+    the_comment = Comment.new(comment_params)
 
     if the_comment.valid?
       the_comment.save
@@ -20,5 +17,11 @@ class CommentsController < ApplicationController
     the_comment.destroy
 
     redirect_back fallback_location: root_path, notice: "Comment deleted successfully."
+  end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:post_id, :commenter_id, :comment)
   end
 end

@@ -11,5 +11,25 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_tree .
- *= require_self
- */
+*= require_self
+*/
+
+body {
+  background: linear-gradient(to bottom, #d0e8ff, #6fa8ff, #0050b3);
+  min-height: 100vh;
+}
+
+.notification-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.profile-banner {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}

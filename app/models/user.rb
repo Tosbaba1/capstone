@@ -60,7 +60,9 @@ class User < ApplicationRecord
   def timeline
     Post.where(creator_id: following.ids + [id])
   end
-  
+
+  validates :username, uniqueness: true, allow_blank: true
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 end

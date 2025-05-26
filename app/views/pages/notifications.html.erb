@@ -1,1 +1,16 @@
-<p>Coming soon.</p>
+<ul class="list-unstyled">
+  <% @notifications.each do |notification| %>
+    <li class="mb-2">
+      <strong><%= notification.actor.name %></strong> <%= notification.action %>
+      <% if notification.notifiable.is_a?(Post) %>
+        <%= link_to 'View post', post_path(notification.notifiable) %>
+      <% elsif notification.notifiable.is_a?(Book) %>
+        <%= link_to notification.notifiable.title, book_path(notification.notifiable) %>
+      <% end %>
+      <small class="text-muted"><%= time_ago_in_words(notification.created_at) %> ago</small>
+    </li>
+  <% end %>
+</ul>
+<% if @notifications.empty? %>
+  <p class="text-muted">No notifications.</p>
+<% end %>

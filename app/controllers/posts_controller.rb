@@ -1,10 +1,10 @@
 class PostsController < ApplicationController
   def index
     posts_source = if params[:tab] == "explore"
-                     current_user.explore_feed
-                   else
-                     current_user.feed
-                   end
+        current_user.explore_feed
+      else
+        current_user.feed
+      end
 
     @list_of_posts = posts_source.order(created_at: :desc)
 

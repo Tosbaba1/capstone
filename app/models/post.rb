@@ -22,4 +22,33 @@ class Post < ApplicationRecord
   #Indirect Associations
   has_many :likeds, through: :likes, source: :liked
   has_many :followers, through: :creator, source: :following
+
+  after_create :notify_mutuals_about_book
+
+  private
+
+  def notify_mutuals_about_book
+    return unless book
+
+    mutuals = creator.followers & creator.following
+    mutuals.each do |user|
+      next if user == creator
+
+      if user.posts.where(book_id: book.id, created_at: 30.days.ago..Time.current).exists?
+        Notification.create(
+          recipient: user,
+          actor: creator,
+          action: 'started reading the same book as you',
+          notifiable: book
+        )
+      elsif user.posts.where(book_id: book.id).exists?
+        Notification.create(
+          recipient: user,
+          actor: creator,
+          action: 'started reading a book you read',
+          notifiable: book
+        )
+      end
+    end
+  end
 end

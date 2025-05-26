@@ -1,13 +1,13 @@
 class PostsController < ApplicationController
-  def index
-    @page_title = "Feed"
-    posts_source = if params[:tab] == "explore"
-        current_user.explore_feed
-      else
-        current_user.feed
-      end
+    def index
+      @page_title = "Feed"
+      posts_source = if params[:tab] == "explore"
+          current_user.explore_feed
+        else
+          current_user.timeline
+        end
 
-    @list_of_posts = posts_source.order(created_at: :desc)
+      @list_of_posts = posts_source.order(created_at: :desc)
 
     render({ :template => "posts/index" })
   end

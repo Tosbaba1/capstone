@@ -1,1 +1,9 @@
-<p>Coming soon.</p>
+<div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-3">
+  <% @books.each do |book| %>
+    <div class="col text-center">
+      <%= image_tag(book.image_url, class: 'img-fluid mb-2') if book.image_url.present? %>
+      <div><strong><%= book.title %></strong></div>
+      <div class="text-muted"><%= book.author.name if book.author %></div>
+    </div>
+  <% end %>
+</div>

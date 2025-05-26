@@ -105,9 +105,12 @@
         </td>
 
         <td>
-          <a href="/followrequests/<%= a_followrequest.id %>">
-            Show details
-          </a>
+          <% if a_followrequest.status == 'pending' && a_followrequest.recipient == current_user %>
+            <%= button_to 'Accept', accept_followrequest_path(a_followrequest), method: :post, class: 'btn btn-sm btn-success' %>
+            <%= button_to 'Decline', decline_followrequest_path(a_followrequest), method: :post, class: 'btn btn-sm btn-danger' %>
+          <% else %>
+            <a href="/followrequests/<%= a_followrequest.id %>">Show details</a>
+          <% end %>
         </td>
       </tr>
       <% end %>

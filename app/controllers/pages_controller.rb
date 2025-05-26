@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   def library
     @page_title = "Library"
-    @books = current_user.books.distinct
+    @readings = current_user.readings.includes(:book)
   end
 
   def notifications

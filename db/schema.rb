@@ -75,7 +75,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_01_000000) do
   create_table "followrequests", force: :cascade do |t|
     t.integer "sender_id"
     t.integer "recipient_id"
-    t.string "status"
+    t.string "status", default: "pending"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -94,6 +94,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_01_000000) do
     t.string "notifiable_type"
     t.integer "notifiable_id"
     t.boolean "read", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "readings", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "book_id"
+    t.string  "status"
+    t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

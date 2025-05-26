@@ -36,10 +36,13 @@ class User < ApplicationRecord
 
   has_many :posts, class_name: "Post", foreign_key: "creator_id", dependent: :destroy
 
-  #Indirect Associations
-  has_many :following, through: :sentfollowrequests, source: :recipient
+  has_many :readings, dependent: :destroy
+  has_many :reading_books, through: :readings, source: :book
 
-  has_many :followers, through: :receivedfollowrequests, source: :sender
+  #Indirect Associations
+  has_many :following, -> { where(followrequests: { status: 'accepted' }) }, through: :sentfollowrequests, source: :recipient
+
+  has_many :followers, -> { where(followrequests: { status: 'accepted' }) }, through: :receivedfollowrequests, source: :sender
 
   has_many :books, through: :posts, source: :book
 

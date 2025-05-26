@@ -8,6 +8,12 @@
         <%= link_to notification.notifiable.title, book_path(notification.notifiable) %>
       <% end %>
       <small class="text-muted"><%= time_ago_in_words(notification.created_at) %> ago</small>
+      <% if notification.read? %>
+        <%= button_to 'Mark unread', mark_notification_unread_path(notification), method: :post, class: 'btn btn-sm btn-link' %>
+      <% else %>
+        <span class="badge bg-primary">New</span>
+        <%= button_to 'Mark read', mark_notification_read_path(notification), method: :post, class: 'btn btn-sm btn-link' %>
+      <% end %>
     </li>
   <% end %>
 </ul>

@@ -36,9 +36,16 @@
       <dt>
         Status
       </dt>
+    <dd>
+      <%= @the_followrequest.status %>
+    </dd>
+
+    <% if @the_followrequest.status == 'pending' && @the_followrequest.recipient == current_user %>
       <dd>
-        <%= @the_followrequest.status %>
+        <%= button_to 'Accept', accept_followrequest_path(@the_followrequest), method: :post, class: 'btn btn-sm btn-success' %>
+        <%= button_to 'Decline', decline_followrequest_path(@the_followrequest), method: :post, class: 'btn btn-sm btn-danger' %>
       </dd>
+    <% end %>
 
       <dt>
         Created at

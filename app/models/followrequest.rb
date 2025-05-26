@@ -13,6 +13,9 @@ class Followrequest < ApplicationRecord
   belongs_to :sender, required: true, class_name: "User", foreign_key: "sender_id"
   belongs_to :recipient, required: true, class_name: "User", foreign_key: "recipient_id"
 
+  STATUSES = %w[pending accepted declined]
+  validates :status, inclusion: { in: STATUSES }
+
   after_create :notify_recipient
 
   private
@@ -21,7 +24,7 @@ class Followrequest < ApplicationRecord
     Notification.create(
       recipient: recipient,
       actor: sender,
-      action: 'followed you',
+      action: 'sent you a follow request',
       notifiable: self
     )
   end

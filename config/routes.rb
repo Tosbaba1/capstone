@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root to: "posts#index"
   get "/library", to: "pages#library"
   get "/notifications", to: "pages#notifications"
+  post "/notifications/:id/mark_read", to: "notifications#mark_read", as: :mark_notification_read
+  post "/notifications/:id/mark_unread", to: "notifications#mark_unread", as: :mark_notification_unread
   get "/profile", to: "pages#profile"
   # Routes for the Author resource:
 
@@ -51,6 +53,11 @@ Rails.application.routes.draw do
 
   # CREATE
   post("/insert_followrequest", { :controller => "followrequests", :action => "create" })
+
+  post("/followrequests/:id/accept", { :controller => "followrequests", :action => "accept", :as => "accept_followrequest" })
+  post("/followrequests/:id/decline", { :controller => "followrequests", :action => "decline", :as => "decline_followrequest" })
+
+  post "/readings/:id", to: "readings#update", as: :update_reading
 
   # READ
   get("/followrequests", { :controller => "followrequests", :action => "index" })

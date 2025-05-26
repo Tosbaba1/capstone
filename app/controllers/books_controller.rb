@@ -32,6 +32,7 @@ class BooksController < ApplicationController
 
     if the_book.valid?
       the_book.save
+      Reading.create(user: current_user, book: the_book, status: 'reading')
       if share_update == "1"
         Post.create(
           creator: current_user,

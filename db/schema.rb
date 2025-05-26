@@ -93,6 +93,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_14_203426) do
     t.integer "book_id"
     t.integer "likes_count"
     t.integer "comments_count"
+    t.jsonb "poll_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

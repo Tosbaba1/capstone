@@ -64,11 +64,11 @@
       </div>
 
       <div class="mb-3">
-        <label for="library_id_box" class="form-label">
-          Library
-        </label>
-
-        <input type="text" id="library_id_box" name="query_library_id" class="form-control">
+        <%= hidden_field_tag :query_library_id, current_user.id %>
+        <div class="form-check">
+          <%= check_box_tag :share_update, '1', false, class: "form-check-input", id: "share_update" %>
+          <label class="form-check-label" for="share_update">Share to feed</label>
+        </div>
       </div>
 
       <div class="mb-3">

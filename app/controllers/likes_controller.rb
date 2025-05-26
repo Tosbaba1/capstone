@@ -1,5 +1,4 @@
 class LikesController < ApplicationController
-
   def create
     the_like = Like.new
     the_like.post_id = params.fetch("query_post_id")

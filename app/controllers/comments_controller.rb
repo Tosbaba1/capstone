@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-
   def create
     the_comment = Comment.new
     the_comment.post_id = params.fetch("query_post_id")

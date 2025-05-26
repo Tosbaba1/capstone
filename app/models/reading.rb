@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: readings
+#
+#  id         :bigint           not null, primary key
+#  rating     :integer
+#  status     :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  book_id    :integer
+#  user_id    :integer
+#
 class Reading < ApplicationRecord
   belongs_to :user
   belongs_to :book

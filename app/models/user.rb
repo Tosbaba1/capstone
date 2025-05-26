@@ -46,6 +46,10 @@ class User < ApplicationRecord
   has_many :liked_posts, through: :likes, source: :post
 
   has_many :feed, through: :following, source: :posts
+
+  # Posts from people your followings follow
+  has_many :extended_following, through: :following, source: :following
+  has_many :explore_feed, through: :extended_following, source: :posts
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable

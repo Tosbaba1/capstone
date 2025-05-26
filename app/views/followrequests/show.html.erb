@@ -66,32 +66,32 @@
       Edit followrequest
     </h2>
 
-    <form action="/modify_followrequest/<%= @the_followrequest.id %>"  method="post" >
-      <div>
-        <label for="sender_id_box">
+    <form action="/modify_followrequest/<%= @the_followrequest.id %>"  method="post" class="mb-3">
+      <div class="mb-3">
+        <label for="sender_id_box" class="form-label">
           Sender
         </label>
 
-        <input type="text" id="sender_id_box" name="query_sender_id" value="<%= @the_followrequest.sender_id %>">
+        <input type="text" id="sender_id_box" name="query_sender_id" value="<%= @the_followrequest.sender_id %>" class="form-control">
       </div>
 
-      <div>
-        <label for="recipient_id_box">
+      <div class="mb-3">
+        <label for="recipient_id_box" class="form-label">
           Recipient
         </label>
 
-        <input type="text" id="recipient_id_box" name="query_recipient_id" value="<%= @the_followrequest.recipient_id %>">
+        <input type="text" id="recipient_id_box" name="query_recipient_id" value="<%= @the_followrequest.recipient_id %>" class="form-control">
       </div>
 
-      <div>
-        <label for="status_box">
+      <div class="mb-3">
+        <label for="status_box" class="form-label">
           Status
         </label>
 
-        <input type="text" id="status_box" name="query_status" value="<%= @the_followrequest.status %>">
+        <input type="text" id="status_box" name="query_status" value="<%= @the_followrequest.status %>" class="form-control">
       </div>
 
-      <button>
+      <button class="btn btn-primary">
         Update followrequest
       </button>
     </form>

@@ -66,32 +66,32 @@
       Edit comment
     </h2>
 
-    <form action="/modify_comment/<%= @the_comment.id %>"  method="post" >
-      <div>
-        <label for="post_id_box">
+    <form action="/modify_comment/<%= @the_comment.id %>"  method="post" class="mb-3">
+      <div class="mb-3">
+        <label for="post_id_box" class="form-label">
           Post
         </label>
 
-        <input type="text" id="post_id_box" name="query_post_id" value="<%= @the_comment.post_id %>">
+        <input type="text" id="post_id_box" name="query_post_id" value="<%= @the_comment.post_id %>" class="form-control">
       </div>
 
-      <div>
-        <label for="commenter_id_box">
+      <div class="mb-3">
+        <label for="commenter_id_box" class="form-label">
           Commenter
         </label>
 
-        <input type="text" id="commenter_id_box" name="query_commenter_id" value="<%= @the_comment.commenter_id %>">
+        <input type="text" id="commenter_id_box" name="query_commenter_id" value="<%= @the_comment.commenter_id %>" class="form-control">
       </div>
 
-      <div>
-        <label for="comment_box">
+      <div class="mb-3">
+        <label for="comment_box" class="form-label">
           Comment
         </label>
 
-        <textarea id="comment_box" name="query_comment"><%= @the_comment.comment %></textarea>
+        <textarea id="comment_box" name="query_comment" class="form-control"><%= @the_comment.comment %></textarea>
       </div>
 
-      <button>
+      <button class="btn btn-primary">
         Update comment
       </button>
     </form>

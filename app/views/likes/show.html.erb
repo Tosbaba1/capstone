@@ -59,24 +59,24 @@
       Edit like
     </h2>
 
-    <form action="/modify_like/<%= @the_like.id %>"  method="post" >
-      <div>
-        <label for="post_id_box">
+    <form action="/modify_like/<%= @the_like.id %>"  method="post" class="mb-3">
+      <div class="mb-3">
+        <label for="post_id_box" class="form-label">
           Post
         </label>
 
-        <input type="text" id="post_id_box" name="query_post_id" value="<%= @the_like.post_id %>">
+        <input type="text" id="post_id_box" name="query_post_id" value="<%= @the_like.post_id %>" class="form-control">
       </div>
 
-      <div>
-        <label for="liked_id_box">
+      <div class="mb-3">
+        <label for="liked_id_box" class="form-label">
           Liked
         </label>
 
-        <input type="text" id="liked_id_box" name="query_liked_id" value="<%= @the_like.liked_id %>">
+        <input type="text" id="liked_id_box" name="query_liked_id" value="<%= @the_like.liked_id %>" class="form-control">
       </div>
 
-      <button>
+      <button class="btn btn-primary">
         Update like
       </button>
     </form>

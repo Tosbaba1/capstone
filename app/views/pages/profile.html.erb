@@ -1,1 +1,55 @@
-<p>Coming soon.</p>
+<div class="row align-items-center mb-4">
+  <div class="col-auto">
+    <%= image_tag(current_user.avatar || 'default_avatar.png', class: 'avatar rounded-circle', style: 'width:80px;height:80px;') %>
+  </div>
+  <div class="col">
+    <div class="d-flex align-items-center">
+      <h4 class="mb-0 me-3"><%= current_user.name %></h4>
+      <%= link_to 'Edit Profile', edit_user_registration_path, class: 'btn btn-outline-secondary btn-sm' %>
+    </div>
+    <p class="text-muted">@<%= current_user.username %></p>
+    <div class="d-flex">
+      <span class="me-3"><strong><%= current_user.posts_count %></strong> Posts</span>
+      <span class="me-3"><strong><%= current_user.followers.count %></strong> Followers</span>
+      <span><strong><%= current_user.following.count %></strong> Following</span>
+    </div>
+  </div>
+</div>
+
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <%= link_to 'Nouvelles', profile_path(tab: 'nouvelles'), class: "nav-link #{params[:tab].blank? || params[:tab] == 'nouvelles' ? 'active' : ''}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Renous', profile_path(tab: 'renous'), class: "nav-link #{params[:tab] == 'renous' ? 'active' : ''}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Likes', profile_path(tab: 'likes'), class: "nav-link #{params[:tab] == 'likes' ? 'active' : ''}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Comments', profile_path(tab: 'comments'), class: "nav-link #{params[:tab] == 'comments' ? 'active' : ''}" %>
+  </li>
+</ul>
+
+<% case params[:tab] %>
+<% when 'likes' %>
+  <% posts = current_user.liked_posts.order(created_at: :desc) %>
+<% when 'comments' %>
+  <% posts = Post.joins(:comments).where(comments: { commenter_id: current_user.id }).distinct.order(created_at: :desc) %>
+<% when 'renous' %>
+  <% posts = [] %>
+<% else %>
+  <% posts = current_user.posts.order(created_at: :desc) %>
+<% end %>
+
+<% posts.each do |post| %>
+  <div class="mb-3 p-3 border rounded">
+    <p class="mb-1"><strong><%= post.creator.name %></strong></p>
+    <p class="mb-1"><%= post.content %></p>
+    <small class="text-muted"><%= time_ago_in_words(post.created_at) %> ago</small>
+  </div>
+<% end %>
+
+<% if posts.empty? %>
+  <p class="text-muted">No posts to display.</p>
+<% end %>

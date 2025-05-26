@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_14_203426) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_26_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -93,9 +93,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_14_203426) do
     t.integer "book_id"
     t.integer "likes_count"
     t.integer "comments_count"
-    t.jsonb "poll_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "poll_data"
   end
 
   create_table "users", force: :cascade do |t|

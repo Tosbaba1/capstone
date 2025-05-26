@@ -1,6 +1,6 @@
-<div class="text-center my-3">
-  <%= link_to 'Following', posts_path, class: "mx-3 #{params[:tab] == 'explore' ? '' : 'fw-bold'}" %>
-  <%= link_to 'Explore', posts_path(tab: 'explore'), class: "mx-3 #{params[:tab] == 'explore' ? 'fw-bold' : ''}" %>
+<div class="text-center my-3 tab-container">
+  <%= link_to 'Following', posts_path, class: "tab-link mx-3 #{params[:tab] == 'explore' ? '' : 'active'}" %>
+  <%= link_to 'Explore', posts_path(tab: 'explore'), class: "tab-link mx-3 #{params[:tab] == 'explore' ? 'active' : ''}" %>
 </div>
 
 <%= form_with url: insert_post_path, scope: :post, local: true, html: {class: "mb-3"}, data: {controller: "post-form"} do |f| %>
@@ -21,9 +21,9 @@
   </div>
 
   <div class="post-icons mb-2">
-    <span data-action="post-form#attachMedia">🖼️</span>
-    <span data-action="post-form#attachVideo">🎥</span>
-    <span data-action="post-form#togglePoll">📊</span>
+    <i class="fas fa-image" data-action="post-form#attachMedia"></i>
+    <i class="fas fa-video" data-action="post-form#attachVideo"></i>
+    <i class="fas fa-chart-bar" data-action="post-form#togglePoll"></i>
   </div>
 
   <%= f.file_field :media, multiple: true, direct_upload: true, class: "d-none", data: {post_form_target: "mediaInput"} %>
@@ -88,7 +88,7 @@
           <%= cf.hidden_field :commenter_id, value: current_user.id %>
           <div class="input-group input-group-sm">
             <%= cf.text_field :comment, class: 'form-control', placeholder: 'Add a comment' %>
-            <button class="btn btn-outline-secondary">Comment</button>
+            <button class="btn btn-primary">Comment</button>
           </div>
         <% end %>
 

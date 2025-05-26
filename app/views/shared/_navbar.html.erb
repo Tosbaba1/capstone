@@ -1,16 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid position-relative">
     <ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row mx-auto justify-content-center">
-      <li class="nav-item me-3"><%= link_to root_path, class: "nav-link" do %>🏠<% end %></li>
-      <li class="nav-item me-3"><%= link_to '/library', class: "nav-link" do %>📚<% end %></li>
-      <li class="nav-item me-3"><%= link_to '/notifications', class: "nav-link position-relative" do %>
-        🔔
+      <li class="nav-item me-3"><%= link_to root_path, class: "nav-link #{current_page?(root_path) ? 'active' : ''}" do %><i class="fas fa-home"></i><% end %></li>
+      <li class="nav-item me-3"><%= link_to '/library', class: "nav-link #{request.path == '/library' ? 'active' : ''}" do %><i class="fas fa-book-open"></i><% end %></li>
+      <li class="nav-item me-3"><%= link_to '/notifications', class: "nav-link position-relative #{request.path == '/notifications' ? 'active' : ''}" do %>
+        <i class="fas fa-bell"></i>
         <% unread_count = current_user.notifications.unread.count %>
         <% if unread_count.positive? %>
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="transform: scale(0.5); transform-origin: top right;"><%= unread_count %></span>
         <% end %>
       <% end %></li>
-      <li class="nav-item"><%= link_to '/profile', class: "nav-link" do %>👤<% end %></li>
+      <li class="nav-item"><%= link_to '/profile', class: "nav-link #{request.path == '/profile' ? 'active' : ''}" do %><i class="fas fa-user"></i><% end %></li>
     </ul>
     <span class="navbar-text position-absolute end-0"><%= @page_title %></span>
   </div>

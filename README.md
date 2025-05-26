@@ -2,7 +2,7 @@
 
 This is a base Ruby on Rails repository configured for learning with Codespaces (and Gitpod).
 
-- Ruby version: `3.2.1`
+- Ruby version: `3.2.3`
 - Rails version: `7.1.3.3`
 
 
@@ -90,3 +90,14 @@ Set it to `true` to enable Turbo everywhere, or you can use `data-turbo="true"` 
 - aliariff.vscode-erb-beautify
 - eamodio.gitlens
 - setobiralo.erb-commenter
+
+## Development Setup
+
+Run the database migrations before loading sample data:
+
+```bash
+bundle install
+rails db:create db:migrate
+rake sample_data
+```
+

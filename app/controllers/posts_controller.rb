@@ -23,6 +23,18 @@ class PostsController < ApplicationController
     render({ :template => "posts/show" })
   end
 
+  def likes
+    @post = Post.find(params.fetch(:post_id))
+    @page_title = "Likes"
+    render template: "posts/likes"
+  end
+
+  def comments
+    @post = Post.find(params.fetch(:post_id))
+    @page_title = "Comments"
+    render template: "posts/comments"
+  end
+
   def create
     # build the post off of the current_user
     @post = current_user.posts.new(post_params)

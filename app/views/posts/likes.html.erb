@@ -1,0 +1,18 @@
+<div class="mb-3 p-3 border rounded">
+  <p class="mb-1"><strong><%= @post.creator.name %></strong></p>
+  <p class="mb-0"><%= @post.content %></p>
+</div>
+
+<h2 class="mb-3">Users who liked this post</h2>
+<%= link_to 'Back to Feed', posts_path %>
+<hr>
+<% @post.likes.includes(:liked).each do |like| %>
+  <div class="d-flex align-items-center mb-2">
+    <%= image_tag(like.liked.avatar || 'default_avatar.png', class: 'avatar me-2') %>
+    <strong><%= like.liked.name %></strong>
+  </div>
+<% end %>
+<% if @post.likes.empty? %>
+  <p>No likes yet.</p>
+<% end %>
+

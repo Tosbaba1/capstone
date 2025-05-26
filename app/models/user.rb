@@ -4,6 +4,7 @@
 #
 #  id                     :bigint           not null, primary key
 #  avatar                 :string
+#  banner                 :string
 #  bio                    :text
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
@@ -60,7 +61,9 @@ class User < ApplicationRecord
   def timeline
     Post.where(creator_id: following.ids + [id])
   end
-  
+
+  validates :username, uniqueness: true, allow_blank: true
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 end

@@ -1,8 +1,12 @@
 class PostsController < ApplicationController
   def index
-    matching_posts = Post.all
+    posts_source = if params[:tab] == "explore"
+                     current_user.explore_feed
+                   else
+                     current_user.feed
+                   end
 
-    @list_of_posts = matching_posts.order({ :created_at => :desc })
+    @list_of_posts = posts_source.order(created_at: :desc)
 
     render({ :template => "posts/index" })
   end

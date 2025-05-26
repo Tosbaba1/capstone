@@ -1,8 +1,10 @@
 <div>
   <div>
-    <h1>
-      Feed
-    </h1>
+    <h1>Feed</h1>
+    <div class="tabs">
+      <%= link_to 'Following', posts_path, class: (params[:tab] == 'explore' ? '' : 'active') %> |
+      <%= link_to 'Explore', posts_path(tab: 'explore'), class: (params[:tab] == 'explore' ? 'active' : '') %>
+    </div>
   </div>
 </div>
 

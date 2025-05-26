@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "posts#index"
+  get "/library", to: "pages#library"
+  get "/notifications", to: "pages#notifications"
+  get "/profile", to: "pages#profile"
   # Routes for the Author resource:
 
   # CREATE

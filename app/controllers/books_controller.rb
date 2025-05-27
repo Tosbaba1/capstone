@@ -8,21 +8,11 @@ class BooksController < ApplicationController
   end
 
   def search
-    @page_title = "Search Books"
-
-    if params[:q].present?
-      term = "%#{params[:q]}%"
-      @books = Book.joins(:author).where("books.title ILIKE ? OR authors.name ILIKE ?", term, term)
-    else
-      @books = []
-    end
-
-    render({ :template => "books/search" })
+    redirect_to search_path(tab: "books", q: params[:q])
   end
 
   def external_search
-    @external_books = OpenLibraryClient.search_books(params[:q])
-    render({ :template => "books/external_search" })
+    redirect_to search_path(tab: "books", q: params[:q])
   end
 
   def suggest

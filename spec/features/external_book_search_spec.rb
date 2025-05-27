@@ -35,7 +35,7 @@ RSpec.describe "External book search", type: :feature do
     stub_request(:get, "https://openlibrary.org/works/OL123W.json")
       .to_return(status: 200, body: work_response.to_json, headers: { "Content-Type" => "application/json" })
 
-    visit "/books/external_search?q=Test+Book"
+    visit "/search?tab=books&q=Test+Book"
 
     expect(page).to have_content("Test Book")
 

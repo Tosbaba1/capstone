@@ -1,0 +1,62 @@
+<h1 class="mb-3 text-white">Search</h1>
+
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <%= link_to 'Users', search_path(tab: 'users', q: params[:q]), class: "nav-link #{'active' if @active_tab == 'users'}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Books', search_path(tab: 'books', q: params[:q]), class: "nav-link #{'active' if @active_tab == 'books'}" %>
+  </li>
+</ul>
+
+<%= form_with url: search_path, method: :get, local: true, class: 'mb-4' do %>
+  <%= hidden_field_tag :tab, @active_tab %>
+  <div class="input-group">
+    <% if @active_tab == 'books' %>
+      <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Search books by title or author', list: 'book-suggestions', data: { controller: 'book-suggest', action: 'input->book-suggest#search', 'book-suggest-target': 'input' } %>
+      <datalist id="book-suggestions" data-book-suggest-target="list"></datalist>
+    <% else %>
+      <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'What are you looking for today?' %>
+    <% end %>
+    <button class="btn btn-primary">Search</button>
+  </div>
+<% end %>
+
+<% if @active_tab == 'books' %>
+  <% Array(@external_books['docs']).each do |book| %>
+    <div class="mb-2 p-2 border rounded content-box">
+      <% if book['cover_i'] %>
+        <%= image_tag(OpenLibraryClient.cover_url(book['cover_i'], 'S'), class: 'me-2', size: '50x75') %>
+      <% end %>
+      <strong class="text-white"><%= book['title'] %></strong>
+      <% if book['author_name'] %>
+        <span class="text-muted">by <%= book['author_name'].join(', ') %></span>
+      <% end %>
+      <%= form_with url: '/books/import', method: :post, local: true, class: 'd-inline ms-2' do %>
+        <%= hidden_field_tag :work_id, book['key'].split('/').last %>
+        <button class="btn btn-sm btn-primary">Import</button>
+      <% end %>
+    </div>
+  <% end %>
+  <% if params[:q].present? && Array(@external_books['docs']).empty? %>
+    <p class="text-muted">No books found.</p>
+  <% end %>
+<% else %>
+  <% if @recent_searches.any? %>
+    <h2 class="h5 text-white">Recent searches</h2>
+    <ul class="list-unstyled mb-3">
+      <% @recent_searches.each do |search| %>
+        <li><%= search.query %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <% @users.each do |user| %>
+    <div class="mb-2 p-2 border rounded content-box">
+      <%= image_tag(user.avatar.presence || 'default_avatar.png', class: 'avatar me-2') %>
+      <%= link_to user.name, user_path(user), class: 'fw-bold text-decoration-none text-white' %>
+    </div>
+  <% end %>
+  <% if params[:q].present? && @users.empty? %>
+    <p class="text-muted">No users found.</p>
+  <% end %>
+<% end %>

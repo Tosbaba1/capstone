@@ -15,7 +15,7 @@
 }
 
 .nav-tabs .nav-link.active {
-  background-color: #4b3ecf;
-  border-color: #4b3ecf #4b3ecf #fff;
+  background-image: linear-gradient(to right, #4169e1, #7851a9);
+  border-color: #4169e1 #7851a9 #fff;
   color: #ffffff;
 }

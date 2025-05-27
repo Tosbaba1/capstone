@@ -58,19 +58,16 @@ class PostsController < ApplicationController
 
   def update
     the_id = params.fetch("path_id")
-    the_post = Post.where({ :id => the_id }).at(0)
+    the_post = Post.find(the_id)
 
-    the_post.creator_id = params.fetch("query_creator_id")
-    the_post.content = params.fetch("query_content")
-    the_post.book_id = params.fetch("query_book_id")
-    the_post.likes_count = params.fetch("query_likes_count")
-    the_post.comments_count = params.fetch("query_comments_count")
+    unless the_post.creator == current_user
+      redirect_to post_path(the_post), alert: "You are not authorized to edit this post." and return
+    end
 
-    if the_post.valid?
-      the_post.save
-      redirect_to("/posts/#{the_post.id}", { :notice => "Post updated successfully." })
+    if the_post.update(post_params)
+      redirect_to(post_path(the_post), notice: "Post updated successfully.")
     else
-      redirect_to("/posts/#{the_post.id}", { :alert => the_post.errors.full_messages.to_sentence })
+      redirect_to(post_path(the_post), alert: the_post.errors.full_messages.to_sentence)
     end
   end
 

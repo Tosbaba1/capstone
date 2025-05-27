@@ -18,6 +18,11 @@
       <% end %></li>
       <li class="nav-item"><%= link_to '/profile', class: "nav-link #{request.path == '/profile' ? 'active' : ''}" do %><i class="bi bi-person"></i><% end %></li>
     </ul>
-    <span class="navbar-text position-absolute end-0"><%= @page_title %></span>
+    <span class="navbar-text position-absolute end-0 d-flex align-items-center">
+      <%= @page_title %>
+      <% if request.path == '/profile' %>
+        <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-link text-light ms-2' %>
+      <% end %>
+    </span>
   </div>
 </nav>

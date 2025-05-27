@@ -11,11 +11,11 @@
         </a>
       </div>
 
-      <div>
-        <a href="/delete_post/<%= @the_post.id %>">
-          Delete post
-        </a>
-      </div>
+      <% if @the_post.creator == current_user %>
+        <div>
+          <%= link_to 'Delete post', "/delete_post/#{@the_post.id}" %>
+        </div>
+      <% end %>
     </div>
 
     <dl>
@@ -23,7 +23,7 @@
         Creator
       </dt>
       <dd>
-        <%= @the_post.creator_id %>
+        <%= @the_post.creator.username %>
       </dd>
 
       <dt>
@@ -40,19 +40,6 @@
         <%= @the_post.book_id %>
       </dd>
 
-      <dt>
-        Likes count
-      </dt>
-      <dd>
-        <%= @the_post.likes_count %>
-      </dd>
-
-      <dt>
-        Comments count
-      </dt>
-      <dd>
-        <%= @the_post.comments_count %>
-      </dd>
 
       <dt>
         Created at
@@ -74,58 +61,26 @@
 <hr>
 
 
-<div>
+<% if @the_post.creator == current_user %>
   <div>
     <h2>
       Edit post
     </h2>
 
-    <form action="/modify_post/<%= @the_post.id %>"  method="post" class="mb-3">
+    <%= form_with model: @the_post, url: "/modify_post/#{@the_post.id}", method: :post, local: true do |f| %>
       <div class="mb-3">
-        <label for="creator_id_box" class="form-label">
-          Creator
-        </label>
-
-        <input type="text" id="creator_id_box" name="query_creator_id" value="<%= @the_post.creator_id %>" class="form-control">
+        <%= f.label :content, class: 'form-label' %>
+        <%= f.text_area :content, class: 'form-control' %>
       </div>
 
       <div class="mb-3">
-        <label for="content_box" class="form-label">
-          Content
-        </label>
-
-        <textarea id="content_box" name="query_content" class="form-control"><%= @the_post.content %></textarea>
+        <%= f.label :book_id, 'Book', class: 'form-label' %>
+        <%= f.text_field :book_id, class: 'form-control' %>
       </div>
 
-      <div class="mb-3">
-        <label for="book_id_box" class="form-label">
-          Book
-        </label>
-
-        <input type="text" id="book_id_box" name="query_book_id" value="<%= @the_post.book_id %>" class="form-control">
-      </div>
-
-      <div class="mb-3">
-        <label for="likes_count_box" class="form-label">
-          Likes count
-        </label>
-
-        <input type="text" id="likes_count_box" name="query_likes_count" value="<%= @the_post.likes_count %>" class="form-control">
-      </div>
-
-      <div class="mb-3">
-        <label for="comments_count_box" class="form-label">
-          Comments count
-        </label>
-
-        <input type="text" id="comments_count_box" name="query_comments_count" value="<%= @the_post.comments_count %>" class="form-control">
-      </div>
-
-      <button class="btn btn-primary">
-        Update post
-      </button>
-    </form>
+      <%= f.submit 'Update post', class: 'btn btn-primary' %>
+    <% end %>
   </div>
-</div>
+<% end %>
 
 <hr>

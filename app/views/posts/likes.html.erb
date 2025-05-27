@@ -8,7 +8,7 @@
 <hr>
 <% @post.likes.includes(:liked).each do |like| %>
   <div class="d-flex align-items-center mb-2">
-    <%= image_tag(like.liked.avatar || 'default_avatar.png', class: 'avatar me-2') %>
+    <%= image_tag(like.liked.avatar.presence || 'default_avatar.png', class: 'avatar me-2') %>
     <strong><%= like.liked.name %></strong>
   </div>
 <% end %>

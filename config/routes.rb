@@ -61,8 +61,8 @@ Rails.application.routes.draw do
 
   # Routes for the Followrequest resource:
 
-  # CREATE
-  post("/insert_followrequest", { :controller => "followrequests", :action => "create" })
+  # CREATE - disabled: new follow requests are no longer allowed
+  # post("/insert_followrequest", { :controller => "followrequests", :action => "create" })
 
   post("/followrequests/:id/accept", { :controller => "followrequests", :action => "accept", :as => "accept_followrequest" })
   post("/followrequests/:id/decline", { :controller => "followrequests", :action => "decline", :as => "decline_followrequest" })

@@ -23,15 +23,7 @@
         <span><%= link_to "<strong>#{@user.following.count}</strong> Following".html_safe, following_user_path(@user), class: 'text-white' %></span>
       </div>
     </div>
-    <% unless @user == current_user %>
-      <% unless current_user.following.include?(@user) %>
-        <% if current_user.sentfollowrequests.where(recipient: @user, status: 'pending').exists? %>
-          <span class="badge bg-secondary mt-2">Request Sent</span>
-        <% else %>
-          <%= button_to 'Follow', insert_followrequest_path(query_sender_id: current_user.id, query_recipient_id: @user.id), method: :post, class: 'btn btn-primary btn-sm mt-2' %>
-        <% end %>
-      <% end %>
-    <% end %>
+    <!-- Follow buttons removed: users can no longer send follow requests -->
   </div>
 </div>
 
@@ -43,6 +35,9 @@
   <div class="mb-3 p-3 border rounded content-box">
     <p class="mb-1"><strong><%= post.creator.name %></strong></p>
     <p class="mb-1"><%= post.content %></p>
+    <div class="text-end">
+      <%= link_to 'View Post', post_path(post), class: 'btn btn-sm btn-link text-white' %>
+    </div>
     <small class="text-white"><%= time_ago_in_words(post.created_at) %> ago</small>
   </div>
 <% end %>

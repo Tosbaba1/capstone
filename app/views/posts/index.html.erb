@@ -103,30 +103,30 @@
       <% end %>
     <% else %>
       <div class="post-card">
-      <div class="post-header">
-        <%= image_tag(post.creator.avatar.presence || 'default_avatar.png', alt: post.creator.name, class: 'avatar') %>
-        <div class="post-user-info">
-          <strong><%= post.creator.name %></strong>
-        </div>
-      </div>
-      <span class="post-body">
-        <p><%= post.content %></p>
-        <% if post.book %>
-          <p class="post-book">
-            Reading: <%= link_to post.book.title, book_path(post.book) %>
-          </p>
-        <% end %>
-        <% if post.poll_data.present? %>
-          <div class="mt-2">
-            <p><strong><%= post.poll_data['question'] %></strong></p>
-            <ul>
-              <% post.poll_data.except('question').each_value do |option| %>
-                <li><%= option %></li>
-              <% end %>
-            </ul>
+        <div class="post-header">
+          <%= image_tag(post.creator.avatar.presence || 'default_avatar.png', alt: post.creator.name, class: 'avatar') %>
+          <div class="post-user-info">
+            <strong><%= post.creator.name %></strong>
           </div>
-        <% end %>
-      </span>
+        </div>
+        <span class="post-body">
+          <p><%= post.content %></p>
+          <% if post.book %>
+            <p class="post-book">
+              Reading: <%= link_to post.book.title, book_path(post.book) %>
+            </p>
+          <% end %>
+          <% if post.poll_data.present? %>
+            <div class="mt-2">
+              <p><strong><%= post.poll_data['question'] %></strong></p>
+              <ul>
+                <% post.poll_data.except('question').each_value do |option| %>
+                  <li><%= option %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+        </span>
         <div class="post-footer mb-2">
           <span class="me-3"><%= link_to pluralize(post.likes_count, 'Like'), post_likes_path(post.id) %></span>
           <span class="me-3"><%= link_to pluralize(post.comments_count, 'Comment'), post_comments_path(post.id) %></span>
@@ -158,3 +158,4 @@
       <hr>
     <% end %>
   </div>
+<% end %>

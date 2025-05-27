@@ -9,13 +9,15 @@
     <ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row mx-auto justify-content-center">
       <li class="nav-item me-3"><%= link_to root_path, class: "nav-link #{current_page?(root_path) ? 'active' : ''}" do %><i class="bi bi-house"></i><% end %></li>
       <li class="nav-item me-3"><%= link_to '/library', class: "nav-link #{request.path == '/library' ? 'active' : ''}" do %><i class="bi bi-book"></i><% end %></li>
-      <li class="nav-item me-3"><%= link_to '/notifications', class: "nav-link position-relative #{request.path == '/notifications' ? 'active' : ''}" do %>
-        <i class="bi bi-bell"></i>
-        <% unread_count = current_user.notifications.unread.count %>
-        <% if unread_count.positive? %>
-          <span class="notification-dot"></span>
-        <% end %>
-      <% end %></li>
+      <% if user_signed_in? %>
+        <li class="nav-item me-3"><%= link_to '/notifications', class: "nav-link position-relative #{request.path == '/notifications' ? 'active' : ''}" do %>
+          <i class="bi bi-bell"></i>
+          <% unread_count = current_user.notifications.unread.count %>
+          <% if unread_count.positive? %>
+            <span class="notification-dot"></span>
+          <% end %>
+        <% end %></li>
+      <% end %>
       <li class="nav-item"><%= link_to '/profile', class: "nav-link #{request.path == '/profile' ? 'active' : ''}" do %><i class="bi bi-person"></i><% end %></li>
     </ul>
     <span class="navbar-text position-absolute end-0 d-flex align-items-center">

@@ -57,6 +57,7 @@ class User < ApplicationRecord
 
   has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
   has_many :active_notifications, class_name: 'Notification', foreign_key: :actor_id, dependent: :destroy
+  has_many :search_histories, dependent: :destroy
 
   def timeline
     Post.where(creator_id: following.ids + [id])

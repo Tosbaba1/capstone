@@ -1,0 +1,25 @@
+<h1 class="mb-3 text-white">External Book Search</h1>
+
+<%= form_with url: '/books/external_search', method: :get, local: true, class: 'mb-4' do %>
+  <div class="input-group">
+    <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Search Open Library' %>
+    <button class="btn btn-primary">Search</button>
+  </div>
+<% end %>
+
+<% Array(@external_books['docs']).each do |book| %>
+  <div class="mb-2 p-2 border rounded content-box">
+    <strong class="text-white"><%= book['title'] %></strong>
+    <% if book['author_name'] %>
+      <span class="text-muted">by <%= book['author_name'].join(', ') %></span>
+    <% end %>
+    <%= form_with url: '/books/import', method: :post, local: true, class: 'd-inline ms-2' do %>
+      <%= hidden_field_tag :work_id, book['key'].split('/').last %>
+      <button class="btn btn-sm btn-primary">Import</button>
+    <% end %>
+  </div>
+<% end %>
+
+<% if params[:q].present? && Array(@external_books['docs']).empty? %>
+  <p class="text-muted">No books found.</p>
+<% end %>

@@ -5,27 +5,6 @@
   color: #ffffff;
 }
 
-.tab-link {
-  position: relative;
-  padding-bottom: 4px;
-  color: #ffffff;
-}
-
-.tab-link.active {
-  color: #4b3ecf;
-  font-weight: bold;
-}
-
-.tab-link.active::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -2px;
-  height: 3px;
-  background-color: #4b3ecf;
-  border-radius: 3px 3px 0 0;
-}
 
 .post-card {
   padding: 1rem;

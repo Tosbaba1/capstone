@@ -52,3 +52,25 @@ body {
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
 }
+
+/* Ensure all text appears in white across the application */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+label,
+a,
+li,
+dt,
+dd,
+th,
+td,
+small,
+button {
+  color: var(--light-grey) !important;
+}

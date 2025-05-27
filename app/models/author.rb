@@ -11,5 +11,8 @@
 #  updated_at  :datetime         not null
 #
 class Author < ApplicationRecord
+  # Validations
+  validates :name, presence: true
+
   has_many  :books, class_name: "Book", foreign_key: "author_id", dependent: :destroy
 end

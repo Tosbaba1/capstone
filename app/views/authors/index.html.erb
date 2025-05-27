@@ -14,6 +14,10 @@
       Add a new author
     </h2>
 
+    <% if flash[:alert].present? %>
+      <p class="text-danger"><%= flash[:alert] %></p>
+    <% end %>
+
     <form action="/insert_author" method="post" class="mb-3">
       <div class="mb-3">
         <label for="name_box" class="form-label">

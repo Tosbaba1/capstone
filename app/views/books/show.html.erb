@@ -101,6 +101,10 @@
       Edit book
     </h2>
 
+    <% if flash[:alert].present? %>
+      <p class="text-danger"><%= flash[:alert] %></p>
+    <% end %>
+
     <form action="/modify_book/<%= @the_book.id %>"  method="post" class="mb-3">
       <div class="mb-3">
         <label for="title_box" class="form-label">

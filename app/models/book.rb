@@ -15,6 +15,12 @@
 #  library_id  :integer
 #
 class Book < ApplicationRecord
+  # Validations
+  validates :title, presence: true
+  validates :author, presence: true
+  validates :page_length, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
+  validates :year, numericality: { only_integer: true }, allow_nil: true
+
   #Direct Associations
   has_many  :posts, class_name: "Post", foreign_key: "book_id", dependent: :nullify
 

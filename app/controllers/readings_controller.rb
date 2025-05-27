@@ -9,7 +9,12 @@ class ReadingsController < ApplicationController
 
   def update
     reading = current_user.readings.find(params[:id])
-    reading.update(status: params[:status], rating: params[:rating])
+    reading.update(
+      status: params[:status],
+      rating: params[:rating],
+      progress: params[:progress],
+      review: params[:review]
+    )
     redirect_to '/library', notice: 'Reading updated.'
   end
 end

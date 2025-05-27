@@ -3,7 +3,9 @@
 # Table name: readings
 #
 #  id         :bigint           not null, primary key
+#  progress   :integer
 #  rating     :integer
+#  review     :text
 #  status     :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

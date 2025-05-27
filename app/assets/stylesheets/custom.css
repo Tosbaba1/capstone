@@ -19,3 +19,8 @@
   border-color: #4169e1 #7851a9 #fff;
   color: #ffffff;
 }
+
+.book-cover {
+  height: 150px;
+  object-fit: cover;
+}

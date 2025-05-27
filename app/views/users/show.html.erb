@@ -32,6 +32,11 @@
       <% else %>
         <%= button_to 'Follow', follow_user_path(@user), method: :post, class: 'btn btn-primary btn-sm mt-2' %>
       <% end %>
+      <% if !@user.is_private || current_user.following.include?(@user) %>
+        <%= link_to 'View Library', user_library_path(@user), class: 'btn btn-secondary btn-sm mt-2 ms-2' %>
+      <% end %>
+    <% else %>
+      <%= link_to 'My Library', library_path, class: 'btn btn-secondary btn-sm mt-2' %>
     <% end %>
   </div>
 </div>

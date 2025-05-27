@@ -54,8 +54,8 @@
         <%= image_tag(post.creator.avatar.presence || 'default_avatar.png', alt: post.creator.name, class: 'avatar') %>
         <div class="ms-2 flex-grow-1">
           <div class="d-flex align-items-center">
-            <strong class="text-white"><%= post.creator.name %></strong>
-            <span class="ms-2 text-white">@<%= post.creator.username %></span>
+            <strong class="text-white"><%= link_to post.creator.name, user_path(post.creator), class: 'text-white' %></strong>
+            <span class="ms-2 text-white">@<%= link_to post.creator.username, user_path(post.creator), class: 'text-white' %></span>
           </div>
           <p class="mb-1"><%= post.content %></p>
           <% if post.book %>

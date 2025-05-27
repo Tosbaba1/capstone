@@ -1,9 +1,14 @@
 class PagesController < ApplicationController
   def library
     @page_title = "Library"
-    @reading_now  = current_user.readings.includes(:book).where(status: 'reading')
-    @want_to_read = current_user.readings.includes(:book).where(status: 'want_to_read')
-    @finished     = current_user.readings.includes(:book).where(status: 'finished')
+    @user = current_user
+    @active_tab = params[:tab] || 'public'
+    scope = @user.readings.includes(:book)
+    scope = scope.where(is_private: true) if @active_tab == 'private'
+    scope = scope.where(is_private: false) if @active_tab == 'public'
+    @reading_now  = scope.where(status: 'reading')
+    @want_to_read = scope.where(status: 'want_to_read')
+    @finished     = scope.where(status: 'finished')
   end
 
   def notifications

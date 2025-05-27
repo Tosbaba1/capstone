@@ -1,0 +1,25 @@
+<h1 class="mb-3 text-white">Book Search</h1>
+
+<%= form_with url: '/books/search', method: :get, local: true, class: 'mb-4' do %>
+  <div class="input-group">
+    <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Search books by title or author' %>
+    <button class="btn btn-primary">Search</button>
+  </div>
+<% end %>
+
+<% @books.each do |book| %>
+  <div class="mb-2 p-2 border rounded content-box">
+    <%= image_tag(book.image_url, class: 'me-2', size: '50x75') if book.image_url.present? %>
+    <strong class="text-white"><%= book.title %></strong>
+    <span class="text-muted">by <%= book.author.name if book.author %></span>
+    <%= form_with url: insert_reading_path, method: :post, local: true, class: 'd-inline ms-2' do %>
+      <%= hidden_field_tag :book_id, book.id %>
+      <%= hidden_field_tag :status, 'want_to_read' %>
+      <button class="btn btn-sm btn-primary">Add to Library</button>
+    <% end %>
+  </div>
+<% end %>
+
+<% if params[:q].present? && @books.empty? %>
+  <p class="text-muted">No books found.</p>
+<% end %>

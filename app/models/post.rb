@@ -19,14 +19,23 @@ class Post < ApplicationRecord
   has_many  :likes, class_name: "Like", foreign_key: "post_id", dependent: :destroy
   has_many  :comments, class_name: "Comment", foreign_key: "post_id", dependent: :destroy
   has_many_attached :media
+  has_many :notifications, as: :notifiable, dependent: :destroy
 
   #Indirect Associations
   has_many :likeds, through: :likes, source: :liked
   has_many :followers, through: :creator, source: :following
 
+  validate :content_present
+
   after_create :notify_mutuals_about_book
 
   private
+
+  def content_present
+    if content.blank? && book_id.blank? && !media.attached?
+      errors.add(:base, "Post cannot be empty")
+    end
+  end
 
   def notify_mutuals_about_book
     return unless book

@@ -14,6 +14,10 @@
       Add a new book
     </h2>
 
+    <% if flash[:alert].present? %>
+      <p class="text-danger"><%= flash[:alert] %></p>
+    <% end %>
+
     <form action="/insert_book" method="post" class="mb-3">
       <div class="mb-3">
         <label for="title_box" class="form-label">

@@ -24,3 +24,24 @@
   background-color: #4b3ecf;
   border-radius: 3px 3px 0 0;
 }
+
+.post-card {
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+}
+
+.post-user-info {
+  margin-left: 0.5rem;
+}
+
+.post-media img,
+.post-media video {
+  max-width: 100%;
+  border-radius: 4px;
+}

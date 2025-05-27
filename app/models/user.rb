@@ -8,6 +8,7 @@
 #  bio                    :text
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  is_private             :boolean          default(FALSE)
 #  name                   :string
 #  posts_count            :integer
 #  remember_created_at    :datetime

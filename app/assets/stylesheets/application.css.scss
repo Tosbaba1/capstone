@@ -15,22 +15,22 @@
 */
 
 :root {
-  --teal-1: #006d77;
-  --teal-2: #008080;
-  --teal-3: #00a5a5;
+  --cb-1: #2c3e50;
+  --cb-2: #34495e;
+  --cb-3: #3c566e;
   --light-grey: #F5F5F5;
   --charcoal: #36454F;
 }
 
 body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(to bottom right, var(--teal-1), var(--teal-2), var(--teal-3));
+  background: linear-gradient(to bottom right, var(--cb-1), var(--cb-2), var(--cb-3));
   color: var(--light-grey);
   min-height: 100vh;
 }
 
-.bg-teal-gradient {
-  background: linear-gradient(to right, var(--teal-1), var(--teal-2), var(--teal-3));
+.bg-charcoal-gradient {
+  background: linear-gradient(to right, var(--cb-1), var(--cb-2), var(--cb-3));
 }
 
 .notification-dot {

@@ -3,6 +3,7 @@
 # Table name: readings
 #
 #  id         :bigint           not null, primary key
+#  is_private :boolean          default(FALSE)
 #  progress   :integer
 #  rating     :integer
 #  review     :text

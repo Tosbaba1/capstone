@@ -118,6 +118,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_17_000000) do
     t.datetime "updated_at", null: false
     t.integer "progress"
     t.text "review"
+    t.boolean "is_private", default: false
     t.index ["user_id", "book_id"], name: "index_readings_on_user_id_and_book_id", unique: true
   end
 

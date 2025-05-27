@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     member do
       get :followers
       get :following
+      get :library
     end
   end
   post "/notifications/:id/mark_read", to: "notifications#mark_read", as: :mark_notification_read

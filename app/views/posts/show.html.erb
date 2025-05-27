@@ -23,7 +23,7 @@
         Creator
       </dt>
       <dd>
-        <%= @the_post.creator.username %>
+        <%= link_to @the_post.creator.username, user_path(@the_post.creator) %>
       </dd>
 
       <dt>

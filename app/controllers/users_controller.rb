@@ -30,4 +30,30 @@ class UsersController < ApplicationController
     @requests = @user.sentfollowrequests.where(status: 'pending')
     @page_title = "Following"
   end
+
+  def library
+    @user = User.find(params[:id])
+    allowed = @user == current_user || !@user.is_private || current_user.following.include?(@user)
+    unless allowed
+      redirect_to user_path(@user), alert: 'Not authorized to view library.' and return
+    end
+
+    @page_title = "#{@user.name}'s Library"
+    @active_tab = params[:tab] || 'public'
+    scope = @user.readings.includes(:book)
+
+    if @user == current_user
+      scope = scope.where(is_private: true) if @active_tab == 'private'
+      scope = scope.where(is_private: false) if @active_tab == 'public'
+    else
+      scope = scope.where(is_private: false)
+      @active_tab = 'public'
+    end
+
+    @reading_now  = scope.where(status: 'reading')
+    @want_to_read = scope.where(status: 'want_to_read')
+    @finished     = scope.where(status: 'finished')
+
+    render template: 'pages/library'
+  end
 end

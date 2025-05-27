@@ -86,7 +86,6 @@ gem "table_print"
 gem "simple_form"
 gem "carrierwave"
 gem "openai-chat"
-gem "font-awesome-sass"
 
 group :development do
   gem "annotate"

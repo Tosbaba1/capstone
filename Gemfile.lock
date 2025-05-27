@@ -170,8 +170,6 @@ GEM
     ffi-compiler (1.3.2)
       ffi (>= 1.15.5)
       rake
-    font-awesome-sass (6.7.2)
-      sassc (~> 2.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     grade_runner (0.0.13)
@@ -489,7 +487,6 @@ DEPENDENCIES
   draft_matchers
   factory_bot_rails
   faker
-  font-awesome-sass
   grade_runner (~> 0.0.13)
   htmlbeautifier
   http

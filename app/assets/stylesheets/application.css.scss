@@ -15,21 +15,22 @@
 */
 
 :root {
-  --teal: #008080;
-  --charcoal: #36454F;
+  --teal-1: #006d77;
+  --teal-2: #008080;
+  --teal-3: #00a5a5;
   --light-grey: #F5F5F5;
-  --coral: #FF6F61;
+  --charcoal: #36454F;
 }
 
 body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  background-color: var(--charcoal);
+  background: linear-gradient(to bottom right, var(--teal-1), var(--teal-2), var(--teal-3));
   color: var(--light-grey);
   min-height: 100vh;
 }
 
 .bg-teal-gradient {
-  background: linear-gradient(to right, var(--teal), var(--coral));
+  background: linear-gradient(to right, var(--teal-1), var(--teal-2), var(--teal-3));
 }
 
 .notification-dot {
@@ -44,5 +45,10 @@ body {
 
 .profile-banner {
   background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.content-box {
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
 }

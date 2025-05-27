@@ -1,17 +1,8 @@
 <h2><%= @user == current_user ? 'Your followers' : "#{@user.name}'s followers" %></h2>
-<ul class="list-unstyled">
-  <% @followers.each do |u| %>
-    <li><%= link_to (u.name.presence || u.username), user_path(u) %></li>
-  <% end %>
-</ul>
-<% if @followers.empty? %>
-  <p class="text-muted">No followers yet.</p>
-<% end %>
 
 <% if @requests.any? %>
-  <hr>
   <h3>Follower requests</h3>
-  <ul class="list-unstyled">
+  <ul class="list-unstyled mb-3">
     <% @requests.each do |req| %>
       <li>
         <%= link_to (req.sender.name.presence || req.sender.username), user_path(req.sender) %>
@@ -22,4 +13,14 @@
       </li>
     <% end %>
   </ul>
+  <hr>
+<% end %>
+
+<ul class="list-unstyled">
+  <% @followers.each do |u| %>
+    <li><%= link_to (u.name.presence || u.username), user_path(u) %></li>
+  <% end %>
+</ul>
+<% if @followers.empty? %>
+  <p class="text-muted">No followers yet.</p>
 <% end %>

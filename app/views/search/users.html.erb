@@ -1,10 +1,19 @@
-<h1 class="mb-3">Search Users</h1>
+<h1 class="mb-3 text-white">Search</h1>
 
 <%= form_with url: search_path, method: :get, local: true, class: 'mb-4' do %>
   <div class="input-group">
-    <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Search by name or username' %>
+    <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'What are you looking for today?' %>
     <button class="btn btn-primary">Search</button>
   </div>
+<% end %>
+
+<% if @recent_searches.any? %>
+  <h2 class="h5 text-white">Recent searches</h2>
+  <ul class="list-unstyled mb-3">
+    <% @recent_searches.each do |search| %>
+      <li><%= search.query %></li>
+    <% end %>
+  </ul>
 <% end %>
 
 <% @users.each do |user| %>

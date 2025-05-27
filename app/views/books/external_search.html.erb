@@ -2,13 +2,16 @@
 
 <%= form_with url: '/books/external_search', method: :get, local: true, class: 'mb-4' do %>
   <div class="input-group">
-    <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Search Open Library' %>
+    <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Search books by title or author' %>
     <button class="btn btn-primary">Search</button>
   </div>
 <% end %>
 
 <% Array(@external_books['docs']).each do |book| %>
   <div class="mb-2 p-2 border rounded content-box">
+    <% if book['cover_i'] %>
+      <%= image_tag(OpenLibraryClient.cover_url(book['cover_i'], 'S'), class: 'me-2', size: '50x75') %>
+    <% end %>
     <strong class="text-white"><%= book['title'] %></strong>
     <% if book['author_name'] %>
       <span class="text-muted">by <%= book['author_name'].join(', ') %></span>

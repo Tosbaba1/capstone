@@ -40,6 +40,7 @@ RSpec.describe "Unified search", type: :feature do
     expect(page).to have_content("Test Book")
 
     expect do
+      select "reading", from: "status", match: :first
       click_button "Import", match: :first
     end.to change(Book, :count).by(1).and change(Reading, :count).by(1)
 

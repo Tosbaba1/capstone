@@ -14,7 +14,9 @@
     <span class="text-muted">by <%= book.author.name if book.author %></span>
     <%= form_with url: insert_reading_path, method: :post, local: true, class: 'd-inline ms-2' do %>
       <%= hidden_field_tag :book_id, book.id %>
-      <%= hidden_field_tag :status, 'want_to_read' %>
+      <%= select_tag :status,
+        options_for_select(Reading::STATUSES.map { |s| [s.humanize, s] }, 'want_to_read'),
+        class: 'form-select form-select-sm d-inline w-auto me-2' %>
       <button class="btn btn-sm btn-primary">Add to Library</button>
     <% end %>
   </div>

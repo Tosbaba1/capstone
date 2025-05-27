@@ -97,7 +97,8 @@ class BooksController < ApplicationController
   end
 
   def import
-    work_id = params[:work_id]
+    permitted = params.permit(:work_id, :status)
+    work_id = permitted[:work_id]
     work    = OpenLibraryClient.fetch_work(work_id)
 
     author_name = work.dig("authors", 0, "name") ||
@@ -118,7 +119,7 @@ class BooksController < ApplicationController
     book.save!
 
     current_user.readings.find_or_create_by(book: book) do |r|
-      r.status = "want_to_read"
+      r.status = permitted[:status] || "want_to_read"
     end
 
     redirect_to "/library", notice: "Book imported successfully."

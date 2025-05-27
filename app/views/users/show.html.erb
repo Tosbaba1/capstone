@@ -23,7 +23,16 @@
         <span><%= link_to "<strong>#{@user.following.count}</strong> Following".html_safe, following_user_path(@user), class: 'text-white' %></span>
       </div>
     </div>
-    <!-- Follow buttons removed: users can no longer send follow requests -->
+    <% unless @user == current_user %>
+      <% fr = current_user.sentfollowrequests.find_by(recipient: @user) %>
+      <% if current_user.following.include?(@user) %>
+        <%= button_to 'Unfollow', unfollow_user_path(@user), method: :delete, class: 'btn btn-secondary btn-sm mt-2' %>
+      <% elsif fr&.status == 'pending' %>
+        <span class="badge bg-secondary mt-2">Request Sent</span>
+      <% else %>
+        <%= button_to 'Follow', follow_user_path(@user), method: :post, class: 'btn btn-primary btn-sm mt-2' %>
+      <% end %>
+    <% end %>
   </div>
 </div>
 

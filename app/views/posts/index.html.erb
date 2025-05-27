@@ -1,7 +1,11 @@
-<div class="text-center my-2 tab-container">
-  <%= link_to 'Following', posts_path, class: "tab-link mx-3 #{params[:tab] == 'explore' ? '' : 'active'}" %>
-  <%= link_to 'Explore', posts_path(tab: 'explore'), class: "tab-link mx-3 #{params[:tab] == 'explore' ? 'active' : ''}" %>
-</div>
+<ul class="nav nav-tabs mb-3 justify-content-center">
+  <li class="nav-item">
+    <%= link_to 'Following', posts_path, class: "nav-link #{params[:tab] == 'explore' ? '' : 'active'}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Explore', posts_path(tab: 'explore'), class: "nav-link #{params[:tab] == 'explore' ? 'active' : ''}" %>
+  </li>
+</ul>
 
 <%= form_with url: insert_post_path, scope: :post, local: true, html: {class: "mb-3"}, data: {controller: "post-form"} do |f| %>
   <%= f.hidden_field :creator_id, value: current_user.id %>

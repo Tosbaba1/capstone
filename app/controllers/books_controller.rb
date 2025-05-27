@@ -20,6 +20,11 @@ class BooksController < ApplicationController
     render({ :template => "books/search" })
   end
 
+  def external_search
+    @external_books = OpenLibraryClient.search_books(params[:q])
+    render({ :template => "books/external_search" })
+  end
+
   def show
     the_id = params.fetch("path_id")
 
@@ -87,5 +92,33 @@ class BooksController < ApplicationController
     the_book.destroy
 
     redirect_to("/books", { :notice => "Book deleted successfully."} )
+  end
+
+  def import
+    work_id = params[:work_id]
+    work    = OpenLibraryClient.fetch_work(work_id)
+
+    author_name = work.dig("authors", 0, "name") ||
+                  work.dig("authors", 0, "author", "name") ||
+                  "Unknown"
+    author = Author.find_or_create_by(name: author_name)
+
+    book = Book.find_or_initialize_by(title: work["title"], author: author)
+    book.description = if work["description"].is_a?(Hash)
+                         work["description"]["value"]
+                       else
+                         work["description"]
+                       end
+    if work["covers"]&.first
+      book.image_url = OpenLibraryClient.cover_url(work["covers"].first, "M")
+    end
+    book.library_id ||= current_user.id
+    book.save!
+
+    current_user.readings.find_or_create_by(book: book) do |r|
+      r.status = "want_to_read"
+    end
+
+    redirect_to "/library", notice: "Book imported successfully."
   end
 end

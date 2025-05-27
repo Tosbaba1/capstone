@@ -116,6 +116,9 @@ Rails.application.routes.draw do
 
   get("/books/search", { :controller => "books", :action => "search" })
 
+  get '/books/external_search' => 'books#external_search'
+  post '/books/import' => 'books#import'
+
   get("/books/:path_id", { :controller => "books", :action => "show" })
 
   # UPDATE

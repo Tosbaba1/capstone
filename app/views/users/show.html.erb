@@ -11,16 +11,16 @@
   <div class="col">
     <div class="d-flex justify-content-between">
       <div>
-        <h4 class="mb-0"><%= @user.name %></h4>
-        <p class="text-muted mb-1">@<%= @user.username %></p>
+        <h4 class="mb-0 text-white"><%= @user.name %></h4>
+        <p class="mb-1 text-white">@<%= @user.username %></p>
         <% if @user.bio.present? %>
-          <p class="mb-1"><%= @user.bio %></p>
+          <p class="mb-1 text-white"><%= @user.bio %></p>
         <% end %>
       </div>
-      <div class="text-end">
+      <div class="text-end text-white">
         <span class="me-3"><strong><%= @user.posts_count || 0 %></strong> Posts</span>
-        <span class="me-3"><%= link_to "<strong>#{@user.followers.count}</strong> Followers".html_safe, followers_user_path(@user) %></span>
-        <span><%= link_to "<strong>#{@user.following.count}</strong> Following".html_safe, following_user_path(@user) %></span>
+        <span class="me-3"><%= link_to "<strong>#{@user.followers.count}</strong> Followers".html_safe, followers_user_path(@user), class: 'text-white' %></span>
+        <span><%= link_to "<strong>#{@user.following.count}</strong> Following".html_safe, following_user_path(@user), class: 'text-white' %></span>
       </div>
     </div>
     <% unless @user == current_user %>
@@ -35,14 +35,18 @@
   </div>
 </div>
 
+<% if @restricted %>
+  <p class="text-white">This account is private.</p>
+<% end %>
+
 <% @posts.each do |post| %>
   <div class="mb-3 p-3 border rounded content-box">
     <p class="mb-1"><strong><%= post.creator.name %></strong></p>
     <p class="mb-1"><%= post.content %></p>
-    <small class="text-muted"><%= time_ago_in_words(post.created_at) %> ago</small>
+    <small class="text-white"><%= time_ago_in_words(post.created_at) %> ago</small>
   </div>
 <% end %>
 
 <% if @posts.empty? %>
-  <p class="text-muted">No posts to display.</p>
+  <p class="text-white">No posts to display.</p>
 <% end %>

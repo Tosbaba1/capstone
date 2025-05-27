@@ -1,12 +1,12 @@
-<div>
+<div class="text-white">
   <div>
-    <h1>
+    <h1 class="text-white">
       Post #<%= @the_post.id %> details
     </h1>
 
     <div>
       <div>
-        <a href="/posts">
+        <a href="/posts" class="text-white">
           Go back
         </a>
       </div>
@@ -38,6 +38,30 @@
       </dt>
       <dd>
         <%= @the_post.book_id %>
+      </dd>
+
+      <dt>Likes</dt>
+      <dd>
+        <%= @the_post.likes_count %>
+      </dd>
+      <dd>
+        <ul>
+          <% @the_post.likes.each do |like| %>
+            <li><%= like.liked.username %></li>
+          <% end %>
+        </ul>
+      </dd>
+
+      <dt>Comments</dt>
+      <dd>
+        <%= @the_post.comments_count %>
+      </dd>
+      <dd>
+        <ul>
+          <% @the_post.comments.each do |comment| %>
+            <li><%= comment.commenter.username %>: <%= comment.comment %></li>
+          <% end %>
+        </ul>
       </dd>
 
 

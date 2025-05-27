@@ -53,11 +53,16 @@ class User < ApplicationRecord
 
   # Posts from people your followings follow
   has_many :extended_following, through: :following, source: :following
-  has_many :explore_feed, through: :extended_following, source: :posts
+  has_many :explore_feed,
+           -> { joins(:creator).where(users: { is_private: false }) },
+           through: :extended_following,
+           source: :posts
 
   has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
   has_many :active_notifications, class_name: 'Notification', foreign_key: :actor_id, dependent: :destroy
   has_many :search_histories, dependent: :destroy
+
+  scope :publicly_visible, -> { where(is_private: false) }
 
   def timeline
     Post.where(creator_id: following.ids + [id])

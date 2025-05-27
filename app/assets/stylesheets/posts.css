@@ -2,6 +2,7 @@
   cursor: pointer;
   font-size: 1.5rem;
   margin-right: 10px;
+  color: #ffffff;
 }
 
 .tab-link {
@@ -46,4 +47,8 @@
 .post-media video {
   max-width: 100%;
   border-radius: 4px;
+}
+
+dl dt, dl dd {
+  color: #ffffff;
 }

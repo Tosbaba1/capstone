@@ -71,6 +71,7 @@ Rails.application.routes.draw do
   delete "/users/:id/follow", to: "followrequests#unfollow", as: :unfollow_user
 
   post "/readings/:id", to: "readings#update", as: :update_reading
+  post("/insert_reading", { :controller => "readings", :action => "create" })
 
   # READ
   # get("/followrequests", { :controller => "followrequests", :action => "index" })
@@ -112,6 +113,8 @@ Rails.application.routes.draw do
 
   # READ
   get("/books", { :controller => "books", :action => "index" })
+
+  get("/books/search", { :controller => "books", :action => "search" })
 
   get("/books/:path_id", { :controller => "books", :action => "show" })
 

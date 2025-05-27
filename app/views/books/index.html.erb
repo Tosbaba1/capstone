@@ -3,6 +3,12 @@
     <h1>
       List of all books
     </h1>
+    <%= form_with url: '/books/search', method: :get, local: true, class: 'mb-3' do %>
+      <div class="input-group">
+        <%= text_field_tag :q, params[:q], placeholder: 'Search books', class: 'form-control' %>
+        <button class="btn btn-primary">Search</button>
+      </div>
+    <% end %>
   </div>
 </div>
 

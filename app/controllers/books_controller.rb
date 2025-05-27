@@ -7,6 +7,19 @@ class BooksController < ApplicationController
     render({ :template => "books/index" })
   end
 
+  def search
+    @page_title = "Search Books"
+
+    if params[:q].present?
+      term = "%#{params[:q]}%"
+      @books = Book.joins(:author).where("books.title ILIKE ? OR authors.name ILIKE ?", term, term)
+    else
+      @books = []
+    end
+
+    render({ :template => "books/search" })
+  end
+
   def show
     the_id = params.fetch("path_id")
 

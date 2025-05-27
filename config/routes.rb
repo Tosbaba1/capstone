@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   root to: "posts#index"
   get "/library", to: "pages#library"
   get "/notifications", to: "pages#notifications"
+  get "/search", to: "search#users", as: :search
+  resources :users, only: [:show]
   post "/notifications/:id/mark_read", to: "notifications#mark_read", as: :mark_notification_read
   post "/notifications/:id/mark_unread", to: "notifications#mark_unread", as: :mark_notification_unread
   get "/profile", to: "pages#profile"

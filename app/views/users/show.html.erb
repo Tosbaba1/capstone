@@ -1,0 +1,48 @@
+<% if @user.banner.present? %>
+  <div class="profile-banner text-center py-3 mb-3">
+    <h5 class="mb-0"><%= @user.banner %></h5>
+  </div>
+<% end %>
+
+<div class="row align-items-center mb-4">
+  <div class="col-auto">
+    <%= image_tag(@user.avatar.presence || 'default_avatar.png', class: 'avatar rounded-circle', style: 'width:80px;height:80px;') %>
+  </div>
+  <div class="col">
+    <div class="d-flex justify-content-between">
+      <div>
+        <h4 class="mb-0"><%= @user.name %></h4>
+        <p class="text-muted mb-1">@<%= @user.username %></p>
+        <% if @user.bio.present? %>
+          <p class="mb-1"><%= @user.bio %></p>
+        <% end %>
+      </div>
+      <div class="text-end">
+        <span class="me-3"><strong><%= @user.posts_count %></strong> Posts</span>
+        <span class="me-3"><strong><%= @user.followers.count %></strong> Followers</span>
+        <span><strong><%= @user.following.count %></strong> Following</span>
+      </div>
+    </div>
+    <% unless @user == current_user %>
+      <% unless current_user.following.include?(@user) %>
+        <% if current_user.sentfollowrequests.where(recipient: @user, status: 'pending').exists? %>
+          <span class="badge bg-secondary mt-2">Request Sent</span>
+        <% else %>
+          <%= button_to 'Follow', insert_followrequest_path(query_sender_id: current_user.id, query_recipient_id: @user.id), method: :post, class: 'btn btn-primary btn-sm mt-2' %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<% @posts.each do |post| %>
+  <div class="mb-3 p-3 border rounded content-box">
+    <p class="mb-1"><strong><%= post.creator.name %></strong></p>
+    <p class="mb-1"><%= post.content %></p>
+    <small class="text-muted"><%= time_ago_in_words(post.created_at) %> ago</small>
+  </div>
+<% end %>
+
+<% if @posts.empty? %>
+  <p class="text-muted">No posts to display.</p>
+<% end %>

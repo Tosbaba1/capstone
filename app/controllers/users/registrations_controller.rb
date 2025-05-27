@@ -4,8 +4,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :username, :avatar, :banner, :bio])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :username, :avatar, :banner, :bio])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :username, :avatar, :banner, :bio, :is_private])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :username, :avatar, :banner, :bio, :is_private])
   end
 
   def update_resource(resource, params)

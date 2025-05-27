@@ -50,8 +50,8 @@
         <%= image_tag(post.creator.avatar.presence || 'default_avatar.png', alt: post.creator.name, class: 'avatar') %>
         <div class="ms-2 flex-grow-1">
           <div class="d-flex align-items-center">
-            <strong><%= post.creator.name %></strong>
-            <span class="text-muted ms-2">@<%= post.creator.username %></span>
+            <strong class="text-white"><%= post.creator.name %></strong>
+            <span class="ms-2 text-white">@<%= post.creator.username %></span>
           </div>
           <p class="mb-1"><%= post.content %></p>
           <% if post.book %>
@@ -81,7 +81,8 @@
             </div>
           <% end %>
         </div>
-        <% if post.creator == current_user %>
+        <% allowed_view = post.creator == current_user || !post.creator.is_private || current_user.following.include?(post.creator) %>
+        <% if allowed_view %>
           <div class="ms-auto text-end">
             <%= link_to 'View Post', post_path(post), class: 'btn btn-sm btn-link text-white' %>
           </div>

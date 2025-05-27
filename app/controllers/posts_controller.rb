@@ -16,9 +16,16 @@ class PostsController < ApplicationController
     @page_title = "Post"
     the_id = params.fetch("path_id")
 
-    matching_posts = Post.where({ :id => the_id })
+    matching_posts = Post.where({ id: the_id })
 
-    @the_post = matching_posts.at(0)
+    @the_post = matching_posts.first
+
+    if @the_post.creator != current_user
+      creator = @the_post.creator
+      if creator.is_private && !current_user.following.include?(creator)
+        redirect_to posts_path, alert: "You are not authorized to view this post." and return
+      end
+    end
 
     render({ :template => "posts/show" })
   end

@@ -13,7 +13,7 @@ RSpec.describe "Book suggestions", type: :feature, js: true do
       .to_return(status: 200, body: [{ title: "Harry Potter" }].to_json,
                  headers: { "Content-Type" => "application/json" })
 
-    visit "/books/external_search"
+    visit "/search?tab=books"
 
     fill_in "q", with: "Har"
 

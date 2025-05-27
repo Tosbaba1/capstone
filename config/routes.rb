@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root to: "posts#index"
   get "/library", to: "pages#library"
   get "/notifications", to: "pages#notifications"
-  get "/search", to: "search#users", as: :search
+  get "/search", to: "search#index", as: :search
   resources :users, only: [:show] do
     member do
       get :followers

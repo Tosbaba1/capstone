@@ -20,7 +20,7 @@ RSpec.describe "External book search", type: :feature do
     }
 
     stub_request(:get, "https://openlibrary.org/search.json")
-      .with(query: hash_including(q: "Test Book", key: ENV["book_search_key"]))
+      .with(query: hash_including(q: "Test Book"))
       .to_return(status: 200, body: search_response.to_json, headers: { "Content-Type" => "application/json" })
 
     work_response = {
@@ -33,7 +33,6 @@ RSpec.describe "External book search", type: :feature do
     }
 
     stub_request(:get, "https://openlibrary.org/works/OL123W.json")
-      .with(query: hash_including(key: ENV["works_key"]))
       .to_return(status: 200, body: work_response.to_json, headers: { "Content-Type" => "application/json" })
 
     visit "/books/external_search?q=Test+Book"

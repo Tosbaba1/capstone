@@ -2,7 +2,8 @@
 
 <%= form_with url: '/books/external_search', method: :get, local: true, class: 'mb-4' do %>
   <div class="input-group">
-    <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Search books by title or author' %>
+    <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Search books by title or author', list: 'book-suggestions', data: { controller: 'book-suggest', action: 'input->book-suggest#search', 'book-suggest-target': 'input' } %>
+    <datalist id="book-suggestions" data-book-suggest-target="list"></datalist>
     <button class="btn btn-primary">Search</button>
   </div>
 <% end %>

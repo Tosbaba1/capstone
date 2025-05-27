@@ -25,6 +25,18 @@ class BooksController < ApplicationController
     render({ :template => "books/external_search" })
   end
 
+  def suggest
+    results = OpenLibraryClient.search_books(params[:q])
+    suggestions = Array(results["docs"]).first(5).map do |doc|
+      {
+        title: doc["title"],
+        author_name: doc["author_name"],
+        cover_i: doc["cover_i"]
+      }
+    end
+    render json: suggestions
+  end
+
   def show
     the_id = params.fetch("path_id")
 

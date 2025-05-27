@@ -6,4 +6,18 @@ class UsersController < ApplicationController
     @page_title = @user.name
     @posts = @user.posts.order(created_at: :desc)
   end
+
+  def followers
+    @user = User.find(params[:id])
+    @followers = @user.followers
+    @requests = @user.receivedfollowrequests.where(status: 'pending')
+    @page_title = "Followers"
+  end
+
+  def following
+    @user = User.find(params[:id])
+    @following = @user.following
+    @requests = @user.sentfollowrequests.where(status: 'pending')
+    @page_title = "Following"
+  end
 end

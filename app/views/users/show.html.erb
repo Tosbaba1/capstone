@@ -18,9 +18,9 @@
         <% end %>
       </div>
       <div class="text-end">
-        <span class="me-3"><strong><%= @user.posts_count %></strong> Posts</span>
-        <span class="me-3"><strong><%= @user.followers.count %></strong> Followers</span>
-        <span><strong><%= @user.following.count %></strong> Following</span>
+        <span class="me-3"><strong><%= @user.posts_count || 0 %></strong> Posts</span>
+        <span class="me-3"><%= link_to "<strong>#{@user.followers.count}</strong> Followers".html_safe, followers_user_path(@user) %></span>
+        <span><%= link_to "<strong>#{@user.following.count}</strong> Following".html_safe, following_user_path(@user) %></span>
       </div>
     </div>
     <% unless @user == current_user %>

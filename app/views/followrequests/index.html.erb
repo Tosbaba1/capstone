@@ -52,10 +52,6 @@
     <table class="table table-striped">
       <tr>
         <th>
-          ID
-        </th>
-
-        <th>
           Sender
         </th>
 
@@ -72,25 +68,17 @@
         </th>
 
         <th>
-          Updated at
-        </th>
-
-        <th>
         </th>
       </tr>
 
       <% @list_of_followrequests.each do |a_followrequest| %>
       <tr>
         <td>
-          <%= a_followrequest.id %>
+          <%= a_followrequest.sender.name.presence || a_followrequest.sender.username %>
         </td>
 
         <td>
-          <%= a_followrequest.sender_id %>
-        </td>
-
-        <td>
-          <%= a_followrequest.recipient_id %>
+          <%= a_followrequest.recipient.name.presence || a_followrequest.recipient.username %>
         </td>
 
         <td>
@@ -101,15 +89,9 @@
           <%= time_ago_in_words(a_followrequest.created_at) %> ago
         </td>
         <td>
-          <%= time_ago_in_words(a_followrequest.updated_at) %> ago
-        </td>
-
-        <td>
           <% if a_followrequest.status == 'pending' && a_followrequest.recipient == current_user %>
             <%= button_to 'Accept', accept_followrequest_path(a_followrequest), method: :post, class: 'btn btn-sm btn-success' %>
             <%= button_to 'Decline', decline_followrequest_path(a_followrequest), method: :post, class: 'btn btn-sm btn-danger' %>
-          <% else %>
-            <a href="/followrequests/<%= a_followrequest.id %>">Show details</a>
           <% end %>
         </td>
       </tr>

@@ -1,0 +1,19 @@
+<h2><%= @user == current_user ? 'You are following' : "#{@user.name} is following" %></h2>
+<ul class="list-unstyled">
+  <% @following.each do |u| %>
+    <li><%= link_to (u.name.presence || u.username), user_path(u) %></li>
+  <% end %>
+</ul>
+<% if @following.empty? %>
+  <p class="text-muted">Not following anyone yet.</p>
+<% end %>
+
+<% if @requests.any? %>
+  <hr>
+  <h3>Pending follow requests</h3>
+  <ul class="list-unstyled">
+    <% @requests.each do |req| %>
+      <li><%= link_to (req.recipient.name.presence || req.recipient.username), user_path(req.recipient) %></li>
+    <% end %>
+  </ul>
+<% end %>

@@ -7,7 +7,12 @@ Rails.application.routes.draw do
   get "/library", to: "pages#library"
   get "/notifications", to: "pages#notifications"
   get "/search", to: "search#users", as: :search
-  resources :users, only: [:show]
+  resources :users, only: [:show] do
+    member do
+      get :followers
+      get :following
+    end
+  end
   post "/notifications/:id/mark_read", to: "notifications#mark_read", as: :mark_notification_read
   post "/notifications/:id/mark_unread", to: "notifications#mark_unread", as: :mark_notification_unread
   get "/profile", to: "pages#profile"
@@ -67,7 +72,6 @@ Rails.application.routes.draw do
   # READ
   get("/followrequests", { :controller => "followrequests", :action => "index" })
 
-  get("/followrequests/:path_id", { :controller => "followrequests", :action => "show" })
 
   # UPDATE
 

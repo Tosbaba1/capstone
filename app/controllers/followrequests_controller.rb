@@ -7,15 +7,6 @@ class FollowrequestsController < ApplicationController
     render({ :template => "followrequests/index" })
   end
 
-  def show
-    the_id = params.fetch("path_id")
-
-    matching_followrequests = Followrequest.where({ :id => the_id })
-
-    @the_followrequest = matching_followrequests.at(0)
-
-    render({ :template => "followrequests/show" })
-  end
 
   def create
     the_followrequest = Followrequest.new
@@ -53,9 +44,9 @@ class FollowrequestsController < ApplicationController
 
     if the_followrequest.valid?
       the_followrequest.save
-      redirect_to("/followrequests/#{the_followrequest.id}", { :notice => "Followrequest updated successfully."} )
+      redirect_to("/followrequests", { :notice => "Followrequest updated successfully."} )
     else
-      redirect_to("/followrequests/#{the_followrequest.id}", { :alert => the_followrequest.errors.full_messages.to_sentence })
+      redirect_to("/followrequests", { :alert => the_followrequest.errors.full_messages.to_sentence })
     end
   end
 

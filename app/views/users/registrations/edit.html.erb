@@ -45,10 +45,6 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
   </div>
 
-  <div class="mb-3">
-    <%= f.label :current_password %>
-    <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
-  </div>
 
   <%= f.submit "Update", class: "btn btn-primary" %>
 <% end %>

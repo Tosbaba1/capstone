@@ -18,9 +18,9 @@
         <% end %>
       </div>
       <div class="text-end">
-        <span class="me-3"><strong><%= current_user.posts_count %></strong> Posts</span>
-        <span class="me-3"><strong><%= current_user.followers.count %></strong> Followers</span>
-        <span><strong><%= current_user.following.count %></strong> Following</span>
+        <span class="me-3"><strong><%= current_user.posts_count || 0 %></strong> Posts</span>
+        <span class="me-3"><%= link_to "<strong>#{current_user.followers.count}</strong> Followers".html_safe, followers_user_path(current_user) %></span>
+        <span><%= link_to "<strong>#{current_user.following.count}</strong> Following".html_safe, following_user_path(current_user) %></span>
       </div>
     </div>
     <%= link_to 'Edit Profile', edit_user_registration_path, class: 'btn btn-primary btn-sm mt-2' %>

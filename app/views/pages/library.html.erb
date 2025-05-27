@@ -1,5 +1,48 @@
+<h2 class="h5 mb-3">Currently Reading</h2>
+<div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-3 mb-4">
+  <% @reading_now.each do |reading| %>
+    <% book = reading.book %>
+    <div class="col text-center">
+      <%= image_tag(book.image_url, class: 'img-fluid mb-2') if book.image_url.present? %>
+      <div><strong><%= book.title %></strong></div>
+      <div class="text-muted"><%= book.author.name if book.author %></div>
+      <%= form_with url: update_reading_path(reading), method: :post, local: true do |f| %>
+        <div class="mb-1">
+          <%= f.select :status, Reading::STATUSES, { selected: reading.status }, class: 'form-select form-select-sm' %>
+        </div>
+        <div class="mb-1">
+          <%= f.number_field :rating, value: reading.rating, in: 1..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
+        </div>
+        <%= f.submit 'Save', class: 'btn btn-sm btn-secondary' %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<h2 class="h5 mb-3">Want to Read</h2>
+<div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-3 mb-4">
+  <% @want_to_read.each do |reading| %>
+    <% book = reading.book %>
+    <div class="col text-center">
+      <%= image_tag(book.image_url, class: 'img-fluid mb-2') if book.image_url.present? %>
+      <div><strong><%= book.title %></strong></div>
+      <div class="text-muted"><%= book.author.name if book.author %></div>
+      <%= form_with url: update_reading_path(reading), method: :post, local: true do |f| %>
+        <div class="mb-1">
+          <%= f.select :status, Reading::STATUSES, { selected: reading.status }, class: 'form-select form-select-sm' %>
+        </div>
+        <div class="mb-1">
+          <%= f.number_field :rating, value: reading.rating, in: 1..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
+        </div>
+        <%= f.submit 'Save', class: 'btn btn-sm btn-secondary' %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<h2 class="h5 mb-3">Finished</h2>
 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-3">
-  <% @readings.each do |reading| %>
+  <% @finished.each do |reading| %>
     <% book = reading.book %>
     <div class="col text-center">
       <%= image_tag(book.image_url, class: 'img-fluid mb-2') if book.image_url.present? %>

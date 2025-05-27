@@ -1,7 +1,9 @@
 class PagesController < ApplicationController
   def library
     @page_title = "Library"
-    @readings = current_user.readings.includes(:book)
+    @reading_now  = current_user.readings.includes(:book).where(status: 'reading')
+    @want_to_read = current_user.readings.includes(:book).where(status: 'want_to_read')
+    @finished     = current_user.readings.includes(:book).where(status: 'finished')
   end
 
   def notifications

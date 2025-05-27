@@ -9,7 +9,7 @@
 <% @post.comments.includes(:commenter).each do |comment| %>
   <div class="mb-3 border-bottom pb-2">
     <div class="d-flex align-items-center mb-1">
-      <%= image_tag(comment.commenter.avatar || 'default_avatar.png', class: 'avatar me-2') %>
+      <%= image_tag(comment.commenter.avatar.presence || 'default_avatar.png', class: 'avatar me-2') %>
       <strong><%= comment.commenter.name %></strong>
     </div>
     <p class="mb-1"><%= comment.comment %></p>

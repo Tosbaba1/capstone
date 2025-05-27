@@ -22,7 +22,7 @@
       <%= select_tag :status,
         options_for_select(Reading::STATUSES.map { |s| [s.humanize, s] }, 'want_to_read'),
         class: 'form-select form-select-sm d-inline w-auto me-2' %>
-      <button class="btn btn-sm btn-primary">Import</button>
+      <button class="btn btn-sm btn-primary">Add</button>
     <% end %>
   </div>
 <% end %>

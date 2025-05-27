@@ -12,6 +12,10 @@
 #  book_id    :integer
 #  user_id    :integer
 #
+# Indexes
+#
+#  index_readings_on_user_id_and_book_id  (user_id,book_id) UNIQUE
+#
 class Reading < ApplicationRecord
   belongs_to :user
   belongs_to :book

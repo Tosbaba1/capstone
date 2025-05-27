@@ -8,6 +8,8 @@ require "capybara/rspec"
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
 require "support/headless_chrome"
+# Load additional support files
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -39,6 +41,7 @@ RSpec.configure do |config|
   
   # Shoulda matchers for association accessor specs
   config.include(Shoulda::Matchers::ActiveRecord, type: :model)
+  config.include FactoryBot::Syntax::Methods
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

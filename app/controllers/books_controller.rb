@@ -52,7 +52,7 @@ class BooksController < ApplicationController
 
     if the_book.valid?
       the_book.save
-      Reading.create(user: current_user, book: the_book, status: 'reading')
+      current_user.readings.find_or_create_by(book: the_book)
       if share_update == "1"
         Post.create(
           creator: current_user,

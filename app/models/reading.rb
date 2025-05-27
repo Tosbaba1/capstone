@@ -16,5 +16,6 @@ class Reading < ApplicationRecord
 
   STATUSES = %w[want_to_read reading finished]
   validates :status, inclusion: { in: STATUSES }
+  validates :book_id, uniqueness: { scope: :user_id }
   validates :progress, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 end

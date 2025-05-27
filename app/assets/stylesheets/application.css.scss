@@ -53,6 +53,12 @@ body {
   border-radius: 4px;
 }
 
+/* Inputs should use dark text since they have light backgrounds */
+.form-control,
+.form-select {
+  color: var(--charcoal);
+}
+
 /* Ensure all text appears in white across the application */
 body,
 h1,

@@ -5,32 +5,32 @@
 
   <div class="mb-3">
     <%= f.label :name, class: 'text-white' %>
-    <%= f.text_field :name, value: resource.name, autofocus: true, class: "form-control text-white" %>
+    <%= f.text_field :name, value: resource.name, autofocus: true, class: "form-control" %>
   </div>
 
   <div class="mb-3">
     <%= f.label :username, class: 'text-white' %>
-    <%= f.text_field :username, value: resource.username, class: "form-control text-white" %>
+    <%= f.text_field :username, value: resource.username, class: "form-control" %>
   </div>
 
   <div class="mb-3">
     <%= f.label :email, class: 'text-white' %>
-    <%= f.email_field :email, value: resource.email, class: "form-control text-white", autocomplete: "email" %>
+    <%= f.email_field :email, value: resource.email, class: "form-control", autocomplete: "email" %>
   </div>
 
   <div class="mb-3">
     <%= f.label :avatar, "Profile picture URL", class: 'text-white' %>
-    <%= f.text_field :avatar, value: resource.avatar, class: "form-control text-white" %>
+    <%= f.text_field :avatar, value: resource.avatar, class: "form-control" %>
   </div>
 
   <div class="mb-3">
     <%= f.label :banner, "Banner quote", class: 'text-white' %>
-    <%= f.text_field :banner, value: resource.banner, class: "form-control text-white" %>
+    <%= f.text_field :banner, value: resource.banner, class: "form-control" %>
   </div>
 
   <div class="mb-3">
     <%= f.label :bio, class: 'text-white' %>
-    <%= f.text_area :bio, value: resource.bio, class: "form-control text-white" %>
+    <%= f.text_area :bio, value: resource.bio, class: "form-control" %>
   </div>
 
   <div class="mb-3">
@@ -42,12 +42,12 @@
   <p class="text-white">Leave password fields blank if you don't want to change it</p>
   <div class="mb-3">
     <%= f.label :password, class: 'text-white' %>
-    <%= f.password_field :password, autocomplete: "new-password", class: "form-control text-white" %>
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
   </div>
 
   <div class="mb-3">
     <%= f.label :password_confirmation, class: 'text-white' %>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control text-white" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
   </div>
 
 

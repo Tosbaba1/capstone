@@ -67,10 +67,13 @@ Rails.application.routes.draw do
   post("/followrequests/:id/accept", { :controller => "followrequests", :action => "accept", :as => "accept_followrequest" })
   post("/followrequests/:id/decline", { :controller => "followrequests", :action => "decline", :as => "decline_followrequest" })
 
+  post "/users/:id/follow", to: "followrequests#follow", as: :follow_user
+  delete "/users/:id/follow", to: "followrequests#unfollow", as: :unfollow_user
+
   post "/readings/:id", to: "readings#update", as: :update_reading
 
   # READ
-  get("/followrequests", { :controller => "followrequests", :action => "index" })
+  # get("/followrequests", { :controller => "followrequests", :action => "index" })
 
 
   # UPDATE

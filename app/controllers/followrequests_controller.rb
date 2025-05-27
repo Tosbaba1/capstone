@@ -7,6 +7,28 @@ class FollowrequestsController < ApplicationController
     render({ :template => "followrequests/index" })
   end
 
+  def follow
+    recipient = User.find(params[:id])
+    fr = current_user.sentfollowrequests.find_or_initialize_by(recipient: recipient)
+
+    if fr.persisted? && fr.status == 'accepted'
+      redirect_to user_path(recipient), notice: 'Already following.' and return
+    end
+
+    fr.status = recipient.is_private ? 'pending' : 'accepted'
+    fr.save
+
+    notice = recipient.is_private ? 'Follow request sent.' : 'Now following.'
+    redirect_to user_path(recipient), notice: notice
+  end
+
+  def unfollow
+    recipient = User.find(params[:id])
+    fr = current_user.sentfollowrequests.find_by(recipient: recipient)
+    fr.destroy if fr
+    redirect_to user_path(recipient), notice: 'Unfollowed.'
+  end
+
 
   def create
     the_followrequest = Followrequest.new
@@ -16,22 +38,22 @@ class FollowrequestsController < ApplicationController
 
     if the_followrequest.valid?
       the_followrequest.save
-      redirect_to("/followrequests", { :notice => "Followrequest created successfully." })
+      redirect_to user_path(the_followrequest.recipient), notice: 'Follow request sent.'
     else
-      redirect_to("/followrequests", { :alert => the_followrequest.errors.full_messages.to_sentence })
+      redirect_to user_path(the_followrequest.recipient), alert: the_followrequest.errors.full_messages.to_sentence
     end
   end
 
   def accept
     the_followrequest = current_user.receivedfollowrequests.find(params[:id])
     the_followrequest.update(status: 'accepted')
-    redirect_to "/followrequests", notice: "Follow request accepted."
+    redirect_to notifications_path(tab: 'follow_requests'), notice: 'Follow request accepted.'
   end
 
   def decline
     the_followrequest = current_user.receivedfollowrequests.find(params[:id])
     the_followrequest.update(status: 'declined')
-    redirect_to "/followrequests", notice: "Follow request declined."
+    redirect_to notifications_path(tab: 'follow_requests'), notice: 'Follow request declined.'
   end
 
   def update
@@ -44,9 +66,9 @@ class FollowrequestsController < ApplicationController
 
     if the_followrequest.valid?
       the_followrequest.save
-      redirect_to("/followrequests", { :notice => "Followrequest updated successfully."} )
+      redirect_to user_path(the_followrequest.recipient), notice: 'Follow request updated.'
     else
-      redirect_to("/followrequests", { :alert => the_followrequest.errors.full_messages.to_sentence })
+      redirect_to user_path(the_followrequest.recipient), alert: the_followrequest.errors.full_messages.to_sentence
     end
   end
 
@@ -56,6 +78,6 @@ class FollowrequestsController < ApplicationController
 
     the_followrequest.destroy
 
-    redirect_to("/followrequests", { :notice => "Followrequest deleted successfully."} )
+    redirect_to user_path(the_followrequest.recipient), notice: 'Follow request deleted.'
   end
 end

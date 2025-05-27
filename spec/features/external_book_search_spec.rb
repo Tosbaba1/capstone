@@ -41,7 +41,7 @@ RSpec.describe "External book search", type: :feature do
 
     expect do
       select "reading", from: "status", match: :first
-      click_button "Import", match: :first
+      click_button "Add", match: :first
     end.to change(Book, :count).by(1).and change(Reading, :count).by(1)
 
     expect(page).to have_current_path("/library")

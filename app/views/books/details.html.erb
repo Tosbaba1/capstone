@@ -1,0 +1,11 @@
+<h1 class="mb-3 text-white"><%= @work['title'] %></h1>
+
+<% if @edition %>
+  <p class="text-white">Edition: <%= @edition['title'] %></p>
+<% end %>
+
+<ul class="list-unstyled text-muted">
+  <li>Finished: <%= @read_count %></li>
+  <li>Reading: <%= @reading_count %></li>
+  <li>Want to read: <%= @want_to_read_count %></li>
+</ul>

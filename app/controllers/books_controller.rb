@@ -134,8 +134,14 @@ class BooksController < ApplicationController
     author = Author.find_by(name: author_name)
 
     @local_book = Book.find_by(title: @work['title'], author: author)
-    @read_count        = @local_book&.readings.where(status: 'finished')&.count || 0
-    @reading_count     = @local_book&.readings.where(status: 'reading')&.count  || 0
-    @want_to_read_count = @local_book&.readings.where(status: 'want_to_read')&.count || 0
+    if @local_book.present?
+      @read_count        = @local_book.readings.where(status: 'finished').count
+      @reading_count     = @local_book.readings.where(status: 'reading').count
+      @want_to_read_count = @local_book.readings.where(status: 'want_to_read').count
+    else
+      @read_count = 0
+      @reading_count = 0
+      @want_to_read_count = 0
+    end
   end
 end

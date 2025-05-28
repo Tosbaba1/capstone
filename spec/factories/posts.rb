@@ -15,6 +15,6 @@
 FactoryBot.define do
   factory :post do
     association :creator, factory: :user
-    content { Faker::Lorem.sentence }
+    content { Faker::Quote.famous_last_words }
   end
 end

@@ -11,7 +11,7 @@ task sample_data: :environment do
     username: "abc",
     avatar: Faker::Avatar.image,
     banner: Faker::Marketing.buzzwords,
-    bio: Faker::Lorem.sentence(word_count: 10),
+    bio: Faker::Quote.matz,
     is_private: false
   )
 
@@ -26,27 +26,60 @@ task sample_data: :environment do
       username: Faker::Internet.unique.username(specifier: 3..8),
       avatar: Faker::Avatar.image,
       banner: Faker::Marketing.buzzwords,
-      bio: Faker::Lorem.sentence(word_count: 12),
+      bio: Faker::Quote.most_interesting_man_in_the_world,
       is_private: [true, false].sample
     )
   end
 
   puts "Generating authors and books..."
-  8.times do
-    author = Author.create!(
-      name: Faker::Book.author,
-      bio: Faker::Lorem.sentence(word_count: 8),
-      dob: Faker::Date.birthday(min_age: 20, max_age: 80).to_s
-    )
-    rand(2..4).times do
+  sample_titles = [
+    'The Hobbit',
+    'Pride and Prejudice',
+    '1984',
+    'Moby Dick',
+    'To Kill a Mockingbird'
+  ]
+
+  sample_titles.each do |title|
+    data = begin
+      OpenLibraryClient.search_books(title)
+    rescue StandardError
+      nil
+    end
+
+    doc = data && data['docs']&.first
+
+    if doc
+      author_name = doc['author_name']&.first || 'Unknown'
+      author = Author.find_or_create_by!(name: author_name) do |a|
+        a.bio = Faker::Quote.famous_last_words
+        a.dob = Faker::Date.birthday(min_age: 20, max_age: 80).to_s
+      end
+
+      Book.create!(
+        title: doc['title'],
+        genre: doc['subject']&.first || 'Fiction',
+        description: Faker::Books::Dune.quote,
+        page_length: doc['number_of_pages_median'] || rand(100..600),
+        year: doc['first_publish_year'] || rand(1950..2024),
+        author: author,
+        image_url: doc['cover_i'] ? OpenLibraryClient.cover_url(doc['cover_i'], 'M') : nil
+      )
+    else
+      author = Author.create!(
+        name: Faker::Book.author,
+        bio: Faker::Quote.famous_last_words,
+        dob: Faker::Date.birthday(min_age: 20, max_age: 80).to_s
+      )
+
       Book.create!(
         title: Faker::Book.title,
         genre: Faker::Book.genre,
-        description: Faker::Lorem.paragraph,
+        description: Faker::Books::Dune.quote,
         page_length: rand(100..600),
         year: rand(1950..2024),
         author: author,
-        image_url: Faker::LoremFlickr.image(size: "200x300", search_terms: ['book'])
+        image_url: nil
       )
     end
   end
@@ -62,7 +95,7 @@ task sample_data: :environment do
         status: Reading::STATUSES.sample,
         rating: rand(1..5),
         progress: rand(0..100),
-        review: rand < 0.3 ? Faker::Lorem.sentence(word_count: 8) : nil,
+        review: rand < 0.3 ? Faker::Quotes::Shakespeare.hamlet_quote : nil,
         is_private: [true, false].sample
       )
     end
@@ -81,7 +114,7 @@ task sample_data: :environment do
     rand(1..3).times do
       Post.create!(
         creator: user,
-        content: Faker::Lorem.paragraph(sentence_count: 2),
+        content: Faker::TvShows::GameOfThrones.quote,
         book: books.sample
       )
     end
@@ -96,7 +129,7 @@ task sample_data: :environment do
         Comment.create!(
           commenter: user,
           post: post,
-          comment: Faker::Lorem.sentence
+          comment: Faker::Quote.yoda
         )
       end
     end

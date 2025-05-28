@@ -2,10 +2,15 @@ class PostsController < ApplicationController
     def index
       @page_title = "Feed"
       posts_source = if params[:tab] == "explore"
-          current_user.explore_feed
-        else
-          current_user.timeline
-        end
+                        feed = current_user.explore_feed
+                        feed = Post.joins(:creator)
+                                   .where(users: { is_private: false })
+                                   .order(created_at: :desc)
+                                   .limit(10) if feed.empty?
+                        feed
+                      else
+                        current_user.timeline
+                      end
 
       @list_of_posts = posts_source.order(created_at: :desc)
 

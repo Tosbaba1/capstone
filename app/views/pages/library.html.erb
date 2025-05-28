@@ -14,19 +14,21 @@
   <% @reading_now.each do |reading| %>
     <% book = reading.book %>
     <div class="col text-center">
-      <%= image_tag(book.image_url, class: 'img-fluid mb-2 book-cover') if book.image_url.present? %>
-      <div><strong><%= book.title %></strong></div>
-      <div class="text-muted"><%= book.author.name if book.author %></div>
+      <%= link_to book_path(book) do %>
+        <%= image_tag(book.image_url, class: 'img-fluid mb-2 book-cover') if book.image_url.present? %>
+      <% end %>
+      <div><strong><%= link_to book.title, book_path(book), class: 'text-white text-decoration-none' %></strong></div>
+      <div class="text-white"><%= book.author.name if book.author %></div>
       <% if @user == current_user %>
         <%= form_with url: update_reading_path(reading), method: :post, local: true do |f| %>
           <div class="mb-1">
             <%= f.select :status, Reading::STATUSES, { selected: reading.status }, class: 'form-select form-select-sm' %>
           </div>
           <div class="mb-1">
-            <%= f.number_field :rating, value: reading.rating, in: 1..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
+            <%= f.number_field :rating, value: reading.rating, step: 0.2, in: 0..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
           </div>
           <div class="mb-1">
-            <%= f.number_field :progress, value: reading.progress, min: 0, class: 'form-control form-control-sm', placeholder: 'Progress' %>
+            <%= f.number_field :progress, value: reading.progress, min: 0, max: 100, class: 'form-control form-control-sm', placeholder: 'Progress' %>
           </div>
           <div class="mb-1">
             <%= f.text_area :review, value: reading.review, class: 'form-control form-control-sm', placeholder: 'Review' %>
@@ -39,6 +41,7 @@
         <% end %>
       <% else %>
         <% if reading.rating.present? %><div>Rating: <%= reading.rating %></div><% end %>
+        <% if reading.progress.present? %><div>Progress: <%= reading.progress %>%</div><% end %>
         <% if reading.review.present? %><div><%= reading.review %></div><% end %>
       <% end %>
     </div>
@@ -50,19 +53,21 @@
   <% @want_to_read.each do |reading| %>
     <% book = reading.book %>
     <div class="col text-center">
-      <%= image_tag(book.image_url, class: 'img-fluid mb-2 book-cover') if book.image_url.present? %>
-      <div><strong><%= book.title %></strong></div>
-      <div class="text-muted"><%= book.author.name if book.author %></div>
+      <%= link_to book_path(book) do %>
+        <%= image_tag(book.image_url, class: 'img-fluid mb-2 book-cover') if book.image_url.present? %>
+      <% end %>
+      <div><strong><%= link_to book.title, book_path(book), class: 'text-white text-decoration-none' %></strong></div>
+      <div class="text-white"><%= book.author.name if book.author %></div>
       <% if @user == current_user %>
         <%= form_with url: update_reading_path(reading), method: :post, local: true do |f| %>
           <div class="mb-1">
             <%= f.select :status, Reading::STATUSES, { selected: reading.status }, class: 'form-select form-select-sm' %>
           </div>
           <div class="mb-1">
-            <%= f.number_field :rating, value: reading.rating, in: 1..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
+            <%= f.number_field :rating, value: reading.rating, step: 0.2, in: 0..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
           </div>
           <div class="mb-1">
-            <%= f.number_field :progress, value: reading.progress, min: 0, class: 'form-control form-control-sm', placeholder: 'Progress' %>
+            <%= f.number_field :progress, value: reading.progress, min: 0, max: 100, class: 'form-control form-control-sm', placeholder: 'Progress' %>
           </div>
           <div class="mb-1">
             <%= f.text_area :review, value: reading.review, class: 'form-control form-control-sm', placeholder: 'Review' %>
@@ -75,6 +80,7 @@
         <% end %>
       <% else %>
         <% if reading.rating.present? %><div>Rating: <%= reading.rating %></div><% end %>
+        <% if reading.progress.present? %><div>Progress: <%= reading.progress %>%</div><% end %>
         <% if reading.review.present? %><div><%= reading.review %></div><% end %>
       <% end %>
     </div>
@@ -86,19 +92,21 @@
   <% @finished.each do |reading| %>
     <% book = reading.book %>
     <div class="col text-center">
-      <%= image_tag(book.image_url, class: 'img-fluid mb-2 book-cover') if book.image_url.present? %>
-      <div><strong><%= book.title %></strong></div>
-      <div class="text-muted"><%= book.author.name if book.author %></div>
+      <%= link_to book_path(book) do %>
+        <%= image_tag(book.image_url, class: 'img-fluid mb-2 book-cover') if book.image_url.present? %>
+      <% end %>
+      <div><strong><%= link_to book.title, book_path(book), class: 'text-white text-decoration-none' %></strong></div>
+      <div class="text-white"><%= book.author.name if book.author %></div>
       <% if @user == current_user %>
         <%= form_with url: update_reading_path(reading), method: :post, local: true do |f| %>
           <div class="mb-1">
             <%= f.select :status, Reading::STATUSES, { selected: reading.status }, class: 'form-select form-select-sm' %>
           </div>
           <div class="mb-1">
-            <%= f.number_field :rating, value: reading.rating, in: 1..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
+            <%= f.number_field :rating, value: reading.rating, step: 0.2, in: 0..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
           </div>
           <div class="mb-1">
-            <%= f.number_field :progress, value: reading.progress, min: 0, class: 'form-control form-control-sm', placeholder: 'Progress' %>
+            <%= f.number_field :progress, value: reading.progress, min: 0, max: 100, class: 'form-control form-control-sm', placeholder: 'Progress' %>
           </div>
           <div class="mb-1">
             <%= f.text_area :review, value: reading.review, class: 'form-control form-control-sm', placeholder: 'Review' %>
@@ -111,6 +119,7 @@
         <% end %>
       <% else %>
         <% if reading.rating.present? %><div>Rating: <%= reading.rating %></div><% end %>
+        <% if reading.progress.present? %><div>Progress: <%= reading.progress %>%</div><% end %>
         <% if reading.review.present? %><div><%= reading.review %></div><% end %>
       <% end %>
     </div>

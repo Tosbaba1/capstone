@@ -32,6 +32,7 @@
       <% if book['author_name'] %>
         <span class="text-muted">by <%= book['author_name'].join(', ') %></span>
       <% end %>
+      <%= link_to 'Details', book_details_path(work_id: book['key'].split('/').last, edition_id: book['edition_key']&.first), class: 'btn btn-link btn-sm text-decoration-none' %>
       <%= form_with url: '/books/import', method: :post, local: true, class: 'd-inline ms-2' do %>
         <%= hidden_field_tag :work_id, book['key'].split('/').last %>
         <%= select_tag :status,

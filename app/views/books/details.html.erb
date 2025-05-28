@@ -1,11 +1,47 @@
 <h1 class="mb-3 text-white"><%= @work['title'] %></h1>
 
+<p class="text-muted mb-2">
+  by <%= @work.dig('authors', 0, 'name') || @work.dig('authors', 0, 'author', 'name') || 'Unknown' %>
+</p>
+
+<% cover_id = if @edition&.dig('covers', 0)
+                @edition['covers'].first
+              else
+                @work.dig('covers', 0)
+              end %>
+
+<% if cover_id %>
+  <%= image_tag(OpenLibraryClient.cover_url(cover_id, 'M'), class: 'mb-3 d-block') %>
+<% end %>
+
+<% description = if @work['description'].is_a?(Hash)
+                    @work['description']['value']
+                  else
+                    @work['description']
+                  end %>
+<% if description.present? %>
+  <p class="text-white"><%= description %></p>
+<% end %>
+
+<% page_length = @edition&.[]('number_of_pages') || @work['number_of_pages'] %>
+<% if page_length.present? %>
+  <p class="text-muted">Page length: <%= page_length %></p>
+<% end %>
+
 <% if @edition %>
   <p class="text-white">Edition: <%= @edition['title'] %></p>
 <% end %>
 
-<ul class="list-unstyled text-muted">
+<ul class="list-unstyled text-muted mb-3">
   <li>Finished: <%= @read_count %></li>
   <li>Reading: <%= @reading_count %></li>
   <li>Want to read: <%= @want_to_read_count %></li>
 </ul>
+
+<%= form_with url: '/books/import', method: :post, local: true do %>
+  <%= hidden_field_tag :work_id, params[:work_id] %>
+  <%= select_tag :status,
+        options_for_select(Reading::STATUSES.map { |s| [s.humanize, s] }, 'want_to_read'),
+        class: 'form-select form-select-sm d-inline w-auto me-2' %>
+  <button class="btn btn-primary">Add to Library</button>
+<% end %>

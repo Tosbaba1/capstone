@@ -52,10 +52,16 @@ class User < ApplicationRecord
 
   has_many :feed, through: :following, source: :posts
 
-  # Posts from people your followings follow
+  # Posts from people followed by your followings
+  # Excludes posts from yourself and people you already follow
   has_many :extended_following, through: :following, source: :following
   has_many :explore_feed,
-           -> { joins(:creator).where(users: { is_private: false }) },
+           ->(user) {
+             joins(:creator)
+               .where(users: { is_private: false })
+               .where.not(creator_id: user.following.ids + [user.id])
+               .distinct
+           },
            through: :extended_following,
            source: :posts
 

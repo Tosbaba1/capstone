@@ -21,7 +21,7 @@ class BooksController < ApplicationController
       {
         title: doc["title"],
         author_name: doc["author_name"],
-        cover_i: doc["cover_i"]
+        cover_i: doc["cover_i"],
       }
     end
     render json: suggestions
@@ -52,12 +52,12 @@ class BooksController < ApplicationController
 
     if the_book.valid?
       the_book.save
-      Reading.create(user: current_user, book: the_book, status: 'reading')
+      Reading.create(user: current_user, book: the_book, status: "reading")
       if share_update == "1"
         Post.create(
           creator: current_user,
           content: "started reading '#{the_book.title}'",
-          book: the_book
+          book: the_book,
         )
       end
       redirect_to("/books", { :notice => "Book created successfully." })
@@ -81,7 +81,7 @@ class BooksController < ApplicationController
 
     if the_book.valid?
       the_book.save
-      redirect_to("/books/#{the_book.id}", { :notice => "Book updated successfully."} )
+      redirect_to("/books/#{the_book.id}", { :notice => "Book updated successfully." })
     else
       redirect_to("/books/#{the_book.id}", { :alert => the_book.errors.full_messages.to_sentence })
     end
@@ -93,13 +93,13 @@ class BooksController < ApplicationController
 
     the_book.destroy
 
-    redirect_to("/books", { :notice => "Book deleted successfully."} )
+    redirect_to("/books", { :notice => "Book deleted successfully." })
   end
 
   def import
     permitted = params.permit(:work_id, :status)
     work_id = permitted[:work_id]
-    work    = OpenLibraryClient.fetch_work(work_id)
+    work = OpenLibraryClient.fetch_work(work_id)
 
     author_name = work.dig("authors", 0, "name") ||
                   work.dig("authors", 0, "author", "name") ||
@@ -108,10 +108,10 @@ class BooksController < ApplicationController
 
     book = Book.find_or_initialize_by(title: work["title"], author: author)
     book.description = if work["description"].is_a?(Hash)
-                         work["description"]["value"]
-                       else
-                         work["description"]
-                       end
+        work["description"]["value"]
+      else
+        work["description"]
+      end
     if work["covers"]&.first
       book.image_url = OpenLibraryClient.cover_url(work["covers"].first, "M")
     end
@@ -129,15 +129,15 @@ class BooksController < ApplicationController
     @work = OpenLibraryClient.fetch_work(params[:work_id])
     @edition = OpenLibraryClient.fetch_edition(params[:edition_id]) if params[:edition_id].present?
 
-    author_name = @work.dig('authors', 0, 'name') ||
-                  @work.dig('authors', 0, 'author', 'name')
+    author_name = @work.dig("authors", 0, "name") ||
+                  @work.dig("authors", 0, "author", "name")
     author = Author.find_by(name: author_name)
 
-    @local_book = Book.find_by(title: @work['title'], author: author)
+    @local_book = Book.find_by(title: @work["title"], author: author)
     if @local_book.present?
-      @read_count        = @local_book.readings.where(status: 'finished').count
-      @reading_count     = @local_book.readings.where(status: 'reading').count
-      @want_to_read_count = @local_book.readings.where(status: 'want_to_read').count
+      @read_count = @local_book.readings.where(status: "finished").count
+      @reading_count = @local_book.readings.where(status: "reading").count
+      @want_to_read_count = @local_book.readings.where(status: "want_to_read").count
     else
       @read_count = 0
       @reading_count = 0

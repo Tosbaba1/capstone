@@ -1,7 +1,7 @@
 desc "Fill the database tables with some sample data"
 task sample_data: :environment do
   puts "Cleaning existing records..."
-  [ActiveStorage::Attachment, ActiveStorage::Blob, Notification, Like, Comment, Post, Reading, Book, Author, Followrequest, User].each(&:delete_all)
+  [ActiveStorage::Attachment, ActiveStorage::Blob, Notification, Like, Comment, Post, Reading, SearchHistory, Book, Author, Followrequest, User].each(&:delete_all)
 
   puts "Creating main user..."
   main_user = User.create!(

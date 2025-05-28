@@ -1,22 +1,10 @@
 <div>
-  <div>
-    <h1>
-      Author #<%= @the_author.id %> details
-    </h1>
-
-    <div>
-      <div>
-        <a href="/authors">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_author/<%= @the_author.id %>">
-          Delete author
-        </a>
-      </div>
-    </div>
+  <div class="d-flex justify-content-between mb-3">
+    <%= link_to authors_path, class: 'text-white' do %>
+      <i class="bi bi-arrow-left"></i>
+    <% end %>
+    <%= link_to 'Delete author', "/delete_author/#{@the_author.id}", class: 'btn btn-danger btn-sm text-white' %>
+  </div>
 
     <dl>
       <dt>

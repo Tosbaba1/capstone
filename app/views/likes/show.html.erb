@@ -1,22 +1,10 @@
 <div>
-  <div>
-    <h1>
-      Like #<%= @the_like.id %> details
-    </h1>
-
-    <div>
-      <div>
-        <a href="/likes">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_like/<%= @the_like.id %>">
-          Delete like
-        </a>
-      </div>
-    </div>
+  <div class="d-flex justify-content-between mb-3">
+    <%= link_to likes_path, class: 'text-white' do %>
+      <i class="bi bi-arrow-left"></i>
+    <% end %>
+    <%= link_to 'Delete like', "/delete_like/#{@the_like.id}", class: 'btn btn-danger btn-sm text-white' %>
+  </div>
 
     <dl>
       <dt>

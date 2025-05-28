@@ -49,77 +49,7 @@
 
 <div class="posts-feed">
   <% @list_of_posts.each do |post| %>
-    <div class="post-card mb-4">
-      <div class="d-flex">
-        <%= image_tag(post.creator.avatar.presence || 'default_avatar.png', alt: post.creator.name, class: 'avatar') %>
-        <div class="ms-2 flex-grow-1">
-          <div class="d-flex align-items-center">
-            <strong class="text-white"><%= link_to post.creator.name, user_path(post.creator), class: 'text-white' %></strong>
-            <span class="ms-2 text-white">@<%= link_to post.creator.username, user_path(post.creator), class: 'text-white' %></span>
-          </div>
-          <p class="mb-1"><%= post.content %></p>
-          <% if post.book %>
-            <p class="post-book">
-              Reading: <%= link_to post.book.title, book_path(post.book) %>
-            </p>
-          <% end %>
-          <% if post.poll_data.present? %>
-            <div class="mt-2">
-              <p><strong><%= post.poll_data['question'] %></strong></p>
-              <ul>
-                <% post.poll_data.except('question').each_value do |option| %>
-                  <li><%= option %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-          <% if post.media.attached? %>
-            <div class="post-media mt-2">
-              <% post.media.each do |media| %>
-                <% if media.image? %>
-                  <%= image_tag media, class: 'img-fluid rounded mb-2' %>
-                <% elsif media.video? %>
-                  <%= video_tag url_for(media), controls: true, class: 'img-fluid rounded mb-2' %>
-                <% end %>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-        <% allowed_view = post.creator == current_user || !post.creator.is_private || current_user.following.include?(post.creator) %>
-        <% if allowed_view %>
-          <div class="ms-auto text-end">
-            <%= link_to 'View Post', post_path(post), class: 'btn btn-sm btn-link text-white' %>
-          </div>
-        <% end %>
-      </div>
-      <div class="post-footer mb-2 mt-2">
-        <span class="me-3"><%= link_to pluralize(post.likes_count, 'Like'), post_likes_path(post.id) %></span>
-        <span class="me-3"><%= link_to pluralize(post.comments_count, 'Comment'), post_comments_path(post.id) %></span>
-        <span><%= time_ago_in_words(post.created_at) %> ago</span>
-      </div>
-
-      <% like = post.likes.find_by(liked: current_user) %>
-      <% if like %>
-        <%= link_to 'Unlike', "/delete_like/#{like.id}", class: 'btn btn-sm btn-link p-0' %>
-      <% else %>
-        <%= link_to 'Like', insert_like_path(query_post_id: post.id, query_liked_id: current_user.id), method: :post, class: 'btn btn-sm btn-link p-0' %>
-      <% end %>
-
-      <%= form_with url: insert_comment_path, scope: :comment, local: true, class: 'mt-2' do |cf| %>
-        <%= cf.hidden_field :post_id, value: post.id %>
-        <%= cf.hidden_field :commenter_id, value: current_user.id %>
-        <div class="input-group input-group-sm">
-          <%= cf.text_field :comment, class: 'form-control', placeholder: 'Add a comment' %>
-          <button class="btn btn-primary">Comment</button>
-        </div>
-      <% end %>
-
-      <% post.comments.each do |comment| %>
-        <div class="mt-2 ps-2 border-start">
-          <strong><%= comment.commenter.name %></strong> <%= comment.comment %>
-        </div>
-      <% end %>
-    </div>
+    <%= render 'posts/post_card', post: post %>
     <hr class="my-4">
   <% end %>
 </div>

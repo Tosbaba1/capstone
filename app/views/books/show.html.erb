@@ -1,22 +1,10 @@
 <div>
-  <div>
-    <h1>
-      Book #<%= @the_book.id %> details
-    </h1>
-
-    <div>
-      <div>
-        <a href="/books">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_book/<%= @the_book.id %>">
-          Delete book
-        </a>
-      </div>
-    </div>
+  <div class="d-flex justify-content-between mb-3">
+    <%= link_to books_path, class: 'text-white' do %>
+      <i class="bi bi-arrow-left"></i>
+    <% end %>
+    <%= link_to 'Delete book', "/delete_book/#{@the_book.id}", class: 'btn btn-danger btn-sm text-white' %>
+  </div>
 
     <dl>
       <dt>

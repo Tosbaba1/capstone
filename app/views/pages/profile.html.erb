@@ -54,16 +54,8 @@
 <% end %>
 
 <% posts.each do |post| %>
-  <div class="mb-3 p-3 border rounded content-box d-flex justify-content-between">
-    <div>
-      <p class="mb-1"><strong><%= post.creator.name %></strong></p>
-      <p class="mb-1"><%= post.content %></p>
-      <small class="text-white"><%= time_ago_in_words(post.created_at) %> ago</small>
-    </div>
-    <div class="ms-2 text-end">
-      <%= link_to 'View Post', post_path(post), class: 'btn btn-sm btn-link text-white' %>
-    </div>
-  </div>
+  <%= render 'posts/post_card', post: post %>
+  <hr class="my-4">
 <% end %>
 
 <% if posts.empty? %>

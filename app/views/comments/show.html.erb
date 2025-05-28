@@ -1,22 +1,10 @@
 <div>
-  <div>
-    <h1>
-      Comment #<%= @the_comment.id %> details
-    </h1>
-
-    <div>
-      <div>
-        <a href="/comments">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_comment/<%= @the_comment.id %>">
-          Delete comment
-        </a>
-      </div>
-    </div>
+  <div class="d-flex justify-content-between mb-3">
+    <%= link_to comments_path, class: 'text-white' do %>
+      <i class="bi bi-arrow-left"></i>
+    <% end %>
+    <%= link_to 'Delete comment', "/delete_comment/#{@the_comment.id}", class: 'btn btn-danger btn-sm text-white' %>
+  </div>
 
     <dl>
       <dt>

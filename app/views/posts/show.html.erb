@@ -1,107 +1,28 @@
-<div class="text-white">
-  <div>
-    <h1 class="text-white">
-      Post #<%= @the_post.id %> details
-    </h1>
-
-    <div>
-      <div>
-        <a href="/posts" class="text-white">
-          Go back
-        </a>
-      </div>
-
-      <% if @the_post.creator == current_user %>
-        <div>
-          <%= link_to 'Delete post', "/delete_post/#{@the_post.id}" %>
-        </div>
-      <% end %>
-    </div>
-
-    <dl>
-      <dt>
-        Creator
-      </dt>
-      <dd>
-        <%= link_to @the_post.creator.username, user_path(@the_post.creator) %>
-      </dd>
-
-      <dt>
-        Content
-      </dt>
-      <dd>
-        <%= @the_post.content %>
-      </dd>
-
-      <dt>
-        Book
-      </dt>
-      <dd>
-        <%= @the_post.book_id %>
-      </dd>
-
-      <dt>Likes</dt>
-      <dd>
-        <%= @the_post.likes_count %>
-      </dd>
-      <dd>
-        <ul>
-          <% @the_post.likes.each do |like| %>
-            <li><%= like.liked.username %></li>
-          <% end %>
-        </ul>
-      </dd>
-
-      <dt>Comments</dt>
-      <dd>
-        <%= @the_post.comments_count %>
-      </dd>
-      <dd>
-        <ul>
-          <% @the_post.comments.each do |comment| %>
-            <li><%= comment.commenter.username %>: <%= comment.comment %></li>
-          <% end %>
-        </ul>
-      </dd>
-
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_post.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_post.updated_at) %> ago
-      </dd>
-    </dl>
-  </div>
+<div class="mb-3 d-flex justify-content-between">
+  <%= link_to posts_path, class: 'text-white' do %>
+    <i class="bi bi-arrow-left"></i>
+  <% end %>
+  <% if @the_post.creator == current_user %>
+    <%= link_to 'Delete post', "/delete_post/#{@the_post.id}", class: 'btn btn-danger btn-sm text-white' %>
+  <% end %>
 </div>
+
+<%= render 'posts/post_card', post: @the_post, show_view_link: false %>
 
 <hr>
 
-
 <% if @the_post.creator == current_user %>
   <div>
-    <h2>
-      Edit post
-    </h2>
-
+    <h2>Edit post</h2>
     <%= form_with model: @the_post, url: "/modify_post/#{@the_post.id}", method: :post, local: true do |f| %>
       <div class="mb-3">
         <%= f.label :content, class: 'form-label' %>
         <%= f.text_area :content, class: 'form-control' %>
       </div>
-
       <div class="mb-3">
         <%= f.label :book_id, 'Book', class: 'form-label' %>
         <%= f.text_field :book_id, class: 'form-control' %>
       </div>
-
       <%= f.submit 'Update post', class: 'btn btn-primary' %>
     <% end %>
   </div>

@@ -3,7 +3,7 @@
   <p class="mb-0"><%= @post.content %></p>
 </div>
 
-<h2 class="mb-3">Comments on this post</h2>
+<h2 class="mb-3">Comments</h2>
 <%= link_to 'Back to Feed', posts_path %>
 <hr>
 <% @post.comments.includes(:commenter).each do |comment| %>

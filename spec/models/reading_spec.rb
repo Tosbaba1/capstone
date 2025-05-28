@@ -5,7 +5,7 @@
 #  id         :bigint           not null, primary key
 #  is_private :boolean          default(FALSE)
 #  progress   :integer
-#  rating     :integer
+#  rating     :decimal(2, 1)
 #  review     :text
 #  status     :string
 #  created_at :datetime         not null

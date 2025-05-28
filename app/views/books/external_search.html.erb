@@ -13,7 +13,7 @@
     <% if book['cover_i'] %>
       <%= image_tag(OpenLibraryClient.cover_url(book['cover_i'], 'S'), class: 'me-2', size: '50x75') %>
     <% end %>
-    <strong class="text-white"><%= book['title'] %></strong>
+    <strong class="text-white"><%= link_to book['title'], book_details_path(work_id: book['key'].split('/').last, edition_id: book['edition_key']&.first), class: 'text-white' %></strong>
     <% if book['author_name'] %>
       <span class="text-muted">by <%= book['author_name'].join(', ') %></span>
     <% end %>

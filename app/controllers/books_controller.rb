@@ -124,4 +124,18 @@ class BooksController < ApplicationController
 
     redirect_to "/library", notice: "Book imported successfully."
   end
+
+  def details
+    @work = OpenLibraryClient.fetch_work(params[:work_id])
+    @edition = OpenLibraryClient.fetch_edition(params[:edition_id]) if params[:edition_id].present?
+
+    author_name = @work.dig('authors', 0, 'name') ||
+                  @work.dig('authors', 0, 'author', 'name')
+    author = Author.find_by(name: author_name)
+
+    @local_book = Book.find_by(title: @work['title'], author: author)
+    @read_count        = @local_book&.readings.where(status: 'finished')&.count || 0
+    @reading_count     = @local_book&.readings.where(status: 'reading')&.count  || 0
+    @want_to_read_count = @local_book&.readings.where(status: 'want_to_read')&.count || 0
+  end
 end

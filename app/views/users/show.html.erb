@@ -24,19 +24,21 @@
       </div>
     </div>
     <% unless @user == current_user %>
-      <% fr = current_user.sentfollowrequests.find_by(recipient: @user) %>
-      <% if current_user.following.include?(@user) %>
-        <%= button_to 'Unfollow', unfollow_user_path(@user), method: :delete, class: 'btn btn-secondary btn-sm mt-2' %>
-      <% elsif fr&.status == 'pending' %>
-        <span class="badge bg-secondary mt-2">Request Sent</span>
-      <% else %>
-        <%= button_to 'Follow', follow_user_path(@user), method: :post, class: 'btn btn-primary btn-sm mt-2' %>
-      <% end %>
-      <% if !@user.is_private || current_user.following.include?(@user) %>
-        <%= link_to 'View Library', library_user_path(@user), class: 'btn btn-secondary btn-sm mt-2 ms-2' %>
-      <% end %>
+      <div class="mt-2 d-flex align-items-center">
+        <% fr = current_user.sentfollowrequests.find_by(recipient: @user) %>
+        <% if current_user.following.include?(@user) %>
+          <%= link_to 'Unfollow', unfollow_user_path(@user), method: :delete, class: 'btn btn-secondary btn-sm me-2' %>
+        <% elsif fr&.status == 'pending' %>
+          <span class="badge bg-secondary me-2">Request Sent</span>
+        <% else %>
+          <%= link_to 'Follow', follow_user_path(@user), method: :post, class: 'btn btn-primary btn-sm me-2' %>
+        <% end %>
+        <% if !@user.is_private || current_user.following.include?(@user) %>
+          <%= link_to 'View Library', library_user_path(@user), class: 'btn btn-royal btn-sm' %>
+        <% end %>
+      </div>
     <% else %>
-      <%= link_to 'My Library', library_path, class: 'btn btn-secondary btn-sm mt-2' %>
+      <%= link_to 'My Library', library_path, class: 'btn btn-royal btn-sm mt-2' %>
     <% end %>
   </div>
 </div>

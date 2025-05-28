@@ -20,6 +20,18 @@
   color: #ffffff;
 }
 
+/* Button style using the same gradient as the tabs */
+.btn-royal {
+  background-image: linear-gradient(to right, #4169e1, #7851a9);
+  border-color: #4169e1 #7851a9 #7851a9;
+  color: #ffffff;
+}
+
+.btn-royal:hover {
+  color: #ffffff;
+  opacity: 0.9;
+}
+
 .book-cover {
   height: 150px;
   object-fit: cover;

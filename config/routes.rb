@@ -122,7 +122,7 @@ Rails.application.routes.draw do
   post '/books/import' => 'books#import'
   get '/books/details/:work_id' => 'books#details', as: :book_details
 
-  get("/books/:path_id", { :controller => "books", :action => "show" })
+  get("/books/:path_id", { :controller => "books", :action => "show", :as => "book" })
 
   # UPDATE
 

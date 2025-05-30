@@ -27,9 +27,21 @@ task sample_data: :environment do
     is_private: false
   )
 
+  puts "Ensuring persistent development account..."
+  persistent_user = User.create!(
+    email: "Tosan@nou.com",
+    password: "password",
+    name: "Tosan Nou",
+    username: "tosan",
+    avatar: Faker::Avatar.image,
+    banner: Faker::Marketing.buzzwords,
+    bio: Faker::Quote.matz,
+    is_private: false
+  )
+
   additional_count = rand(10..20)
   puts "Creating #{additional_count} additional users..."
-  users = [main_user, default_user]
+  users = [main_user, default_user, persistent_user]
   additional_count.times do
     users << User.create!(
       email: Faker::Internet.unique.email,

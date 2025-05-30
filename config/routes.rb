@@ -30,10 +30,7 @@ Rails.application.routes.draw do
 
   # UPDATE
 
-  post("/modify_author/:path_id", { :controller => "authors", :action => "update" })
-
-  # DELETE
-  get("/delete_author/:path_id", { :controller => "authors", :action => "destroy" })
+  # NOTE: update and destroy routes removed
 
   #------------------------------
 
@@ -114,8 +111,6 @@ Rails.application.routes.draw do
   post("/insert_book", { :controller => "books", :action => "create" })
 
   # READ
-  get("/books", { :controller => "books", :action => "index" })
-
   get("/books/search", { :controller => "books", :action => "search" })
 
   get '/books/external_search' => 'books#external_search'
@@ -127,10 +122,7 @@ Rails.application.routes.draw do
 
   # UPDATE
 
-  post("/modify_book/:path_id", { :controller => "books", :action => "update" })
-
-  # DELETE
-  get("/delete_book/:path_id", { :controller => "books", :action => "destroy" })
+  # NOTE: update and destroy routes removed
 
   #------------------------------
 

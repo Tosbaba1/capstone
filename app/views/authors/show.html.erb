@@ -3,7 +3,6 @@
     <%= link_to authors_path, class: 'text-white' do %>
       <i class="bi bi-arrow-left"></i>
     <% end %>
-    <%= link_to 'Delete author', "/delete_author/#{@the_author.id}", class: 'btn btn-danger btn-sm text-white' %>
   </div>
 
     <dl>
@@ -52,57 +51,3 @@
   </div>
 </div>
 
-<hr>
-
-
-<div>
-  <div>
-    <h2>
-      Edit author
-    </h2>
-
-    <% if flash[:alert].present? %>
-      <p class="text-danger"><%= flash[:alert] %></p>
-    <% end %>
-
-    <form action="/modify_author/<%= @the_author.id %>"  method="post" class="mb-3">
-      <div class="mb-3">
-        <label for="name_box" class="form-label">
-          Name
-        </label>
-
-        <input type="text" id="name_box" name="query_name" value="<%= @the_author.name %>" class="form-control">
-      </div>
-
-      <div class="mb-3">
-        <label for="bio_box" class="form-label">
-          Bio
-        </label>
-
-        <input type="text" id="bio_box" name="query_bio" value="<%= @the_author.bio %>" class="form-control">
-      </div>
-
-      <div class="mb-3">
-        <label for="dob_box" class="form-label">
-          Dob
-        </label>
-
-        <input type="text" id="dob_box" name="query_dob" value="<%= @the_author.dob %>" class="form-control">
-      </div>
-
-      <div class="mb-3">
-        <label for="books_count_box" class="form-label">
-          Books count
-        </label>
-
-        <input type="text" id="books_count_box" name="query_books_count" value="<%= @the_author.books_count %>" class="form-control">
-      </div>
-
-      <button class="btn btn-primary">
-        Update author
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>

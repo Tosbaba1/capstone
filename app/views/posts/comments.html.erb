@@ -10,7 +10,7 @@
   <div class="mb-3 border-bottom pb-2">
     <div class="d-flex align-items-center mb-1">
       <%= image_tag(comment.commenter.avatar.presence || 'default_avatar.png', class: 'avatar me-2') %>
-      <strong><%= comment.commenter.name %></strong>
+      <strong><%= link_to comment.commenter.name, user_path(comment.commenter), class: 'text-decoration-none text-white' %></strong>
     </div>
     <p class="mb-1"><%= comment.comment %></p>
     <small class="text-muted"><%= time_ago_in_words(comment.created_at) %> ago</small>

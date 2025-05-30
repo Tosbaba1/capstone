@@ -22,6 +22,11 @@ class Reading < ApplicationRecord
   belongs_to :book
 
   STATUSES = %w[want_to_read reading finished]
+  STATUS_OPTIONS = [
+    ['Currently reading', 'reading'],
+    ['Want to read', 'want_to_read'],
+    ['Finished reading', 'finished']
+  ].freeze
   validates :status, inclusion: { in: STATUSES }
   validates :progress, numericality: {
     greater_than_or_equal_to: 0,

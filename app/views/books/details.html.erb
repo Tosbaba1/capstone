@@ -41,7 +41,7 @@
 <%= form_with url: '/books/import', method: :post, local: true do %>
   <%= hidden_field_tag :work_id, params[:work_id] %>
   <%= select_tag :status,
-        options_for_select(Reading::STATUSES.map { |s| [s.humanize, s] }, 'want_to_read'),
+        options_for_select(Reading::STATUS_OPTIONS, 'want_to_read'),
         class: 'form-select form-select-sm d-inline w-auto me-2' %>
   <button class="btn btn-primary">Add to Library</button>
 <% end %>

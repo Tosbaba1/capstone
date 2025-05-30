@@ -9,7 +9,7 @@
 <div class="mt-4">
   <% @chat_history.each do |msg| %>
     <% next if msg[:role] == 'system' %>
-    <div class="mb-2">
+    <div class="mb-2 text-white">
       <strong><%= msg[:role] == 'user' ? 'You' : 'Librarian' %>:</strong>
       <%= simple_format(msg[:content]) %>
     </div>

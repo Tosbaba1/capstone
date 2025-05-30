@@ -18,6 +18,9 @@ class OpenAiService
         messages: messages
       }
     )
-    api_response.dig("choices", 0, "message", "content")
+    api_response.dig("choices", 0, "message", "content").to_s
+  rescue StandardError => e
+    Rails.logger.error("OpenAI API failure: #{e.class} - #{e.message}")
+    "Sorry, I'm having trouble responding right now."
   end
 end

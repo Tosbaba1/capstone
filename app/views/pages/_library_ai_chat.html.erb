@@ -1,0 +1,17 @@
+<h2 class="h5 mb-3">Ask the Librarian</h2>
+<%= form_with url: library_ai_chat_path, method: :post, local: true do %>
+  <div class="mb-2">
+    <%= text_area_tag :message, nil, class: 'form-control', placeholder: 'Describe your mood or what you want to read...' %>
+  </div>
+  <%= submit_tag 'Get Suggestions', class: 'btn btn-primary' %>
+<% end %>
+
+<div class="mt-4">
+  <% @chat_history.each do |msg| %>
+    <% next if msg[:role] == 'system' %>
+    <div class="mb-2">
+      <strong><%= msg[:role] == 'user' ? 'You' : 'Librarian' %>:</strong>
+      <%= simple_format(msg[:content]) %>
+    </div>
+  <% end %>
+</div>

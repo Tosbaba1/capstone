@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   }
   root to: "posts#index"
   get "/library", to: "pages#library"
+  post "/library/ai_chat", to: "pages#ai_chat", as: :library_ai_chat
   get "/notifications", to: "pages#notifications"
   get "/search", to: "search#index", as: :search
   resources :users, only: [:show] do

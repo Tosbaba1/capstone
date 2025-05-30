@@ -13,26 +13,26 @@ class PagesController < ApplicationController
       @finished = scope.where(status: "finished")
     end
 
-    @chat_history = session[:ai_history] || []
+    @chat_history = (session[:ai_history] || []).map(&:symbolize_keys)
   end
 
   def ai_chat
     session[:ai_history] ||= [
       {
-        role: "system",
-        content: "You are an all-knowing librarian who knows every book ever created. You recommend books based on the reader's mood, reading level, experience, desired length, and any other preferences. Explain suggestions using simple words a beginning reader can understand."
+        "role" => "system",
+        "content" => "You are an all-knowing librarian who knows every book ever created. You recommend books based on the reader's mood, reading level, experience, desired length, and any other preferences. Explain suggestions using simple words a beginning reader can understand."
       },
     ]
 
     user_message = params[:message].to_s.strip
 
     if user_message.present?
-      session[:ai_history] << { role: "user", content: user_message }
+      session[:ai_history] << { "role" => "user", "content" => user_message }
 
       service = OpenAiService.new
       assistant_response = service.chat(session[:ai_history])
 
-      session[:ai_history] << { role: "assistant", content: assistant_response }
+      session[:ai_history] << { "role" => "assistant", "content" => assistant_response }
     end
 
     redirect_to library_path(tab: "ai")

@@ -17,53 +17,23 @@ class PagesController < ApplicationController
   end
 
   def ai_chat
-    # Set up the message list with a system message
-    message_list = [
+    session[:ai_history] ||= [
       {
         role: "system",
-        content: 'You are an all-knowing librarian who knows every book ever created. You recommend books based on the reader\'s mood, reading level, experience, desired length, and any other preferences. Explain suggestions using simple words a beginning reader can understand.',
+        content: "You are an all-knowing librarian who knows every book ever created. You recommend books based on the reader's mood, reading level, experience, desired length, and any other preferences. Explain suggestions using simple words a beginning reader can understand."
       },
     ]
 
-    # Start the conversation loop
-    user_input = ""
+    user_message = params[:message].to_s.strip
 
-    # Loop until the user types "bye"
-    while user_input != "bye"
-      puts "Hello! How can I help you today?"
-      puts "-" * 50
+    if user_message.present?
+      session[:ai_history] << { role: "user", content: user_message }
 
-      # Get user input
-      user_input = gets.chomp
+      service = OpenAiService.new
+      assistant_response = service.chat(session[:ai_history])
 
-      # Add the user's message to the message list
-      if user_input != "bye"
-        message_list.push({ "role" => "user", "content" => user_input })
-
-        # Send the message list to the API
-        api_response = client.chat(
-          parameters: {
-            model: "gpt-3.5-turbo",
-            messages: message_list,
-          },
-        )
-
-        # Dig through the JSON response to get the content
-        choices = api_response.fetch("choices")
-        first_choice = choices.at(0)
-        message = first_choice.fetch("message")
-        assistant_response = message["content"]
-
-        # Print the assistant's response
-        puts assistant_response
-        puts "-" * 50
-
-        # Add the assistant's response to the message list
-        message_list.push({ "role" => "assistant", "content" => assistant_response })
-      end
+      session[:ai_history] << { role: "assistant", content: assistant_response }
     end
-
-    puts "Goodbye! Have a great day!"
 
     redirect_to library_path(tab: "ai")
   end

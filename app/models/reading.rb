@@ -21,6 +21,8 @@ class Reading < ApplicationRecord
   belongs_to :user
   belongs_to :book
 
+  after_save :post_started_reading, if: :started_reading?
+
   STATUSES = %w[want_to_read reading finished]
   validates :status, inclusion: { in: STATUSES }
   validates :progress, numericality: {
@@ -32,4 +34,18 @@ class Reading < ApplicationRecord
     less_than_or_equal_to: 5
   }, allow_nil: true
   validates :book_id, uniqueness: { scope: :user_id }
+
+  private
+
+  def started_reading?
+    saved_change_to_status? && status == 'reading' && status_before_last_save != 'reading'
+  end
+
+  def post_started_reading
+    Post.create(
+      creator: user,
+      book: book,
+      content: "#{user.name} is currently reading '#{book.title}'!"
+    )
+  end
 end

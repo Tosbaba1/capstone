@@ -71,6 +71,14 @@ class User < ApplicationRecord
 
   scope :publicly_visible, -> { where(is_private: false) }
 
+  def random_currently_reading_book
+    reading_books
+      .joins(:readings)
+      .where(readings: { status: 'reading' })
+      .order(Arel.sql('RANDOM()'))
+      .first
+  end
+
   def timeline
     Post.where(creator_id: following.ids + [id])
   end

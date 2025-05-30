@@ -90,6 +90,14 @@ class User < ApplicationRecord
   validates :name, presence: true, on: :update
   validates :username, presence: true, uniqueness: true, on: :update
 
+  before_validation :downcase_email
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  private
+
+  def downcase_email
+    self.email = email.downcase if email.present?
+  end
 end

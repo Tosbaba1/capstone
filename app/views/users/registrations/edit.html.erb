@@ -40,14 +40,24 @@
 
   <hr>
   <p class="text-white">Leave password fields blank if you don't want to change it</p>
-  <div class="mb-3">
+  <div class="mb-3" data-controller="password-visibility">
     <%= f.label :password, class: 'text-white' %>
-    <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+    <div class="input-group">
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-control", data: { password_visibility_target: "input" } %>
+      <span class="input-group-text" data-action="click->password-visibility#toggle">
+        <i class="bi bi-eye" data-password-visibility-target="toggle"></i>
+      </span>
+    </div>
   </div>
 
-  <div class="mb-3">
+  <div class="mb-3" data-controller="password-visibility">
     <%= f.label :password_confirmation, class: 'text-white' %>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+    <div class="input-group">
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", data: { password_visibility_target: "input" } %>
+      <span class="input-group-text" data-action="click->password-visibility#toggle">
+        <i class="bi bi-eye" data-password-visibility-target="toggle"></i>
+      </span>
+    </div>
   </div>
 
 

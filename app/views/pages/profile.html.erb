@@ -40,6 +40,9 @@
   <li class="nav-item">
     <%= link_to 'Comments', profile_path(tab: 'comments'), class: "nav-link #{params[:tab] == 'comments' ? 'active' : ''}" %>
   </li>
+  <li class="nav-item">
+    <%= link_to 'Badges', profile_path(tab: 'badges'), class: "nav-link #{params[:tab] == 'badges' ? 'active' : ''}" %>
+  </li>
 </ul>
 
 <% case params[:tab] %>
@@ -49,15 +52,32 @@
   <% posts = Post.joins(:comments).where(comments: { commenter_id: current_user.id }).distinct.order(created_at: :desc) %>
 <% when 'renous' %>
   <% posts = [] %>
+<% when 'badges' %>
+  <% posts = [] %>
 <% else %>
   <% posts = current_user.posts.order(created_at: :desc) %>
 <% end %>
 
-<% posts.each do |post| %>
-  <%= render 'posts/post_card', post: post %>
-  <hr class="my-4">
-<% end %>
+<% if params[:tab] == 'badges' %>
+  <div class="row row-cols-2 row-cols-sm-3 g-3">
+    <% current_user.badges.each do |badge| %>
+      <div class="col text-center text-white">
+        <%= image_tag badge.image_url, class: 'img-fluid mb-2' if badge.image_url.present? %>
+        <div><strong><%= badge.name %></strong></div>
+        <div><small><%= badge.description %></small></div>
+      </div>
+    <% end %>
+  </div>
+  <% if current_user.badges.empty? %>
+    <p class="text-white">No badges earned yet.</p>
+  <% end %>
+<% else %>
+  <% posts.each do |post| %>
+    <%= render 'posts/post_card', post: post %>
+    <hr class="my-4">
+  <% end %>
 
-<% if posts.empty? %>
-  <p class="text-white">No posts to display.</p>
+  <% if posts.empty? %>
+    <p class="text-white">No posts to display.</p>
+  <% end %>
 <% end %>

@@ -40,6 +40,7 @@ class User < ApplicationRecord
 
   has_many :readings, dependent: :destroy
   has_many :reading_books, through: :readings, source: :book
+  has_many :badges, dependent: :destroy
 
   #Indirect Associations
   has_many :following, -> { where(followrequests: { status: 'accepted' }) }, through: :sentfollowrequests, source: :recipient

@@ -1,7 +1,7 @@
 desc "Fill the database tables with some sample data"
 task sample_data: :environment do
   puts "Cleaning existing records..."
-  [ActiveStorage::Attachment, ActiveStorage::Blob, Notification, Like, Comment, Post, Reading, SearchHistory, Book, Author, Followrequest, User].each(&:delete_all)
+  [ActiveStorage::Attachment, ActiveStorage::Blob, Notification, Like, Comment, Post, Reading, SearchHistory, Book, Author, Followrequest, Badge, User].each(&:delete_all)
 
   puts "Creating main user..."
   main_user = User.create!(
@@ -15,9 +15,21 @@ task sample_data: :environment do
     is_private: false
   )
 
+  puts "Creating default user..."
+  default_user = User.create!(
+    email: "tosan@example.com",
+    password: "password",
+    name: "Tosan",
+    username: "Tosan1",
+    avatar: Faker::Avatar.image,
+    banner: Faker::Marketing.buzzwords,
+    bio: Faker::Quote.matz,
+    is_private: false
+  )
+
   additional_count = rand(10..20)
   puts "Creating #{additional_count} additional users..."
-  users = [main_user]
+  users = [main_user, default_user]
   additional_count.times do
     users << User.create!(
       email: Faker::Internet.unique.email,
@@ -133,6 +145,13 @@ task sample_data: :environment do
         )
       end
     end
+  end
+
+  puts "Generating badges..."
+  badge_images = Dir[Rails.root.join('app/assets/images/badges/*.png')]
+  users.each do |user|
+    Badge.create!(user: user, name: 'First Book', description: 'Started reading your first book', image_url: badge_images.sample)
+    Badge.create!(user: user, name: 'Five Books', description: 'Read five books', image_url: badge_images.sample)
   end
 
   puts "Sample data created."

@@ -43,15 +43,65 @@
   </div>
 </div>
 
+<% if !@restricted %>
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <%= link_to 'Nouvelles', user_path(@user), class: "nav-link #{params[:tab].blank? || params[:tab] == 'nouvelles' ? 'active' : ''}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Renous', user_path(@user, tab: 'renous'), class: "nav-link #{params[:tab] == 'renous' ? 'active' : ''}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Likes', user_path(@user, tab: 'likes'), class: "nav-link #{params[:tab] == 'likes' ? 'active' : ''}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Comments', user_path(@user, tab: 'comments'), class: "nav-link #{params[:tab] == 'comments' ? 'active' : ''}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Badges', user_path(@user, tab: 'badges'), class: "nav-link #{params[:tab] == 'badges' ? 'active' : ''}" %>
+    </li>
+  </ul>
+<% end %>
+
 <% if @restricted %>
   <p class="text-white">This account is private.</p>
 <% end %>
 
-<% @posts.each do |post| %>
-  <%= render 'posts/post_card', post: post %>
-  <hr class="my-4">
-<% end %>
+<% unless @restricted %>
+  <% case params[:tab] %>
+  <% when 'likes' %>
+    <% posts = @user.liked_posts.order(created_at: :desc) %>
+  <% when 'comments' %>
+    <% posts = Post.joins(:comments).where(comments: { commenter_id: @user.id }).distinct.order(created_at: :desc) %>
+  <% when 'renous' %>
+    <% posts = [] %>
+  <% when 'badges' %>
+    <% posts = [] %>
+  <% else %>
+    <% posts = @user.posts.order(created_at: :desc) %>
+  <% end %>
 
-<% if @posts.empty? %>
-  <p class="text-white">No posts to display.</p>
+  <% if params[:tab] == 'badges' %>
+    <div class="row row-cols-2 row-cols-sm-3 g-3">
+      <% @user.badges.each do |badge| %>
+        <div class="col text-center text-white">
+          <%= image_tag badge.image_url, class: 'img-fluid mb-2' if badge.image_url.present? %>
+          <div><strong><%= badge.name %></strong></div>
+          <div><small><%= badge.description %></small></div>
+        </div>
+      <% end %>
+    </div>
+    <% if @user.badges.empty? %>
+      <p class="text-white">No badges earned yet.</p>
+    <% end %>
+  <% else %>
+    <% posts.each do |post| %>
+      <%= render 'posts/post_card', post: post %>
+      <hr class="my-4">
+    <% end %>
+
+    <% if posts.empty? %>
+      <p class="text-white">No posts to display.</p>
+    <% end %>
+  <% end %>
 <% end %>

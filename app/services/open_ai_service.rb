@@ -3,7 +3,11 @@ require "openai"
 class OpenAiService
   MODEL = "gpt-3.5-turbo"
 
-  def initialize(client: OpenAI::Client.new(access_token: ENV.fetch("OPENAI_API_KEY")))
+  def initialize(client: nil)
+    api_key = ENV["OPENAI_API_KEY"]
+    raise "OPENAI_API_KEY environment variable is missing" if api_key.nil? || api_key.strip.empty?
+
+    client ||= OpenAI::Client.new(access_token: api_key)
     @client = client
   end
 

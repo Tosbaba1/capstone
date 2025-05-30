@@ -103,3 +103,5 @@ rake sample_data
 
 Ensure that an `OPENAI_API_KEY` environment variable is set with your OpenAI API key for librarian chat features.
 
+If you see an error like `Errno::ENOENT @ rb_sysopen - 0.0.0.0` when submitting a question to the librarian chat, double check that `OPENAI_API_KEY` is pointing to your actual API key value and not a placeholder such as `0.0.0.0`.
+

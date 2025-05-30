@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   post "/notifications/:id/mark_read", to: "notifications#mark_read", as: :mark_notification_read
   post "/notifications/:id/mark_unread", to: "notifications#mark_unread", as: :mark_notification_unread
   get "/profile", to: "pages#profile"
-  # Routes for the Author resource:
 
   # CREATE
   post("/insert_author", { :controller => "authors", :action => "create" })
@@ -29,8 +28,6 @@ Rails.application.routes.draw do
   get("/authors/:path_id", { :controller => "authors", :action => "show" })
 
   # UPDATE
-
-  # NOTE: update and destroy routes removed
 
   #------------------------------
 
@@ -119,11 +116,5 @@ Rails.application.routes.draw do
   get '/books/details/:work_id' => 'books#details', as: :book_details
 
   get("/books/:path_id", { :controller => "books", :action => "show", :as => "book" })
-
-  # UPDATE
-
-  # NOTE: update and destroy routes removed
-
-  #------------------------------
 
 end

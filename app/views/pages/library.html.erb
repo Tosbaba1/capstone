@@ -6,8 +6,15 @@
     <li class="nav-item">
       <%= link_to 'Private', library_path(tab: 'private'), class: "nav-link #{@active_tab == 'private' ? 'active' : ''}" %>
     </li>
+    <li class="nav-item">
+      <%= link_to 'Ask Librarian', library_path(tab: 'ai'), class: "nav-link #{@active_tab == 'ai' ? 'active' : ''}" %>
+    </li>
   </ul>
 <% end %>
+
+<% if @active_tab == 'ai' %>
+  <%= render 'library_ai_chat' %>
+<% else %>
 
 <h2 class="h5 mb-3">Currently Reading</h2>
 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-3 mb-4">
@@ -125,3 +132,4 @@
     </div>
   <% end %>
 </div>
+<% end %>

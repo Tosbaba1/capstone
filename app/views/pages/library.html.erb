@@ -18,11 +18,11 @@
         <%= image_tag(book.image_url, class: 'img-fluid mb-2 book-cover') if book.image_url.present? %>
       <% end %>
       <div><strong><%= link_to book.title, book_path(book), class: 'text-white text-decoration-none' %></strong></div>
-      <div class="text-white"><%= book.author.name if book.author %></div>
+      <div class="text-white"><%= book.author.name unless book.author&.name.to_s.downcase == 'unknown' %></div>
       <% if @user == current_user %>
         <%= form_with url: update_reading_path(reading), method: :post, local: true do |f| %>
-          <div class="mb-1">
-            <%= f.select :status, Reading::STATUSES, { selected: reading.status }, class: 'form-select form-select-sm' %>
+          <div class="mb-2">
+            <%= f.select :status, Reading::STATUS_OPTIONS, { selected: reading.status }, class: 'form-select form-select-sm' %>
           </div>
           <div class="mb-1">
             <%= f.number_field :rating, value: reading.rating, step: 0.2, in: 0..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
@@ -57,11 +57,11 @@
         <%= image_tag(book.image_url, class: 'img-fluid mb-2 book-cover') if book.image_url.present? %>
       <% end %>
       <div><strong><%= link_to book.title, book_path(book), class: 'text-white text-decoration-none' %></strong></div>
-      <div class="text-white"><%= book.author.name if book.author %></div>
+      <div class="text-white"><%= book.author.name unless book.author&.name.to_s.downcase == 'unknown' %></div>
       <% if @user == current_user %>
         <%= form_with url: update_reading_path(reading), method: :post, local: true do |f| %>
-          <div class="mb-1">
-            <%= f.select :status, Reading::STATUSES, { selected: reading.status }, class: 'form-select form-select-sm' %>
+          <div class="mb-2">
+            <%= f.select :status, Reading::STATUS_OPTIONS, { selected: reading.status }, class: 'form-select form-select-sm' %>
           </div>
           <div class="mb-1">
             <%= f.number_field :rating, value: reading.rating, step: 0.2, in: 0..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
@@ -96,11 +96,11 @@
         <%= image_tag(book.image_url, class: 'img-fluid mb-2 book-cover') if book.image_url.present? %>
       <% end %>
       <div><strong><%= link_to book.title, book_path(book), class: 'text-white text-decoration-none' %></strong></div>
-      <div class="text-white"><%= book.author.name if book.author %></div>
+      <div class="text-white"><%= book.author.name unless book.author&.name.to_s.downcase == 'unknown' %></div>
       <% if @user == current_user %>
         <%= form_with url: update_reading_path(reading), method: :post, local: true do |f| %>
-          <div class="mb-1">
-            <%= f.select :status, Reading::STATUSES, { selected: reading.status }, class: 'form-select form-select-sm' %>
+          <div class="mb-2">
+            <%= f.select :status, Reading::STATUS_OPTIONS, { selected: reading.status }, class: 'form-select form-select-sm' %>
           </div>
           <div class="mb-1">
             <%= f.number_field :rating, value: reading.rating, step: 0.2, in: 0..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>

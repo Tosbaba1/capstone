@@ -75,7 +75,8 @@ class User < ApplicationRecord
     Post.where(creator_id: following.ids + [id])
   end
 
-  validates :username, uniqueness: true, allow_blank: true
+  validates :name, presence: true, on: :update
+  validates :username, presence: true, uniqueness: true, on: :update
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable

@@ -1,7 +1,7 @@
 desc "Fill the database tables with some sample data"
 task sample_data: :environment do
   puts "Cleaning existing records..."
-  [ActiveStorage::Attachment, ActiveStorage::Blob, Notification, Like, Comment, Post, Reading, SearchHistory, Book, Author, Followrequest, Badge, User].each(&:delete_all)
+  [ActiveStorage::Attachment, ActiveStorage::Blob, Notification, Like, Comment, Renou, AiChatMessage, Post, Reading, SearchHistory, Book, Author, Followrequest, Badge, User].each(&:delete_all)
 
   puts "Creating main user..."
   main_user = User.create!(
@@ -156,6 +156,13 @@ task sample_data: :environment do
           comment: Faker::Quote.yoda
         )
       end
+    end
+  end
+
+  puts "Generating renous..."
+  users.each do |user|
+    posts.sample(rand(1..2)).each do |post|
+      Renou.find_or_create_by!(user: user, post: post)
     end
   end
 

@@ -101,6 +101,15 @@ Rails.application.routes.draw do
   get("/delete_like/:path_id", { :controller => "likes", :action => "destroy" })
 
   #------------------------------
+  # Routes for the Renou resource:
+
+  # CREATE
+  post("/insert_renou", { :controller => "renous", :action => "create" })
+
+  # DELETE
+  get("/delete_renou/:path_id", { :controller => "renous", :action => "destroy" })
+
+  #------------------------------
 
   # Routes for the Book resource:
 

@@ -18,12 +18,14 @@ class Post < ApplicationRecord
   belongs_to :book, class_name: "Book", foreign_key: "book_id", optional: true
   has_many  :likes, class_name: "Like", foreign_key: "post_id", dependent: :destroy
   has_many  :comments, class_name: "Comment", foreign_key: "post_id", dependent: :destroy
+  has_many  :renous, dependent: :destroy
   has_many_attached :media
   has_many :notifications, as: :notifiable, dependent: :destroy
 
   #Indirect Associations
   has_many :likeds, through: :likes, source: :liked
   has_many :followers, through: :creator, source: :following
+  has_many :renouers, through: :renous, source: :user
 
   validate :content_present
 

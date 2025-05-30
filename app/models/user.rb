@@ -41,6 +41,9 @@ class User < ApplicationRecord
   has_many :readings, dependent: :destroy
   has_many :reading_books, through: :readings, source: :book
   has_many :badges, dependent: :destroy
+  has_many :renous, dependent: :destroy
+  has_many :renoued_posts, through: :renous, source: :post
+  has_many :ai_chat_messages, dependent: :destroy
 
   #Indirect Associations
   has_many :following, -> { where(followrequests: { status: 'accepted' }) }, through: :sentfollowrequests, source: :recipient

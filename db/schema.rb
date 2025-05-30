@@ -140,6 +140,25 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_20_000000) do
     t.index ["user_id"], name: "index_search_histories_on_user_id"
   end
 
+  create_table "ai_chat_messages", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "role"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_ai_chat_messages_on_user_id"
+  end
+
+  create_table "renous", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_renous_on_post_id"
+    t.index ["user_id", "post_id"], name: "index_renous_on_user_id_and_post_id", unique: true
+    t.index ["user_id"], name: "index_renous_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -163,4 +182,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_20_000000) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "badges", "users"
   add_foreign_key "search_histories", "users"
+  add_foreign_key "ai_chat_messages", "users"
+  add_foreign_key "renous", "posts"
+  add_foreign_key "renous", "users"
 end

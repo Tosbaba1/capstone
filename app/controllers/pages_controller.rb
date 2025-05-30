@@ -13,26 +13,27 @@ class PagesController < ApplicationController
       @finished = scope.where(status: "finished")
     end
 
-    @chat_history = (session[:ai_history] || []).map(&:symbolize_keys)
+    @chat_history = current_user.ai_chat_messages.order(:created_at)
   end
 
   def ai_chat
-    session[:ai_history] ||= [
-      {
-        "role" => "system",
-        "content" => "You are an all-knowing librarian who knows every book ever created. You recommend books based on the reader's mood, reading level, experience, desired length, and any other preferences. Explain suggestions using simple words a beginning reader can understand."
-      },
-    ]
+    unless current_user.ai_chat_messages.exists?(role: 'system')
+      current_user.ai_chat_messages.create(
+        role: 'system',
+        content: 'You are an all-knowing librarian who knows every book ever created. You recommend books based on the reader\'s mood, reading level, experience, desired length, and any other preferences. Explain suggestions using simple words a beginning reader can understand.'
+      )
+    end
 
     user_message = params[:message].to_s.strip
 
     if user_message.present?
-      session[:ai_history] << { "role" => "user", "content" => user_message }
+      current_user.ai_chat_messages.create(role: 'user', content: user_message)
 
+      messages = current_user.ai_chat_messages.order(:created_at).map { |m| { 'role' => m.role, 'content' => m.content } }
       service = OpenAiService.new
-      assistant_response = service.chat(session[:ai_history])
+      assistant_response = service.chat(messages)
 
-      session[:ai_history] << { "role" => "assistant", "content" => assistant_response }
+      current_user.ai_chat_messages.create(role: 'assistant', content: assistant_response)
     end
 
     redirect_to library_path(tab: "ai")

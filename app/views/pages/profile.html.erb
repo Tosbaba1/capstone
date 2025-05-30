@@ -51,7 +51,7 @@
 <% when 'comments' %>
   <% posts = Post.joins(:comments).where(comments: { commenter_id: current_user.id }).distinct.order(created_at: :desc) %>
 <% when 'renous' %>
-  <% posts = [] %>
+  <% posts = current_user.renoued_posts.order('renous.created_at DESC') %>
 <% when 'badges' %>
   <% posts = [] %>
 <% else %>

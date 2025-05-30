@@ -78,7 +78,7 @@ class User < ApplicationRecord
   def random_currently_reading_book
     reading_books
       .joins(:readings)
-      .where(readings: { status: 'reading' })
+      .where(readings: { status: 'reading', is_private: false })
       .order(Arel.sql('RANDOM()'))
       .first
   end

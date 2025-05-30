@@ -11,7 +11,7 @@
         <% end %>
       </div>
       <p class="mb-1"><%= post.content %></p>
-      <% if post.book && post.creator.readings.where(book: post.book, status: 'reading').exists? %>
+      <% if post.book && post.creator.readings.where(book: post.book, status: 'reading', is_private: false).exists? %>
         <p class="post-book text-white">
           Reading: <%= link_to post.book.title, book_path(post.book), class: 'text-white' %>
         </p>

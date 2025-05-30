@@ -14,7 +14,7 @@
         <h4 class="mb-0 text-white"><%= current_user.name %></h4>
         <p class="mb-1 text-white">@<%= current_user.username %></p>
         <% if current_user.bio.present? %>
-          <p class="mb-1 text-white"><%= current_user.bio %></p>
+          <p class="mb-1 text-white text-truncate" style="max-width: 250px;"><%= current_user.bio %></p>
         <% end %>
       </div>
       <div class="text-end text-white">

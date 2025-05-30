@@ -101,3 +101,5 @@ rails db:create db:migrate
 rake sample_data
 ```
 
+Ensure that an `OPENAI_API_KEY` environment variable is set with your OpenAI API key for librarian chat features.
+

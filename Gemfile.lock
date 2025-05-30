@@ -269,8 +269,7 @@ GEM
       faraday (>= 1, < 3)
       sawyer (~> 0.9)
     oj (3.13.23)
-    openai-chat (0.0.3)
-      mime-types (~> 3.0)
+    openai (4.0.0)
     orm_adapter (0.5.0)
     pg (1.5.6)
     pry (0.14.2)
@@ -494,7 +493,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kredis
-  openai-chat
+  openai
   pg (~> 1.1)
   pry-rails
   puma

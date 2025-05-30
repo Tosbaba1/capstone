@@ -9,7 +9,7 @@
 <% @post.likes.includes(:liked).each do |like| %>
   <div class="d-flex align-items-center mb-2">
     <%= image_tag(like.liked.avatar.presence || 'default_avatar.png', class: 'avatar me-2') %>
-    <strong><%= like.liked.name %></strong>
+    <strong><%= link_to like.liked.name, user_path(like.liked), class: 'text-white' %></strong>
   </div>
 <% end %>
 <% if @post.likes.empty? %>

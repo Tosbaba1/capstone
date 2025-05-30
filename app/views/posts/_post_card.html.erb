@@ -6,14 +6,14 @@
       <div class="d-flex align-items-center">
         <strong class="text-white"><%= link_to post.creator.name, user_path(post.creator), class: 'text-white' %></strong>
         <span class="ms-2 text-white">@<%= link_to post.creator.username, user_path(post.creator), class: 'text-white' %></span>
-        <% if (current_book = post.creator.random_currently_reading_book) %>
-          <small class="ms-2 text-muted">reading <%= link_to current_book.title, book_path(current_book) %></small>
+        <% if post.book.blank? && (current_book = post.creator.random_currently_reading_book) %>
+          <small class="ms-2 text-white">reading <%= link_to current_book.title, book_path(current_book), class: 'text-white' %></small>
         <% end %>
       </div>
       <p class="mb-1"><%= post.content %></p>
       <% if post.book %>
-        <p class="post-book">
-          Reading: <%= link_to post.book.title, book_path(post.book) %>
+        <p class="post-book text-white">
+          Reading: <%= link_to post.book.title, book_path(post.book), class: 'text-white' %>
         </p>
       <% end %>
       <% if post.poll_data.present? %>

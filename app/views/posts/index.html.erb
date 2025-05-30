@@ -17,12 +17,6 @@
           class: "form-control" %>
   </div>
 
-  <div class="mb-3">
-    <%= f.collection_select :book_id,
-          Book.all, :id, :title,
-          prompt: "— no book —",
-          class: "form-select" %>
-  </div>
 
   <div class="post-icons mb-2">
     <i class="bi bi-image" data-action="click->post-form#attachMedia"></i>
@@ -41,7 +35,7 @@
   </div>
 
   <div class="mb-3">
-    <%= f.submit "Post", class: "btn btn-primary" %>
+    <%= f.submit "Post", class: "btn btn-royal" %>
   </div>
 <% end %>
 

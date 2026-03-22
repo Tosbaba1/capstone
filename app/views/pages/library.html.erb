@@ -15,8 +15,9 @@
 <% if @active_tab == 'ai' %>
   <%= render 'library_ai_chat' %>
 <% else %>
-  <% library_title = @user == current_user ? 'Your Library' : "#{@user.name}'s Library" %>
-  <% shelf_label = @user == current_user ? (@active_tab == 'private' ? 'Private shelf' : 'Public shelf') : 'Public shelf' %>
+  <% editable = @user == current_user %>
+  <% library_title = editable ? 'Your Library' : "#{@user.name}'s Library" %>
+  <% shelf_label = editable ? (@active_tab == 'private' ? 'Private shelf' : 'Public shelf') : 'Public shelf' %>
 
   <section class="library-shell">
     <header class="library-hero mb-4">
@@ -38,18 +39,18 @@
       title: 'Currently Reading',
       subtitle: 'Books with your bookmark still tucked inside.',
       readings: @reading_now,
-      editable: @user == current_user %>
+      editable: editable %>
 
     <%= render 'library_shelf_section',
       title: 'Want to Read',
       subtitle: 'Books waiting patiently in your next-up stack.',
       readings: @want_to_read,
-      editable: @user == current_user %>
+      editable: editable %>
 
     <%= render 'library_shelf_section',
       title: 'Finished',
       subtitle: 'Books you have already carried all the way to the last page.',
       readings: @finished,
-      editable: @user == current_user %>
+      editable: editable %>
   </section>
 <% end %>

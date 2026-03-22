@@ -78,6 +78,10 @@
   padding: 1.5rem;
 }
 
+.feed-post-card {
+  padding: 1.25rem;
+}
+
 .feed-composer__title {
   color: #2b1e16 !important;
   font-size: 1.75rem;
@@ -161,10 +165,6 @@
   border-radius: 20px;
   color: #4f3b2d;
   margin-top: 1rem;
-  padding: 1.25rem;
-}
-
-.feed-post-card {
   padding: 1.25rem;
 }
 

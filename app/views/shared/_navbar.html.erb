@@ -15,6 +15,14 @@
       active: request.path == search_path
     },
     {
+      label: "Quill",
+      path: posts_path(anchor: "feed-composer"),
+      icon: "bi-feather",
+      active: false,
+      compose: true,
+      aria_label: "Create a post"
+    },
+    {
       label: "Library",
       path: library_path,
       icon: "bi-journal-richtext",
@@ -26,12 +34,6 @@
       icon: "bi-bell",
       active: request.path == notifications_path,
       badge: unread_count
-    },
-    {
-      label: "Profile",
-      path: profile_path,
-      icon: "bi-person",
-      active: request.path == profile_path
     }
   ]
 %>
@@ -39,30 +41,34 @@
 <header class="app-header">
   <div class="container">
     <div class="app-header__inner">
-      <%= link_to root_path, class: "nouvelle-mark", aria: { label: "Nouvelle home" } do %>
-        <span class="nouvelle-mark__seal" aria-hidden="true">
-          <span class="nouvelle-mark__glyph">N</span>
-        </span>
-        <span class="nouvelle-mark__wording">
-          <span class="nouvelle-mark__name">Nouvelle</span>
-          <span class="nouvelle-mark__tag">Reading society</span>
-        </span>
-      <% end %>
+      <div class="app-header__lead">
+        <%= link_to root_path, class: "nouvelle-mark", aria: { label: "Nouvelle home" } do %>
+          <span class="nouvelle-mark__seal" aria-hidden="true">
+            <span class="nouvelle-mark__glyph">N</span>
+          </span>
+          <span class="nouvelle-mark__wording">
+            <span class="nouvelle-mark__name">Nouvelle</span>
+            <span class="nouvelle-mark__tag">Reading society</span>
+          </span>
+        <% end %>
+      </div>
 
       <div class="app-header__meta">
         <p class="app-header__eyebrow mb-0">Editorial social reading</p>
         <p class="app-header__title mb-0"><%= page_label %></p>
       </div>
 
-      <% if user_signed_in? %>
-        <% if request.path == profile_path %>
-          <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "app-header__action" %>
-        <% else %>
-          <%= link_to profile_path, class: "app-header__profile", aria: { label: "Open your profile" } do %>
-            <%= image_tag(current_user.avatar.presence || "default_avatar.png", alt: current_user.name, class: "app-header__avatar") %>
+      <div class="app-header__tail">
+        <% if user_signed_in? %>
+          <% if request.path == profile_path %>
+            <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "app-header__action" %>
+          <% else %>
+            <%= link_to profile_path, class: "app-header__profile", aria: { label: "Open your profile" } do %>
+              <%= image_tag(current_user.avatar.presence || "default_avatar.png", alt: current_user.name, class: "app-header__avatar") %>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
 </header>
@@ -71,29 +77,11 @@
   <div class="app-bottom-bar" role="presentation">
     <nav class="app-bottom-nav container" aria-label="Primary">
       <div class="app-bottom-nav__surface">
-        <%= link_to posts_path(anchor: "feed-composer"), class: "app-fab", aria: { label: "Create a post" } do %>
-          <i class="bi bi-feather"></i>
-        <% end %>
-
         <div class="app-bottom-nav__items">
-          <% nav_items.first(2).each do |item| %>
-            <%= link_to item[:path], class: "app-bottom-nav__link #{'is-active' if item[:active]}", aria: (item[:label] == "Alerts" && unread_count.positive? ? { label: "#{item[:label]}, #{unread_count} unread" } : { label: item[:label] }) do %>
-              <span class="app-bottom-nav__icon-wrap">
-                <span class="app-bottom-nav__icon">
-                  <i class="bi <%= item[:icon] %>"></i>
-                </span>
-                <% if item[:badge].to_i.positive? %>
-                  <span class="app-bottom-nav__badge"><%= [item[:badge], 9].min %></span>
-                <% end %>
-              </span>
-              <span class="app-bottom-nav__label"><%= item[:label] %></span>
-            <% end %>
-          <% end %>
-
-          <span class="app-bottom-nav__fab-space" aria-hidden="true"></span>
-
-          <% nav_items.drop(2).each do |item| %>
-            <%= link_to item[:path], class: "app-bottom-nav__link #{'is-active' if item[:active]}", aria: (item[:label] == "Alerts" && unread_count.positive? ? { label: "#{item[:label]}, #{unread_count} unread" } : { label: item[:label] }) do %>
+          <% nav_items.each do |item| %>
+            <% link_classes = ["app-bottom-nav__link", ("app-bottom-nav__link--compose" if item[:compose]), ("is-active" if item[:active])].compact.join(" ") %>
+            <% link_label = item[:label] == "Alerts" && unread_count.positive? ? "#{item[:label]}, #{unread_count} unread" : item[:aria_label].presence || item[:label] %>
+            <%= link_to item[:path], class: link_classes, aria: { label: link_label } do %>
               <span class="app-bottom-nav__icon-wrap">
                 <span class="app-bottom-nav__icon">
                   <i class="bi <%= item[:icon] %>"></i>

@@ -23,8 +23,7 @@
   --warm-paper: #f4eade;
   --warm-gold: #d1a170;
   --warm-bronze: #8f5f3b;
-  --app-bottom-nav-height: 6rem;
-  --app-fab-size: 4.35rem;
+  --app-bottom-nav-height: 5.75rem;
 }
 
 body {
@@ -66,7 +65,7 @@ body {
 }
 
 .app-page--with-nav {
-  padding-bottom: calc(var(--app-bottom-nav-height) + var(--app-fab-size) + 2.25rem + env(safe-area-inset-bottom));
+  padding-bottom: calc(var(--app-bottom-nav-height) + 1.65rem + env(safe-area-inset-bottom));
 }
 
 .app-flash {
@@ -117,6 +116,6 @@ button {
 
 @media (min-width: 992px) {
   .app-page--with-nav {
-    padding-bottom: calc(var(--app-bottom-nav-height) + var(--app-fab-size) + 2.75rem + env(safe-area-inset-bottom));
+    padding-bottom: calc(var(--app-bottom-nav-height) + 2rem + env(safe-area-inset-bottom));
   }
 }

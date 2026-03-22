@@ -1,49 +1,33 @@
-<ul class="nav nav-tabs mb-3 justify-content-center">
-  <li class="nav-item">
-    <%= link_to 'Following', posts_path, class: "nav-link #{params[:tab] == 'explore' ? '' : 'active'}" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to 'Explore', posts_path(tab: 'explore'), class: "nav-link #{params[:tab] == 'explore' ? 'active' : ''}" %>
-  </li>
-</ul>
+<section class="feed-shell">
+  <header class="feed-hero mb-4">
+    <p class="feed-hero__eyebrow mb-2">Nouvelle Feed</p>
+    <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end">
+      <div>
+        <h1 class="feed-hero__title mb-2">A social feed for people in the middle of a book.</h1>
+        <p class="feed-hero__copy mb-0">
+          Share the page you just reached, the line you underlined, or the feeling you closed the cover with.
+        </p>
+      </div>
+      <div class="feed-hero__pill">
+        <span><%= params[:tab] == 'explore' ? 'Explore shelf' : 'Following shelf' %></span>
+      </div>
+    </div>
+  </header>
 
-<%= form_with url: insert_post_path, scope: :post, local: true, html: {class: "mb-3"}, data: {controller: "post-form"} do |f| %>
-  <%= f.hidden_field :creator_id, value: current_user.id %>
+  <ul class="nav nav-tabs feed-tabs mb-4 justify-content-center">
+    <li class="nav-item">
+      <%= link_to 'Following', posts_path, class: "nav-link #{params[:tab] == 'explore' ? '' : 'active'}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Explore', posts_path(tab: 'explore'), class: "nav-link #{params[:tab] == 'explore' ? 'active' : ''}" %>
+    </li>
+  </ul>
 
-  <div class="mb-3">
-    <%= f.text_area :content,
-          rows: 3,
-          placeholder: "What's happening?",
-          class: "form-control" %>
+  <%= render 'posts/composer', composer_books: @composer_books %>
+
+  <div class="posts-feed">
+    <% @list_of_posts.each do |post| %>
+      <%= render 'posts/post_card', post: post %>
+    <% end %>
   </div>
-
-
-  <div class="post-icons mb-2">
-    <i class="bi bi-image" data-action="click->post-form#attachMedia"></i>
-    <i class="bi bi-camera-video" data-action="click->post-form#attachVideo"></i>
-    <i class="bi bi-bar-chart" data-action="click->post-form#togglePoll"></i>
-  </div>
-
-  <%= f.file_field :media, multiple: true, direct_upload: true, class: "d-none", data: {post_form_target: "mediaInput"} %>
-
-  <div id="poll-fields" class="d-none" data-post-form-target="poll">
-    <%= text_field_tag :poll_question, nil, placeholder: "Poll question", class: "form-control mb-2" %>
-    <%= text_field_tag :poll_option1, nil, placeholder: "Option 1", class: "form-control mb-2" %>
-    <%= text_field_tag :poll_option2, nil, placeholder: "Option 2", class: "form-control mb-2" %>
-    <%= text_field_tag :poll_option3, nil, placeholder: "Option 3 (optional)", class: "form-control mb-2" %>
-    <%= text_field_tag :poll_option4, nil, placeholder: "Option 4 (optional)", class: "form-control mb-2" %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.submit "Post", class: "btn btn-royal text-white" %>
-  </div>
-<% end %>
-
-<hr>
-
-<div class="posts-feed">
-  <% @list_of_posts.each do |post| %>
-    <%= render 'posts/post_card', post: post %>
-    <hr class="my-4">
-  <% end %>
-</div>
+</section>

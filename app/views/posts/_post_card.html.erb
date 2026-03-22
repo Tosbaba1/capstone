@@ -1,31 +1,64 @@
 <% show_view_link = local_assigns.fetch(:show_view_link, true) %>
-<div class="post-card mb-4">
-  <div class="d-flex">
-    <%= image_tag(post.creator.avatar.presence || 'default_avatar.png', alt: post.creator.name, class: 'avatar') %>
-    <div class="ms-2 flex-grow-1">
-      <div class="d-flex align-items-center">
-        <strong class="text-white"><%= link_to post.creator.name, user_path(post.creator), class: 'text-white' %></strong>
-        <span class="ms-2 text-white">@<%= link_to post.creator.username, user_path(post.creator), class: 'text-white' %></span>
-        <% if post.book.blank? && (current_book = post.creator.random_currently_reading_book) %>
-          <small class="ms-2 text-white">reading <%= link_to current_book.title, book_path(current_book), class: 'text-white' %></small>
+<% fallback_reading = nil %>
+<% if post.book.present? %>
+  <% candidate_reading = post.creator.readings.find_by(book: post.book) %>
+  <% fallback_reading = candidate_reading if candidate_reading.present? && (!candidate_reading.is_private || post.creator == current_user) %>
+<% end %>
+<article class="feed-post-card mb-4">
+  <div class="feed-post-card__header d-flex gap-3">
+    <%= image_tag(post.creator.avatar.presence || 'default_avatar.png', alt: post.creator.name, class: 'avatar feed-post-card__avatar') %>
+    <div class="feed-post-card__content flex-grow-1">
+      <div class="d-flex flex-column flex-lg-row justify-content-between gap-2">
+        <div>
+          <div class="feed-post-card__author-line">
+            <strong><%= link_to post.creator.name, user_path(post.creator), class: 'feed-post-card__author-link' %></strong>
+            <span class="feed-post-card__username">@<%= link_to post.creator.username, user_path(post.creator), class: 'feed-post-card__username-link' %></span>
+          </div>
+          <div class="feed-post-card__meta-line">
+            <% if post.reading_post_type_label.present? %>
+              <span class="feed-post-card__type-pill"><%= post.reading_post_type_label %></span>
+            <% elsif post.book.blank? && (current_book = post.creator.random_currently_reading_book) %>
+              <span>currently reading <%= link_to current_book.title, book_path(current_book), class: 'feed-post-card__inline-link' %></span>
+            <% end %>
+            <span><%= time_ago_in_words(post.created_at) %> ago</span>
+          </div>
+        </div>
+
+        <% allowed_view = post.creator == current_user || !post.creator.is_private || current_user.following.include?(post.creator) %>
+        <% if allowed_view && show_view_link %>
+          <div class="text-lg-end">
+            <%= link_to 'View Post', post_path(post), class: 'feed-post-card__view-link' %>
+          </div>
         <% end %>
       </div>
-      <p class="mb-1"><%= post.content %></p>
-      <% if post.book && post.creator.readings.where(book: post.book, status: 'reading', is_private: false).exists? %>
-        <p class="post-book text-white">
-          Reading: <%= link_to post.book.title, book_path(post.book), class: 'text-white' %>
-        </p>
+
+      <% if post.book.present? %>
+        <%= render 'posts/post_book_panel', post: post, reading: fallback_reading %>
       <% end %>
-      <% if post.poll_data.present? %>
-        <div class="mt-2">
-          <p><strong><%= post.poll_data['question'] %></strong></p>
-          <ul>
+
+      <% if post.quote_text.present? %>
+        <blockquote class="feed-post-card__quote mb-3">
+          <p class="mb-0">"<%= post.quote_text %>"</p>
+        </blockquote>
+      <% end %>
+
+      <% if post.content.present? %>
+        <div class="feed-post-card__body mb-3">
+          <%= simple_format(post.content) %>
+        </div>
+      <% end %>
+
+      <% if post.legacy_poll? %>
+        <div class="feed-post-card__poll mb-3">
+          <p class="feed-post-card__poll-question mb-2"><%= post.poll_data['question'] %></p>
+          <ul class="mb-0">
             <% post.poll_data.except('question').each_value do |option| %>
               <li><%= option %></li>
             <% end %>
           </ul>
         </div>
       <% end %>
+
       <% if post.media.attached? %>
         <div class="post-media mt-2">
           <% post.media.each do |media| %>
@@ -37,54 +70,8 @@
           <% end %>
         </div>
       <% end %>
+
+      <%= render 'posts/post_engagement', post: post %>
     </div>
-    <% allowed_view = post.creator == current_user || !post.creator.is_private || current_user.following.include?(post.creator) %>
-    <% if allowed_view && show_view_link %>
-      <div class="ms-auto text-end">
-        <%= link_to 'View Post', post_path(post), class: 'btn btn-sm btn-link text-white' %>
-      </div>
-    <% end %>
   </div>
-  <div class="post-footer mb-2 mt-2">
-    <span class="me-3"><%= link_to pluralize(post.likes_count, 'Like'), post_likes_path(post.id) %></span>
-    <span class="me-3"><%= link_to pluralize(post.comments_count, 'Comment'), post_comments_path(post.id) %></span>
-    <span><%= time_ago_in_words(post.created_at) %> ago</span>
-  </div>
-
-  <% like = post.likes.find_by(liked: current_user) %>
-  <% if like %>
-    <%= link_to "/delete_like/#{like.id}", class: 'btn btn-sm btn-link p-0' do %>
-      <i class="bi bi-heart-fill text-danger"></i>
-    <% end %>
-  <% else %>
-    <%= link_to insert_like_path(query_post_id: post.id, query_liked_id: current_user.id), method: :post, class: 'btn btn-sm btn-link p-0' do %>
-      <i class="bi bi-heart"></i>
-    <% end %>
-  <% end %>
-
-  <% renou = post.renous.find_by(user: current_user) %>
-  <% if renou %>
-    <%= link_to "/delete_renou/#{renou.id}", class: 'btn btn-sm btn-link p-0' do %>
-      <i class="bi bi-arrow-repeat text-success"></i>
-    <% end %>
-  <% else %>
-    <%= link_to insert_renou_path(query_post_id: post.id, query_user_id: current_user.id), method: :post, class: 'btn btn-sm btn-link p-0' do %>
-      <i class="bi bi-arrow-repeat"></i>
-    <% end %>
-  <% end %>
-
-  <%= form_with url: insert_comment_path, scope: :comment, local: true, class: 'mt-2' do |cf| %>
-    <%= cf.hidden_field :post_id, value: post.id %>
-    <%= cf.hidden_field :commenter_id, value: current_user.id %>
-    <div class="input-group input-group-sm">
-      <%= cf.text_field :comment, class: 'form-control', placeholder: 'Add a comment' %>
-      <button class="btn btn-primary">Comment</button>
-    </div>
-  <% end %>
-
-  <% post.comments.each do |comment| %>
-    <div class="mt-2 ps-2 border-start">
-      <strong><%= link_to comment.commenter.name, user_path(comment.commenter), class: 'text-decoration-none text-white' %></strong> <%= comment.comment %>
-    </div>
-  <% end %>
-</div>
+</article>

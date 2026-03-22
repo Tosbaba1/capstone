@@ -18,10 +18,12 @@
 #  index_readings_on_user_id_and_book_id  (user_id,book_id) UNIQUE
 #
 class Reading < ApplicationRecord
+  attr_accessor :skip_started_reading_post
+
   belongs_to :user
   belongs_to :book
 
-  after_save :post_started_reading, if: :started_reading?
+  after_save :post_started_reading, if: :should_post_started_reading?
 
   STATUSES = %w[want_to_read reading finished]
   STATUS_OPTIONS = [
@@ -41,6 +43,10 @@ class Reading < ApplicationRecord
   validates :book_id, uniqueness: { scope: :user_id }
 
   private
+
+  def should_post_started_reading?
+    !skip_started_reading_post && started_reading?
+  end
 
   def started_reading?
     saved_change_to_status? && status == 'reading' && status_before_last_save != 'reading'

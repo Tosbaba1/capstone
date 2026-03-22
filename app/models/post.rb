@@ -13,6 +13,15 @@
 #  creator_id     :integer
 #
 class Post < ApplicationRecord
+  POST_TYPES = {
+    "started_reading" => "Started reading",
+    "finished_reading" => "Finished reading",
+    "progress_update" => "Progress update",
+    "quick_thought" => "Quick thought/review",
+    "favorite_quote" => "Favorite quote"
+  }.freeze
+  POST_TYPE_OPTIONS = POST_TYPES.map { |key, label| [label, key] }.freeze
+
   #Direct Associations
   belongs_to :creator, required: true, class_name: "User", foreign_key: "creator_id", counter_cache: true
   belongs_to :book, class_name: "Book", foreign_key: "book_id", optional: true
@@ -29,7 +38,45 @@ class Post < ApplicationRecord
 
   validate :content_present
 
-  after_create :notify_mutuals_about_book
+  after_create :notify_mutuals_about_book, if: :book_notification_eligible?
+
+  def metadata
+    poll_data.is_a?(Hash) ? poll_data.stringify_keys : {}
+  end
+
+  def reading_post_type
+    metadata["post_type"].presence
+  end
+
+  def reading_post?
+    reading_post_type.present?
+  end
+
+  def reading_post_type_label
+    POST_TYPES[reading_post_type]
+  end
+
+  def legacy_poll?
+    metadata["question"].present? && !reading_post?
+  end
+
+  def quote_text
+    metadata["quote_text"].presence
+  end
+
+  def reading_status
+    metadata["status"].presence
+  end
+
+  def reading_progress
+    value = metadata["progress"]
+    value.present? ? value.to_i : nil
+  end
+
+  def reading_rating
+    value = metadata["rating"]
+    value.present? ? value.to_f : nil
+  end
 
   private
 
@@ -37,6 +84,13 @@ class Post < ApplicationRecord
     if content.blank? && book_id.blank? && !media.attached?
       errors.add(:base, "Post cannot be empty")
     end
+  end
+
+  def book_notification_eligible?
+    return false unless book
+    return true unless reading_post?
+
+    reading_post_type == "started_reading"
   end
 
   def notify_mutuals_about_book

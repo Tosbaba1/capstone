@@ -1,0 +1,124 @@
+<% status_labels = Reading::STATUS_OPTIONS.to_h %>
+
+<section class="feed-composer mb-4">
+  <div class="feed-composer__header d-flex gap-3 align-items-start">
+    <%= image_tag(current_user.avatar.presence || 'default_avatar.png', alt: current_user.name, class: 'avatar feed-post-card__avatar') %>
+    <div>
+      <p class="feed-composer__eyebrow mb-1">Share an update</p>
+      <h2 class="feed-composer__title mb-1">Make it about the book, not the algorithm.</h2>
+      <p class="feed-composer__copy mb-0">
+        Pick a book from your library and post the kind of update another reader would actually want to see.
+      </p>
+    </div>
+  </div>
+
+  <% if composer_books.any? %>
+    <%= form_with url: insert_post_path, scope: :post, local: true, data: { controller: "post-form" } do |f| %>
+      <div class="row g-3 mt-1">
+        <div class="col-md-7">
+          <%= f.label :book_id, 'Book', class: 'feed-composer__label form-label' %>
+          <%= f.select :book_id,
+                options_for_select(
+                  composer_books.map do |reading|
+                    author_name = reading.book.author&.name.presence || 'Unknown author'
+                    status_label = status_labels.key(reading.status) || reading.status.to_s.humanize
+                    ["#{reading.book.title} by #{author_name} · #{status_label}", reading.book_id]
+                  end
+                ),
+                { prompt: 'Choose a book from your library' },
+                class: 'form-select feed-composer__select',
+                required: true %>
+        </div>
+
+        <div class="col-md-5">
+          <%= f.label :post_type, 'Post type', class: 'feed-composer__label form-label' %>
+          <%= f.select :post_type,
+                options_for_select(Post::POST_TYPE_OPTIONS, 'quick_thought'),
+                {},
+                class: 'form-select feed-composer__select',
+                data: {
+                  post_form_target: 'typeSelect',
+                  action: 'change->post-form#syncForm'
+                } %>
+        </div>
+      </div>
+
+      <div class="row g-3 mt-1">
+        <div class="col-12 d-none" data-post-form-target="quoteField">
+          <%= f.label :quote_text, 'Favorite quote', class: 'feed-composer__label form-label' %>
+          <%= f.text_area :quote_text,
+                rows: 3,
+                class: 'form-control feed-composer__textarea',
+                placeholder: 'Paste the line that deserves its own spotlight.',
+                data: { post_form_target: 'quoteInput' } %>
+        </div>
+
+        <div class="col-md-6 d-none" data-post-form-target="progressField">
+          <%= f.label :progress, 'Progress', class: 'feed-composer__label form-label' %>
+          <div class="input-group">
+            <%= f.number_field :progress,
+                  min: 0,
+                  max: 100,
+                  class: 'form-control feed-composer__input',
+                  placeholder: '42',
+                  data: { post_form_target: 'progressInput' } %>
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 d-none" data-post-form-target="ratingField">
+          <%= f.label :rating, 'Rating', class: 'feed-composer__label form-label' %>
+          <div class="input-group">
+            <%= f.number_field :rating,
+                  min: 0,
+                  max: 5,
+                  step: 0.5,
+                  class: 'form-control feed-composer__input',
+                  placeholder: '4.5' %>
+            <span class="input-group-text">/5</span>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="d-flex justify-content-between align-items-center gap-2">
+            <%= f.label :content, 'Quick thought', class: 'feed-composer__label form-label mb-0', data: { post_form_target: 'bodyLabel' } %>
+            <span class="feed-composer__helper" data-post-form-target="helperText">
+              A line or two is enough. Rating is optional.
+            </span>
+          </div>
+          <%= f.text_area :content,
+                rows: 4,
+                class: 'form-control feed-composer__textarea',
+                placeholder: 'Share a short review, a reaction, or a recommendation.',
+                data: { post_form_target: 'bodyInput' } %>
+        </div>
+      </div>
+
+      <div class="feed-composer__footer d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mt-3">
+        <div class="d-flex flex-wrap gap-2">
+          <button type="button" class="feed-composer__media-button" data-action="click->post-form#attachMedia">
+            <i class="bi bi-image"></i>
+            <span>Add cover-worthy media</span>
+          </button>
+          <button type="button" class="feed-composer__media-button" data-action="click->post-form#attachVideo">
+            <i class="bi bi-camera-video"></i>
+            <span>Add video</span>
+          </button>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+          <%= f.file_field :media, multiple: true, direct_upload: true, class: "d-none", data: { post_form_target: "mediaInput" } %>
+          <%= f.submit "Share to Feed", class: "btn feed-composer__submit" %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="feed-composer__empty">
+      <p class="mb-2">Your composer is ready once there’s at least one book in your library.</p>
+      <div class="d-flex flex-wrap gap-2">
+        <%= link_to 'Open your library', library_path, class: 'btn feed-composer__submit' %>
+        <%= link_to 'Find books', '/books/search', class: 'feed-post-card__view-link' %>
+      </div>
+    </div>
+  <% end %>
+</section>

@@ -1,0 +1,48 @@
+<% book = post.book %>
+<% author_name = book.author&.name.to_s.downcase == 'unknown' ? nil : book.author&.name %>
+<% status_code = post.reading_status || reading&.status %>
+<% status_label = status_code.present? ? (Reading::STATUS_OPTIONS.to_h.key(status_code) || status_code.to_s.humanize) : nil %>
+<% progress_value = post.reading_progress || reading&.progress %>
+<% rating_value = post.reading_rating || reading&.rating %>
+
+<section class="feed-book-panel mb-3">
+  <%= link_to book_path(book), class: 'feed-book-panel__cover-link' do %>
+    <% if book.image_url.present? %>
+      <%= image_tag(book.image_url, class: 'feed-book-panel__cover', alt: "#{book.title} cover") %>
+    <% else %>
+      <div class="feed-book-panel__cover feed-book-panel__cover--placeholder">
+        <span>Open Book</span>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="feed-book-panel__content">
+    <div class="d-flex flex-wrap gap-2 mb-2">
+      <% if status_label.present? %>
+        <span class="feed-book-panel__status"><%= status_label %></span>
+      <% end %>
+      <% if post.reading_post_type_label.present? %>
+        <span class="feed-book-panel__context"><%= post.reading_post_type_label %></span>
+      <% end %>
+    </div>
+
+    <h3 class="feed-book-panel__title mb-1">
+      <%= link_to book.title, book_path(book), class: 'text-decoration-none' %>
+    </h3>
+
+    <% if author_name.present? %>
+      <p class="feed-book-panel__author mb-2">by <%= author_name %></p>
+    <% end %>
+
+    <% if progress_value.present? || rating_value.present? %>
+      <div class="feed-book-panel__meta">
+        <% if progress_value.present? %>
+          <span><%= progress_value %>% through</span>
+        <% end %>
+        <% if rating_value.present? %>
+          <span><%= number_with_precision(rating_value, precision: 1, strip_insignificant_zeros: true) %>/5 stars</span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>

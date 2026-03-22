@@ -1,9 +1,9 @@
 <section class="feed-shell">
-  <header class="feed-hero mb-4">
-    <p class="feed-hero__eyebrow mb-2">Nouvelle Feed</p>
-    <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end">
+  <header class="feed-hero mb-3">
+    <p class="feed-hero__eyebrow mb-1">Nouvelle Feed</p>
+    <div class="d-flex flex-column flex-lg-row justify-content-between gap-2 align-items-lg-end">
       <div>
-        <h1 class="feed-hero__title mb-2">A social feed for people in the middle of a book.</h1>
+        <h1 class="feed-hero__title mb-1">A social feed for people in the middle of a book.</h1>
         <p class="feed-hero__copy mb-0">
           Share the page you just reached, the line you underlined, or the feeling you closed the cover with.
         </p>
@@ -14,7 +14,7 @@
     </div>
   </header>
 
-  <ul class="nav nav-tabs feed-tabs mb-4 justify-content-center">
+  <ul class="nav nav-tabs feed-tabs mb-3 justify-content-center">
     <li class="nav-item">
       <%= link_to 'Following', posts_path, class: "nav-link #{params[:tab] == 'explore' ? '' : 'active'}" %>
     </li>

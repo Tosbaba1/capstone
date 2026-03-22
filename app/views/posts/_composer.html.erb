@@ -1,7 +1,7 @@
 <% status_labels = Reading::STATUS_OPTIONS.to_h %>
 
-<section class="feed-composer mb-4">
-  <div class="feed-composer__header d-flex gap-3 align-items-start">
+<section class="feed-composer mb-3">
+  <div class="feed-composer__header d-flex gap-2 align-items-start">
     <%= image_tag(current_user.avatar.presence || 'default_avatar.png', alt: current_user.name, class: 'avatar feed-post-card__avatar') %>
     <div>
       <p class="feed-composer__eyebrow mb-1">Share an update</p>
@@ -14,7 +14,7 @@
 
   <% if composer_books.any? %>
     <%= form_with url: insert_post_path, scope: :post, local: true, data: { controller: "post-form" } do |f| %>
-      <div class="row g-3 mt-1">
+      <div class="row g-2 mt-1">
         <div class="col-md-7">
           <%= f.label :book_id, 'Book', class: 'feed-composer__label form-label' %>
           <%= f.select :book_id,
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div class="row g-3 mt-1">
+      <div class="row g-2 mt-1">
         <div class="col-12 d-none" data-post-form-target="quoteField">
           <%= f.label :quote_text, 'Favorite quote', class: 'feed-composer__label form-label' %>
           <%= f.text_area :quote_text,
@@ -94,7 +94,7 @@
         </div>
       </div>
 
-      <div class="feed-composer__footer d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mt-3">
+      <div class="feed-composer__footer d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2 mt-2">
         <div class="d-flex flex-wrap gap-2">
           <button type="button" class="feed-composer__media-button" data-action="click->post-form#attachMedia">
             <i class="bi bi-image"></i>

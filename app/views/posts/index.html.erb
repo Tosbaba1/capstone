@@ -1,3 +1,7 @@
+<% explore_active = params[:tab] == 'explore' %>
+<% pill_label = explore_active ? 'Following shelf' : 'Explore shelf' %>
+<% pill_path = explore_active ? posts_path : posts_path(tab: 'explore') %>
+
 <section class="feed-shell">
   <header class="feed-hero mb-3">
     <p class="feed-hero__eyebrow mb-1">Nouvelle Feed</p>
@@ -8,18 +12,18 @@
           Share the page you just reached, the line you underlined, or the feeling you closed the cover with.
         </p>
       </div>
-      <div class="feed-hero__pill">
-        <span><%= params[:tab] == 'explore' ? 'Explore shelf' : 'Following shelf' %></span>
-      </div>
+      <%= link_to pill_label, pill_path,
+        class: 'feed-hero__pill',
+        aria: { label: "Switch to #{pill_label.sub(' shelf', '')} feed" } %>
     </div>
   </header>
 
   <ul class="nav nav-tabs feed-tabs mb-3 justify-content-center">
     <li class="nav-item">
-      <%= link_to 'Following', posts_path, class: "nav-link #{params[:tab] == 'explore' ? '' : 'active'}" %>
+      <%= link_to 'Following', posts_path, class: "nav-link #{explore_active ? '' : 'active'}" %>
     </li>
     <li class="nav-item">
-      <%= link_to 'Explore', posts_path(tab: 'explore'), class: "nav-link #{params[:tab] == 'explore' ? 'active' : ''}" %>
+      <%= link_to 'Explore', posts_path(tab: 'explore'), class: "nav-link #{explore_active ? 'active' : ''}" %>
     </li>
   </ul>
 

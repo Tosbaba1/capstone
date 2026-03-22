@@ -46,12 +46,32 @@
   background: rgba(255, 248, 238, 0.12);
   border: 1px solid rgba(255, 248, 238, 0.18);
   border-radius: 999px;
+  color: #fff4e0 !important;
+  display: inline-flex;
+  font-size: 0.84rem;
   padding: 0.45rem 0.85rem;
+  text-decoration: none;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 
-.feed-hero__pill span {
-  color: #fff4e0 !important;
-  font-size: 0.84rem;
+.feed-hero__pill:hover {
+  background: rgba(255, 248, 238, 0.2);
+  border-color: rgba(255, 248, 238, 0.3);
+  box-shadow: 0 10px 24px rgba(7, 12, 24, 0.16);
+  color: #fff8ee !important;
+  transform: translateY(-1px);
+}
+
+.feed-hero__pill:focus-visible {
+  background: rgba(255, 248, 238, 0.2);
+  border-color: rgba(255, 248, 238, 0.42);
+  box-shadow: 0 0 0 3px rgba(255, 244, 224, 0.22);
+  color: #fff8ee !important;
+  outline: none;
 }
 
 .feed-tabs .nav-link {

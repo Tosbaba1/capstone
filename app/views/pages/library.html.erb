@@ -1,5 +1,5 @@
 <% if @user == current_user %>
-  <ul class="nav nav-tabs mb-3">
+  <ul class="nav nav-tabs mb-4">
     <li class="nav-item">
       <%= link_to 'Public', library_path(tab: 'public'), class: "nav-link #{@active_tab == 'public' ? 'active' : ''}" %>
     </li>
@@ -15,121 +15,41 @@
 <% if @active_tab == 'ai' %>
   <%= render 'library_ai_chat' %>
 <% else %>
+  <% library_title = @user == current_user ? 'Your Library' : "#{@user.name}'s Library" %>
+  <% shelf_label = @user == current_user ? (@active_tab == 'private' ? 'Private shelf' : 'Public shelf') : 'Public shelf' %>
 
-<h2 class="h5 mb-3">Currently Reading</h2>
-<div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-3 mb-4">
-  <% @reading_now.each do |reading| %>
-    <% book = reading.book %>
-    <div class="col text-center">
-      <%= link_to book_path(book) do %>
-        <%= image_tag(book.image_url, class: 'img-fluid mb-2 book-cover') if book.image_url.present? %>
-      <% end %>
-      <div><strong><%= link_to book.title, book_path(book), class: 'text-white text-decoration-none' %></strong></div>
-      <div class="text-white"><%= book.author.name unless book.author&.name.to_s.downcase == 'unknown' %></div>
-      <% if @user == current_user %>
-        <%= form_with url: update_reading_path(reading), method: :post, local: true do |f| %>
-          <div class="mb-2">
-            <%= f.select :status, Reading::STATUS_OPTIONS, { selected: reading.status }, class: 'form-select form-select-sm' %>
-          </div>
-          <div class="mb-1">
-            <%= f.number_field :rating, value: reading.rating, step: 0.2, in: 0..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
-          </div>
-          <div class="mb-1">
-            <%= f.number_field :progress, value: reading.progress, min: 0, max: 100, class: 'form-control form-control-sm', placeholder: 'Progress' %>
-          </div>
-          <div class="mb-1">
-            <%= f.text_area :review, value: reading.review, class: 'form-control form-control-sm', placeholder: 'Review' %>
-          </div>
-          <div class="form-check mb-1">
-            <%= f.check_box :is_private, { checked: reading.is_private, class: 'form-check-input' }, '1', '0' %>
-            <%= f.label :is_private, 'Private', class: 'form-check-label' %>
-          </div>
-          <%= f.submit 'Save', class: 'btn btn-sm btn-royal text-white' %>
-        <% end %>
-      <% else %>
-        <% if reading.rating.present? %><div>Rating: <%= reading.rating %></div><% end %>
-        <% if reading.progress.present? %><div>Progress: <%= reading.progress %>%</div><% end %>
-        <% if reading.review.present? %><div><%= reading.review %></div><% end %>
-      <% end %>
-    </div>
-  <% end %>
-</div>
+  <section class="library-shell">
+    <header class="library-hero mb-4">
+      <p class="library-hero__eyebrow mb-2">Reading Journal</p>
+      <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end">
+        <div>
+          <h1 class="library-hero__title mb-2"><%= library_title %></h1>
+          <p class="library-hero__copy mb-0">
+            A calmer shelf view for the books you are keeping close right now.
+          </p>
+        </div>
+        <div class="library-hero__pill">
+          <span><%= shelf_label %></span>
+        </div>
+      </div>
+    </header>
 
-<h2 class="h5 mb-3">Want to Read</h2>
-<div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-3 mb-4">
-  <% @want_to_read.each do |reading| %>
-    <% book = reading.book %>
-    <div class="col text-center">
-      <%= link_to book_path(book) do %>
-        <%= image_tag(book.image_url, class: 'img-fluid mb-2 book-cover') if book.image_url.present? %>
-      <% end %>
-      <div><strong><%= link_to book.title, book_path(book), class: 'text-white text-decoration-none' %></strong></div>
-      <div class="text-white"><%= book.author.name unless book.author&.name.to_s.downcase == 'unknown' %></div>
-      <% if @user == current_user %>
-        <%= form_with url: update_reading_path(reading), method: :post, local: true do |f| %>
-          <div class="mb-2">
-            <%= f.select :status, Reading::STATUS_OPTIONS, { selected: reading.status }, class: 'form-select form-select-sm' %>
-          </div>
-          <div class="mb-1">
-            <%= f.number_field :rating, value: reading.rating, step: 0.2, in: 0..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
-          </div>
-          <div class="mb-1">
-            <%= f.number_field :progress, value: reading.progress, min: 0, max: 100, class: 'form-control form-control-sm', placeholder: 'Progress' %>
-          </div>
-          <div class="mb-1">
-            <%= f.text_area :review, value: reading.review, class: 'form-control form-control-sm', placeholder: 'Review' %>
-          </div>
-          <div class="form-check mb-1">
-            <%= f.check_box :is_private, { checked: reading.is_private, class: 'form-check-input' }, '1', '0' %>
-            <%= f.label :is_private, 'Private', class: 'form-check-label' %>
-          </div>
-          <%= f.submit 'Save', class: 'btn btn-sm btn-royal text-white' %>
-        <% end %>
-      <% else %>
-        <% if reading.rating.present? %><div>Rating: <%= reading.rating %></div><% end %>
-        <% if reading.progress.present? %><div>Progress: <%= reading.progress %>%</div><% end %>
-        <% if reading.review.present? %><div><%= reading.review %></div><% end %>
-      <% end %>
-    </div>
-  <% end %>
-</div>
+    <%= render 'library_shelf_section',
+      title: 'Currently Reading',
+      subtitle: 'Books with your bookmark still tucked inside.',
+      readings: @reading_now,
+      editable: @user == current_user %>
 
-<h2 class="h5 mb-3">Finished</h2>
-<div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-3">
-  <% @finished.each do |reading| %>
-    <% book = reading.book %>
-    <div class="col text-center">
-      <%= link_to book_path(book) do %>
-        <%= image_tag(book.image_url, class: 'img-fluid mb-2 book-cover') if book.image_url.present? %>
-      <% end %>
-      <div><strong><%= link_to book.title, book_path(book), class: 'text-white text-decoration-none' %></strong></div>
-      <div class="text-white"><%= book.author.name unless book.author&.name.to_s.downcase == 'unknown' %></div>
-      <% if @user == current_user %>
-        <%= form_with url: update_reading_path(reading), method: :post, local: true do |f| %>
-          <div class="mb-2">
-            <%= f.select :status, Reading::STATUS_OPTIONS, { selected: reading.status }, class: 'form-select form-select-sm' %>
-          </div>
-          <div class="mb-1">
-            <%= f.number_field :rating, value: reading.rating, step: 0.2, in: 0..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
-          </div>
-          <div class="mb-1">
-            <%= f.number_field :progress, value: reading.progress, min: 0, max: 100, class: 'form-control form-control-sm', placeholder: 'Progress' %>
-          </div>
-          <div class="mb-1">
-            <%= f.text_area :review, value: reading.review, class: 'form-control form-control-sm', placeholder: 'Review' %>
-          </div>
-          <div class="form-check mb-1">
-            <%= f.check_box :is_private, { checked: reading.is_private, class: 'form-check-input' }, '1', '0' %>
-            <%= f.label :is_private, 'Private', class: 'form-check-label' %>
-          </div>
-          <%= f.submit 'Save', class: 'btn btn-sm btn-royal text-white' %>
-        <% end %>
-      <% else %>
-        <% if reading.rating.present? %><div>Rating: <%= reading.rating %></div><% end %>
-        <% if reading.progress.present? %><div>Progress: <%= reading.progress %>%</div><% end %>
-        <% if reading.review.present? %><div><%= reading.review %></div><% end %>
-      <% end %>
-    </div>
-  <% end %>
-</div>
+    <%= render 'library_shelf_section',
+      title: 'Want to Read',
+      subtitle: 'Books waiting patiently in your next-up stack.',
+      readings: @want_to_read,
+      editable: @user == current_user %>
+
+    <%= render 'library_shelf_section',
+      title: 'Finished',
+      subtitle: 'Books you have already carried all the way to the last page.',
+      readings: @finished,
+      editable: @user == current_user %>
+  </section>
 <% end %>

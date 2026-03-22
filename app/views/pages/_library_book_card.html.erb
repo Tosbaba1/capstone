@@ -1,0 +1,93 @@
+<% book = reading.book %>
+<% author_name = book.author&.name.to_s.downcase == 'unknown' ? nil : book.author&.name %>
+<% status_label = Reading::STATUS_OPTIONS.to_h.key(reading.status) || reading.status.to_s.humanize %>
+<% edit_panel_id = dom_id(reading, :edit_panel) %>
+
+<article class="library-book-card h-100">
+  <div class="library-book-card__body">
+    <div class="library-book-card__top">
+      <%= link_to book_path(book), class: 'library-book-card__cover-link' do %>
+        <% if book.image_url.present? %>
+          <%= image_tag(book.image_url, class: 'library-book-card__cover', alt: "#{book.title} cover") %>
+        <% else %>
+          <div class="library-book-card__cover library-book-card__cover--placeholder">
+            <span>Open Book</span>
+          </div>
+        <% end %>
+      <% end %>
+
+      <div class="library-book-card__content">
+        <div class="d-flex justify-content-between align-items-start gap-3">
+          <div>
+            <p class="library-book-card__status mb-2"><%= status_label %></p>
+            <h3 class="library-book-card__title mb-1">
+              <%= link_to book.title, book_path(book), class: 'text-decoration-none' %>
+            </h3>
+            <% if author_name.present? %>
+              <p class="library-book-card__author mb-0">by <%= author_name %></p>
+            <% end %>
+          </div>
+
+          <% if editable %>
+            <button
+              class="btn btn-sm btn-outline-light library-book-card__edit-toggle"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#<%= edit_panel_id %>"
+              aria-expanded="false"
+              aria-controls="<%= edit_panel_id %>">
+              Edit
+            </button>
+          <% end %>
+        </div>
+
+        <% if reading.progress.present? || reading.rating.present? %>
+          <div class="library-book-card__meta">
+            <% if reading.progress.present? %>
+              <span><%= reading.progress %>% through</span>
+            <% end %>
+            <% if reading.rating.present? %>
+              <span><%= number_with_precision(reading.rating, precision: 1, strip_insignificant_zeros: true) %>/5 stars</span>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% if reading.review.present? %>
+          <p class="library-book-card__review mb-0">
+            <%= truncate(reading.review, length: 140) %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <% if editable %>
+    <div class="collapse" id="<%= edit_panel_id %>">
+      <div class="library-book-card__editor">
+        <%= form_with url: update_reading_path(reading), method: :post, local: true do |f| %>
+          <div class="mb-2">
+            <%= f.select :status, Reading::STATUS_OPTIONS, { selected: reading.status }, class: 'form-select form-select-sm' %>
+          </div>
+          <div class="row g-2 mb-2">
+            <div class="col-sm-6">
+              <%= f.number_field :rating, value: reading.rating, step: 0.2, in: 0..5, class: 'form-control form-control-sm', placeholder: 'Rating' %>
+            </div>
+            <div class="col-sm-6">
+              <%= f.number_field :progress, value: reading.progress, min: 0, max: 100, class: 'form-control form-control-sm', placeholder: 'Progress' %>
+            </div>
+          </div>
+          <div class="mb-2">
+            <%= f.text_area :review, value: reading.review, rows: 3, class: 'form-control form-control-sm', placeholder: 'Review' %>
+          </div>
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
+            <div class="form-check mb-0">
+              <%= f.check_box :is_private, { checked: reading.is_private, class: 'form-check-input' }, '1', '0' %>
+              <%= f.label :is_private, 'Private', class: 'form-check-label' %>
+            </div>
+            <%= f.submit 'Save', class: 'btn btn-sm btn-royal text-white align-self-start align-self-sm-auto' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</article>

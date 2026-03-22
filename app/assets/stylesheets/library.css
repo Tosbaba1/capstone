@@ -1,0 +1,199 @@
+.library-shell {
+  padding-bottom: 2rem;
+}
+
+.library-hero {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.2), transparent 35%),
+    linear-gradient(135deg, rgba(17, 24, 39, 0.82), rgba(77, 52, 36, 0.76));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 24px;
+  box-shadow: 0 20px 45px rgba(7, 12, 24, 0.24);
+  padding: 2rem;
+}
+
+.library-hero__eyebrow {
+  color: rgba(255, 244, 224, 0.78) !important;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.library-hero__title {
+  color: #fff8ee !important;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+}
+
+.library-hero__copy {
+  color: rgba(255, 248, 238, 0.82) !important;
+  max-width: 36rem;
+}
+
+.library-hero__pill {
+  align-self: flex-start;
+  background: rgba(255, 248, 238, 0.12);
+  border: 1px solid rgba(255, 248, 238, 0.18);
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+}
+
+.library-hero__pill span {
+  color: #fff4e0 !important;
+  font-size: 0.9rem;
+}
+
+.library-shelf__title {
+  color: #fff8ee !important;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.75rem;
+}
+
+.library-shelf__subtitle {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.library-shelf__count {
+  color: rgba(255, 248, 238, 0.78) !important;
+  font-size: 0.9rem;
+}
+
+.library-shelf__empty {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.76) !important;
+  padding: 1.5rem;
+}
+
+.library-book-card {
+  background:
+    linear-gradient(180deg, rgba(255, 250, 244, 0.95), rgba(238, 229, 214, 0.92));
+  border: 1px solid rgba(93, 64, 55, 0.18);
+  border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(7, 12, 24, 0.16);
+  overflow: hidden;
+}
+
+.library-book-card__body,
+.library-book-card__editor {
+  padding: 1.1rem;
+}
+
+.library-book-card__top {
+  display: flex;
+  gap: 1rem;
+}
+
+.library-book-card__cover-link {
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.library-book-card__cover {
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(36, 29, 26, 0.18);
+  display: block;
+  height: 180px;
+  object-fit: cover;
+  width: 120px;
+}
+
+.library-book-card__cover--placeholder {
+  align-items: center;
+  background: linear-gradient(160deg, #d4b483, #9b6b43);
+  color: #fff8ee !important;
+  display: flex;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+}
+
+.library-book-card__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.library-book-card__status {
+  color: #8f5f3b !important;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.library-book-card__title,
+.library-book-card__title a {
+  color: #2b1e16 !important;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.library-book-card__author {
+  color: #5b4636 !important;
+  font-size: 0.95rem;
+}
+
+.library-book-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.library-book-card__meta span {
+  background: rgba(143, 95, 59, 0.12);
+  border-radius: 999px;
+  color: #65462d !important;
+  font-size: 0.84rem;
+  padding: 0.35rem 0.7rem;
+}
+
+.library-book-card__review {
+  color: #433126 !important;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.library-book-card__edit-toggle {
+  border-color: rgba(84, 58, 42, 0.28);
+  color: #5b4636 !important;
+  white-space: nowrap;
+}
+
+.library-book-card__edit-toggle:hover,
+.library-book-card__edit-toggle:focus {
+  background: rgba(84, 58, 42, 0.08);
+  border-color: rgba(84, 58, 42, 0.4);
+  color: #2b1e16 !important;
+}
+
+.library-book-card__editor {
+  background: rgba(84, 58, 42, 0.08);
+  border-top: 1px solid rgba(84, 58, 42, 0.12);
+}
+
+.library-book-card__editor .form-check-label {
+  color: #3f2d21 !important;
+}
+
+@media (max-width: 575.98px) {
+  .library-hero {
+    padding: 1.5rem;
+  }
+
+  .library-book-card__top {
+    flex-direction: column;
+  }
+
+  .library-book-card__cover {
+    height: 220px;
+    width: 100%;
+  }
+}

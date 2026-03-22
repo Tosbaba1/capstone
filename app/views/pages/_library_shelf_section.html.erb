@@ -1,0 +1,25 @@
+<section class="library-shelf mb-5">
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-2 mb-3">
+    <div>
+      <h2 class="library-shelf__title mb-1"><%= title %></h2>
+      <p class="library-shelf__subtitle mb-0"><%= subtitle %></p>
+    </div>
+    <div class="library-shelf__count">
+      <%= pluralize(readings.size, 'book') %>
+    </div>
+  </div>
+
+  <% if readings.any? %>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4">
+      <% readings.each do |reading| %>
+        <div class="col">
+          <%= render 'library_book_card', reading: reading, editable: editable %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="library-shelf__empty">
+      Nothing on this shelf yet.
+    </div>
+  <% end %>
+</section>

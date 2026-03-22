@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Rails Template</title>
+    <title>Nouvelle</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -23,15 +23,19 @@
   </style>
 
   <body>
-
     <%= render 'shared/navbar' %>
 
-    <div class="container mt-1">
-      <p class="notice text-success"><%= notice %></p>
-      <p class="alert text-danger"><%= alert %></p>
+    <main class="app-page <%= 'app-page--with-nav' if user_signed_in? %> container">
+      <div class="app-flash-stack">
+        <% if notice.present? %>
+          <p class="notice app-flash app-flash--notice mb-2"><%= notice %></p>
+        <% end %>
+        <% if alert.present? %>
+          <p class="alert app-flash app-flash--alert mb-2"><%= alert %></p>
+        <% end %>
+      </div>
 
       <%= yield %>
-    </div>
-
+    </main>
   </body>
 </html>

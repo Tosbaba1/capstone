@@ -15,16 +15,23 @@
 */
 
 :root {
-  --cb-1: #2c3e50;
-  --cb-2: #34495e;
-  --cb-3: #3c566e;
-  --light-grey: #FFFFFF;
+  --cb-1: #142032;
+  --cb-2: #1e3049;
+  --cb-3: #314864;
+  --light-grey: #fff9f1;
   --charcoal: #36454F;
+  --warm-paper: #f4eade;
+  --warm-gold: #d1a170;
+  --warm-bronze: #8f5f3b;
+  --app-bottom-nav-height: 6rem;
+  --app-fab-size: 4.35rem;
 }
 
 body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(to bottom right, var(--cb-1), var(--cb-2), var(--cb-3));
+  background:
+    radial-gradient(circle at top, rgba(255, 236, 214, 0.08), transparent 26%),
+    linear-gradient(180deg, #101a29 0%, var(--cb-1) 24%, var(--cb-2) 62%, var(--cb-3) 100%);
   color: var(--light-grey);
   min-height: 100vh;
 }
@@ -53,6 +60,33 @@ body {
   border-radius: 4px;
 }
 
+.app-page {
+  padding-bottom: 1.5rem;
+  padding-top: 0.35rem;
+}
+
+.app-page--with-nav {
+  padding-bottom: calc(var(--app-bottom-nav-height) + var(--app-fab-size) + 2.25rem + env(safe-area-inset-bottom));
+}
+
+.app-flash {
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 240, 220, 0.14);
+  border-radius: 18px;
+  font-size: 0.95rem;
+  padding: 0.8rem 1rem;
+}
+
+.app-flash--notice {
+  background: rgba(133, 96, 61, 0.16);
+  color: #ffe6c8 !important;
+}
+
+.app-flash--alert {
+  background: rgba(128, 52, 45, 0.22);
+  color: #ffd4cc !important;
+}
+
 /* Inputs should use dark text since they have light backgrounds */
 .form-control,
 .form-select {
@@ -79,4 +113,10 @@ td,
 small,
 button {
   color: var(--light-grey) !important;
+}
+
+@media (min-width: 992px) {
+  .app-page--with-nav {
+    padding-bottom: calc(var(--app-bottom-nav-height) + var(--app-fab-size) + 2.75rem + env(safe-area-inset-bottom));
+  }
 }

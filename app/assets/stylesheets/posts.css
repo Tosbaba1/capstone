@@ -1,5 +1,8 @@
 .feed-shell {
+  margin: 0 auto;
+  max-width: 52rem;
   padding-bottom: 1.5rem;
+  width: 100%;
 }
 
 .feed-hero {
@@ -9,7 +12,22 @@
   border: 1px solid rgba(255, 248, 238, 0.16);
   border-radius: 24px;
   box-shadow: 0 20px 45px rgba(7, 12, 24, 0.22);
-  padding: 1.25rem 1.4rem;
+  padding: 1.15rem 1.4rem;
+}
+
+.feed-hero__inner {
+  align-items: center;
+  display: flex;
+  gap: 1rem 1.5rem;
+  justify-content: space-between;
+  min-height: clamp(9.75rem, 18vw, 11.5rem);
+}
+
+.feed-hero__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
 }
 
 .feed-hero__eyebrow,
@@ -29,20 +47,20 @@
 }
 
 .feed-hero__title {
-  font-size: clamp(1.55rem, 3vw, 2.35rem);
-  line-height: 1.08;
-  max-width: 15ch;
+  font-size: clamp(1.45rem, 2.6vw, 1.95rem);
+  line-height: 1.1;
+  max-width: 18ch;
 }
 
 .feed-hero__copy,
 .feed-composer__copy {
   color: rgba(255, 248, 238, 0.82) !important;
-  max-width: 40rem;
+  max-width: 33rem;
   line-height: 1.45;
 }
 
 .feed-hero__pill {
-  align-self: flex-start;
+  align-self: center;
   background: rgba(255, 248, 238, 0.12);
   border: 1px solid rgba(255, 248, 238, 0.18);
   border-radius: 999px;
@@ -74,6 +92,12 @@
   outline: none;
 }
 
+.feed-tabs {
+  border-bottom: 0;
+  margin-inline: auto;
+  width: 100%;
+}
+
 .feed-tabs .nav-link {
   border-radius: 999px;
   color: rgba(255, 248, 238, 0.78);
@@ -98,6 +122,7 @@
 
 .feed-composer {
   padding: 1.1rem 1.2rem;
+  scroll-margin-top: 1rem;
 }
 
 .feed-post-card {
@@ -195,6 +220,86 @@
   color: #4f3b2d;
   margin-top: 0.75rem;
   padding: 1rem;
+}
+
+.feed-composer--drawer {
+  margin-bottom: 0 !important;
+}
+
+.feed-composer-drawer {
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  transition: opacity 160ms ease;
+  z-index: 1080;
+}
+
+.feed-composer-drawer:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.feed-composer-drawer__backdrop {
+  backdrop-filter: blur(6px);
+  background: rgba(11, 14, 19, 0.56);
+  display: block;
+  inset: 0;
+  position: absolute;
+}
+
+.feed-composer-drawer__panel {
+  left: 50%;
+  max-height: calc(100vh - 1.5rem);
+  max-width: min(52rem, calc(100% - 1.5rem));
+  opacity: 0;
+  overflow: auto;
+  position: absolute;
+  top: 0.75rem;
+  transform: translate(-50%, 1rem);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+  width: 100%;
+}
+
+.feed-composer-drawer:target .feed-composer-drawer__panel {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.feed-composer-drawer__chrome {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.65rem;
+  padding: 0 0.2rem;
+}
+
+.feed-composer-drawer__eyebrow {
+  color: rgba(255, 244, 224, 0.88) !important;
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.feed-composer-drawer__close {
+  align-items: center;
+  background: rgba(255, 248, 238, 0.16);
+  border: 1px solid rgba(255, 248, 238, 0.22);
+  border-radius: 999px;
+  color: #fff8ee;
+  display: inline-flex;
+  height: 2.4rem;
+  justify-content: center;
+  text-decoration: none;
+  width: 2.4rem;
+}
+
+.feed-composer-drawer__close:hover,
+.feed-composer-drawer__close:focus-visible {
+  background: rgba(255, 248, 238, 0.24);
+  color: #fff8ee;
 }
 
 .feed-post-card__content {
@@ -359,7 +464,13 @@
 @media (max-width: 767.98px) {
   .feed-hero {
     border-radius: 20px;
-    padding: 1rem;
+    padding: 1rem 1.05rem;
+  }
+
+  .feed-hero__inner {
+    align-items: flex-start;
+    flex-direction: column;
+    min-height: auto;
   }
 
   .feed-composer,
@@ -368,14 +479,19 @@
   }
 
   .feed-hero__title {
-    font-size: 1.4rem;
-    max-width: none;
+    font-size: 1.35rem;
+    max-width: 14ch;
   }
 
   .feed-hero__copy,
   .feed-composer__copy,
   .feed-composer__helper {
     font-size: 0.9rem;
+    max-width: none;
+  }
+
+  .feed-hero__pill {
+    align-self: flex-start;
   }
 
   .feed-composer__textarea {
@@ -393,5 +509,11 @@
 
   .feed-composer__footer {
     align-items: stretch;
+  }
+
+  .feed-composer-drawer__panel {
+    max-height: calc(100vh - 1rem);
+    max-width: calc(100% - 1rem);
+    top: 0.5rem;
   }
 }

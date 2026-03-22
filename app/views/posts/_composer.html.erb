@@ -1,11 +1,16 @@
-<% status_labels = Reading::STATUS_OPTIONS.to_h %>
+<%
+  status_labels = Reading::STATUS_OPTIONS.to_h
+  composer_id = local_assigns.fetch(:composer_id, 'feed-composer')
+  composer_classes = ['feed-composer', 'mb-3', local_assigns[:composer_classes]].compact.join(' ')
+  heading_id = local_assigns[:heading_id]
+%>
 
-<section class="feed-composer mb-3">
+<%= content_tag :section, id: composer_id, class: composer_classes do %>
   <div class="feed-composer__header d-flex gap-2 align-items-start">
     <%= image_tag(current_user.avatar.presence || 'default_avatar.png', alt: current_user.name, class: 'avatar feed-post-card__avatar') %>
     <div>
       <p class="feed-composer__eyebrow mb-1">Share an update</p>
-      <h2 class="feed-composer__title mb-1">Make it about the book, not the algorithm.</h2>
+      <%= content_tag :h2, 'Make it about the book, not the algorithm.', id: heading_id, class: 'feed-composer__title mb-1' %>
       <p class="feed-composer__copy mb-0">
         Pick a book from your library and post the kind of update another reader would actually want to see.
       </p>
@@ -121,4 +126,4 @@
       </div>
     </div>
   <% end %>
-</section>
+<% end %>

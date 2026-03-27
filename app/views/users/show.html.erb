@@ -18,7 +18,7 @@
         <% end %>
       </div>
       <div class="text-end text-white">
-        <span class="me-3"><strong><%= @user.posts_count || 0 %></strong> Posts</span>
+        <span class="me-3"><strong><%= @user.completed_session_count %></strong> Sessions</span>
         <span class="me-3"><%= link_to "<strong>#{@user.followers.count}</strong> Followers".html_safe, followers_user_path(@user), class: 'text-white' %></span>
         <span><%= link_to "<strong>#{@user.following.count}</strong> Following".html_safe, following_user_path(@user), class: 'text-white' %></span>
       </div>
@@ -38,7 +38,10 @@
         <% end %>
       </div>
     <% else %>
-      <%= link_to 'My Library', library_path, class: 'btn btn-royal btn-sm mt-2' %>
+      <div class="mt-2 d-flex align-items-center gap-2">
+        <%= link_to 'View Progress', profile_path, class: 'btn btn-secondary btn-sm' %>
+        <%= link_to 'My Library', library_path, class: 'btn btn-royal btn-sm' %>
+      </div>
     <% end %>
   </div>
 </div>
@@ -46,10 +49,10 @@
 <% if !@restricted %>
   <ul class="nav nav-tabs mb-3">
     <li class="nav-item">
-      <%= link_to 'Nouvelles', user_path(@user), class: "nav-link #{params[:tab].blank? || params[:tab] == 'nouvelles' ? 'active' : ''}" %>
+      <%= link_to 'Notes', user_path(@user), class: "nav-link #{params[:tab].blank? || params[:tab] == 'nouvelles' ? 'active' : ''}" %>
     </li>
     <li class="nav-item">
-      <%= link_to 'Renous', user_path(@user, tab: 'renous'), class: "nav-link #{params[:tab] == 'renous' ? 'active' : ''}" %>
+      <%= link_to 'Reshares', user_path(@user, tab: 'renous'), class: "nav-link #{params[:tab] == 'renous' ? 'active' : ''}" %>
     </li>
     <li class="nav-item">
       <%= link_to 'Likes', user_path(@user, tab: 'likes'), class: "nav-link #{params[:tab] == 'likes' ? 'active' : ''}" %>
@@ -101,7 +104,7 @@
     <% end %>
 
     <% if posts.empty? %>
-      <p class="text-white">No posts to display.</p>
+      <p class="text-white">No reading notes to display.</p>
     <% end %>
   <% end %>
 <% end %>

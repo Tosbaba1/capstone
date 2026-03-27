@@ -168,7 +168,7 @@
     <div class="sessions-home__panel-head">
       <div>
         <p class="sessions-home__section-eyebrow mb-1">Secondary Surfaces</p>
-        <h2 class="sessions-home__section-title mb-1">Library, search, and feed remain available without taking over Home.</h2>
+        <h2 class="sessions-home__section-title mb-1">Library, discovery, and activity stay available without taking over Home.</h2>
         <p class="sessions-home__section-copy mb-0">The social layer still exists, but it now sits behind the session loop instead of ahead of it.</p>
       </div>
     </div>
@@ -181,15 +181,15 @@
       <% end %>
 
       <%= link_to search_path(tab: "books"), class: "secondary-surface-card" do %>
-        <span class="secondary-surface-card__eyebrow">Search</span>
+        <span class="secondary-surface-card__eyebrow">Discover</span>
         <strong class="secondary-surface-card__title">Find your next book</strong>
         <span class="secondary-surface-card__copy">Browse titles without breaking the calm session-first structure.</span>
       <% end %>
 
       <%= link_to posts_path, class: "secondary-surface-card" do %>
-        <span class="secondary-surface-card__eyebrow">Feed</span>
-        <strong class="secondary-surface-card__title">Reading updates</strong>
-        <span class="secondary-surface-card__copy">The feed is preserved as its own surface instead of driving the Home page.</span>
+        <span class="secondary-surface-card__eyebrow">Activity</span>
+        <strong class="secondary-surface-card__title">Reading notes and updates</strong>
+        <span class="secondary-surface-card__copy">Activity is preserved as its own surface instead of driving the Home page.</span>
       <% end %>
     </div>
 
@@ -197,11 +197,11 @@
       <% recent_author = @recent_post.creator.name.presence || @recent_post.creator.username.presence || "A reader" %>
       <% recent_book = @recent_post.book&.title.presence || "their current read" %>
       <article class="feed-teaser">
-        <p class="feed-teaser__eyebrow mb-1">Latest from the feed</p>
+        <p class="feed-teaser__eyebrow mb-1">Latest reading note</p>
         <p class="feed-teaser__copy mb-2">
           <strong><%= recent_author %></strong> shared an update about <strong><%= recent_book %></strong>.
         </p>
-        <%= link_to "Open the feed", posts_path, class: "entry-card__link" %>
+        <%= link_to "Open activity", posts_path, class: "entry-card__link" %>
       </article>
     <% end %>
   </section>

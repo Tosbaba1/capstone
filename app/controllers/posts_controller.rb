@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @page_title = "Feed"
+    @page_title = "Activity"
     posts_scope = params[:tab] == "explore" ? explore_posts_scope : current_user.timeline
 
     @list_of_posts = posts_scope
@@ -13,6 +13,7 @@ class PostsController < ApplicationController
 
   def show
     @the_post = Post.find(params.fetch("path_id"))
+    @page_title = "Reading Note"
 
     if private_post_hidden?(@the_post)
       redirect_to posts_path, alert: "You are not authorized to view this post." and return
@@ -23,14 +24,14 @@ class PostsController < ApplicationController
 
   def likes
     @post = Post.find(params.fetch(:post_id))
-    @page_title = "Likes"
+    @page_title = "Appreciation"
 
     render template: "posts/likes"
   end
 
   def comments
     @post = Post.find(params.fetch(:post_id))
-    @page_title = "Comments"
+    @page_title = "Responses"
 
     render template: "posts/comments"
   end
@@ -51,7 +52,7 @@ class PostsController < ApplicationController
       @post.save!
     end
 
-    redirect_to posts_path, notice: "Post created successfully."
+    redirect_to posts_path, notice: "Reading note shared."
   rescue ActiveRecord::RecordInvalid => e
     record = e.record == @post ? @post : e.record
     redirect_to posts_path, alert: record.errors.full_messages.to_sentence.presence || "Unable to create post."
@@ -67,7 +68,7 @@ class PostsController < ApplicationController
     permitted = post_params
 
     if post.update(post_attributes_from(permitted))
-      redirect_to post_path(post), notice: "Post updated successfully."
+      redirect_to post_path(post), notice: "Reading note updated."
     else
       redirect_to post_path(post), alert: post.errors.full_messages.to_sentence
     end
@@ -77,7 +78,7 @@ class PostsController < ApplicationController
     post = Post.find(params.fetch("path_id"))
     post.destroy
 
-    redirect_to posts_path, notice: "Post deleted successfully."
+    redirect_to posts_path, notice: "Reading note deleted."
   end
 
   private

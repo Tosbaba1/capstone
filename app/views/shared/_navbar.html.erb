@@ -1,36 +1,41 @@
 <%
   page_label = @page_title.presence || "Welcome back"
   unread_count = user_signed_in? ? current_user.notifications.unread.count : 0
+  reading_active = request.path == root_path || request.path == home_path || request.path == new_session_path
+  library_active = request.path == library_path || request.path.match?(%r{\A/users/\d+/library\z})
+  discover_active = request.path == search_path || request.path.start_with?("/books")
+  activity_active = request.path.start_with?("/posts")
+  inbox_active = request.path == notifications_path
   nav_items = [
     {
-      label: "Home",
+      label: "Read",
       path: root_path,
       icon: "bi-house-door",
-      active: request.path == root_path || request.path == home_path
+      active: reading_active
     },
     {
-      label: "Sessions",
+      label: "Library",
       path: library_path,
       icon: "bi-book-half",
-      active: request.path == library_path
+      active: library_active
     },
     {
-      label: "Search",
+      label: "Discover",
       path: search_path,
-      icon: "bi-search",
-      active: request.path == search_path
+      icon: "bi-compass",
+      active: discover_active
     },
     {
-      label: "Feed",
+      label: "Activity",
       path: posts_path,
-      icon: "bi-layout-text-window-reverse",
-      active: request.path == posts_path
+      icon: "bi-journal-text",
+      active: activity_active
     },
     {
-      label: "Alerts",
+      label: "Inbox",
       path: notifications_path,
       icon: "bi-bell",
-      active: request.path == notifications_path,
+      active: inbox_active,
       badge: unread_count
     }
   ]
@@ -46,13 +51,13 @@
           </span>
           <span class="nouvelle-mark__wording">
             <span class="nouvelle-mark__name">Nouvelle</span>
-            <span class="nouvelle-mark__tag">Quiet reading company</span>
+            <span class="nouvelle-mark__tag">Quiet reading sessions</span>
           </span>
         <% end %>
       </div>
 
       <div class="app-header__meta">
-        <p class="app-header__eyebrow mb-0">Session-based social reading</p>
+        <p class="app-header__eyebrow mb-0">Session-first reading with quiet company</p>
         <p class="app-header__title mb-0"><%= page_label %></p>
       </div>
 
@@ -78,7 +83,7 @@
         <div class="app-bottom-nav__items">
           <% nav_items.each do |item| %>
             <% link_classes = ["app-bottom-nav__link", ("is-active" if item[:active])].compact.join(" ") %>
-            <% link_label = item[:label] == "Alerts" && unread_count.positive? ? "#{item[:label]}, #{unread_count} unread" : item[:aria_label].presence || item[:label] %>
+            <% link_label = item[:label] == "Inbox" && unread_count.positive? ? "#{item[:label]}, #{unread_count} unread" : item[:aria_label].presence || item[:label] %>
             <%= link_to item[:path], class: link_classes, aria: { label: link_label } do %>
               <span class="app-bottom-nav__icon-wrap">
                 <span class="app-bottom-nav__icon">

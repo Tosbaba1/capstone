@@ -2,8 +2,8 @@ class SearchController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @page_title = 'Search'
-    @active_tab = params[:tab] || 'users'
+    @page_title = 'Discover'
+    @active_tab = params[:tab] || 'books'
 
     if @active_tab == 'books'
       if params[:q].present?
@@ -24,7 +24,7 @@ class SearchController < ApplicationController
   end
 
   def users
-    @page_title = 'Search'
+    @page_title = 'Discover'
     @recent_searches = current_user.search_histories.order(created_at: :desc).limit(5)
 
     if params[:q].present?

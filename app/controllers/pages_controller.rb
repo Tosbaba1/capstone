@@ -44,6 +44,7 @@ class PagesController < ApplicationController
     @page_title = "Library"
     @user = current_user
     @active_tab = params[:tab] || "public"
+    @current_session_participant = current_user.active_session_participant
 
     unless @active_tab == "ai"
       scope = @user.readings.includes(:book)
@@ -81,17 +82,17 @@ class PagesController < ApplicationController
   end
 
   def notifications
-    @page_title = "Notifications"
+    @page_title = "Inbox"
     scope = current_user.notifications.order(created_at: :desc)
 
     @notifications = case params[:tab]
-      when "likes"
+      when "appreciation", "likes"
         scope.where(action: "liked your post")
-      when "comments"
+      when "responses", "comments"
         scope.where(action: "commented on your post")
-      when "follow_requests"
+      when "requests", "follow_requests"
         scope.where(action: "sent you a follow request")
-      when "milestones"
+      when "progress", "milestones"
         scope.where("action LIKE ?", "started reading%")
       else
         scope
@@ -99,7 +100,7 @@ class PagesController < ApplicationController
   end
 
   def profile
-    @page_title = "Profile"
+    @page_title = "Progress"
     @weekly_reading_time = current_user.reading_time_this_week
     @sessions_completed = current_user.completed_session_count
     @sessions_this_week = current_user.reading_sessions_this_week

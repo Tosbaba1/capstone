@@ -1,43 +1,58 @@
-<ul class="nav nav-tabs mb-3">
-  <li class="nav-item">
-    <%= link_to 'All', notifications_path, class: "nav-link #{params[:tab].blank? ? 'active' : ''}" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to 'Likes', notifications_path(tab: 'likes'), class: "nav-link #{params[:tab] == 'likes' ? 'active' : ''}" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to 'Comments', notifications_path(tab: 'comments'), class: "nav-link #{params[:tab] == 'comments' ? 'active' : ''}" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to 'Follow Requests', notifications_path(tab: 'follow_requests'), class: "nav-link #{params[:tab] == 'follow_requests' ? 'active' : ''}" %>
-  </li>
-  <li class="nav-item">
-    <%= link_to 'Milestones', notifications_path(tab: 'milestones'), class: "nav-link #{params[:tab] == 'milestones' ? 'active' : ''}" %>
-  </li>
-</ul>
+<section class="library-shell">
+  <header class="library-hero mb-4">
+    <p class="library-hero__eyebrow mb-2">Reading Inbox</p>
+    <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end">
+      <div>
+        <h1 class="library-hero__title mb-2">Signals around your reading life</h1>
+        <p class="library-hero__copy mb-0">
+          Catch up here after you read. Sessions and progress stay primary; this surface is for everything that can wait.
+        </p>
+      </div>
+    </div>
+  </header>
 
-<ul class="list-unstyled">
-  <% @notifications.each do |notification| %>
-    <li class="mb-2">
-      <strong><%= notification.actor.name %></strong> <%= notification.action %>
-      <% if notification.notifiable.is_a?(Post) %>
-        <%= link_to 'View post', post_path(notification.notifiable) %>
-      <% elsif notification.notifiable.is_a?(Book) %>
-        <%= link_to notification.notifiable.title, book_path(notification.notifiable) %>
-      <% elsif notification.notifiable.is_a?(Followrequest) && notification.action == 'sent you a follow request' && notification.notifiable.status == 'pending' %>
-        <%= button_to 'Accept', accept_followrequest_path(notification.notifiable), method: :post, class: 'btn btn-sm btn-success ms-2' %>
-        <%= button_to 'Decline', decline_followrequest_path(notification.notifiable), method: :post, class: 'btn btn-sm btn-danger ms-1' %>
-      <% end %>
-      <small class="text-muted"><%= time_ago_in_words(notification.created_at) %> ago</small>
-      <% if notification.read? %>
-        <%= button_to 'Mark unread', mark_notification_unread_path(notification), method: :post, class: 'btn btn-sm btn-link' %>
-      <% else %>
-        <span class="badge bg-primary">New</span>
-        <%= button_to 'Mark read', mark_notification_read_path(notification), method: :post, class: 'btn btn-sm btn-link' %>
-      <% end %>
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <%= link_to 'All', notifications_path, class: "nav-link #{params[:tab].blank? ? 'active' : ''}" %>
     </li>
+    <li class="nav-item">
+      <%= link_to 'Progress', notifications_path(tab: 'progress'), class: "nav-link #{%w[progress milestones].include?(params[:tab]) ? 'active' : ''}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Responses', notifications_path(tab: 'responses'), class: "nav-link #{%w[responses comments].include?(params[:tab]) ? 'active' : ''}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Appreciation', notifications_path(tab: 'appreciation'), class: "nav-link #{%w[appreciation likes].include?(params[:tab]) ? 'active' : ''}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Requests', notifications_path(tab: 'requests'), class: "nav-link #{%w[requests follow_requests].include?(params[:tab]) ? 'active' : ''}" %>
+    </li>
+  </ul>
+
+  <ul class="list-unstyled">
+    <% @notifications.each do |notification| %>
+      <li class="mb-2">
+        <strong><%= notification.actor.name %></strong> <%= notification.action %>
+        <% if notification.notifiable.is_a?(Post) %>
+          <%= link_to 'View note', post_path(notification.notifiable) %>
+        <% elsif notification.notifiable.is_a?(Book) %>
+          <%= link_to notification.notifiable.title, book_path(notification.notifiable) %>
+        <% elsif notification.notifiable.is_a?(Followrequest) && notification.action == 'sent you a follow request' && notification.notifiable.status == 'pending' %>
+          <%= button_to 'Accept', accept_followrequest_path(notification.notifiable), method: :post, class: 'btn btn-sm btn-success ms-2' %>
+          <%= button_to 'Decline', decline_followrequest_path(notification.notifiable), method: :post, class: 'btn btn-sm btn-danger ms-1' %>
+        <% end %>
+        <small class="text-muted"><%= time_ago_in_words(notification.created_at) %> ago</small>
+        <% if notification.read? %>
+          <%= button_to 'Mark unread', mark_notification_unread_path(notification), method: :post, class: 'btn btn-sm btn-link' %>
+        <% else %>
+          <span class="badge bg-primary">New</span>
+          <%= button_to 'Mark read', mark_notification_read_path(notification), method: :post, class: 'btn btn-sm btn-link' %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
+  <% if @notifications.empty? %>
+    <p class="text-white">No updates waiting in your inbox.</p>
   <% end %>
-</ul>
-<% if @notifications.empty? %>
-  <p class="text-white">No notifications.</p>
-<% end %>
+</section>

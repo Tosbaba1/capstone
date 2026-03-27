@@ -1,21 +1,21 @@
 <% explore_active = params[:tab] == 'explore' %>
 <% feed_path = explore_active ? posts_path(tab: 'explore') : posts_path %>
-<% pill_label = explore_active ? 'Following shelf' : 'Explore shelf' %>
+<% pill_label = explore_active ? 'Following room' : 'Wider room' %>
 <% pill_path = explore_active ? posts_path : posts_path(tab: 'explore') %>
 
 <section class="feed-shell">
   <header class="feed-hero mb-3">
     <div class="feed-hero__inner">
       <div class="feed-hero__content">
-        <p class="feed-hero__eyebrow mb-0">Nouvelle Feed</p>
-        <h1 class="feed-hero__title mb-0">A social feed for readers in the middle of a book.</h1>
+        <p class="feed-hero__eyebrow mb-0">Reading Activity</p>
+        <h1 class="feed-hero__title mb-0">Notes and progress from the readers around you.</h1>
         <p class="feed-hero__copy mb-0">
-          Share the page you reached, the line you underlined, or the feeling you closed the cover with.
+          Activity lives here after the session so Home can stay devoted to getting you into a reading room quickly.
         </p>
       </div>
       <%= link_to pill_label, pill_path,
         class: 'feed-hero__pill',
-        aria: { label: "Switch to #{pill_label.sub(' shelf', '')} feed" } %>
+        aria: { label: "Switch to #{pill_label.downcase} activity" } %>
     </div>
   </header>
 
@@ -24,7 +24,7 @@
       <%= link_to 'Following', posts_path, class: "nav-link #{explore_active ? '' : 'active'}" %>
     </li>
     <li class="nav-item">
-      <%= link_to 'Explore', posts_path(tab: 'explore'), class: "nav-link #{explore_active ? 'active' : ''}" %>
+      <%= link_to 'Wider Room', posts_path(tab: 'explore'), class: "nav-link #{explore_active ? 'active' : ''}" %>
     </li>
   </ul>
 
@@ -41,7 +41,7 @@
 
   <div class="feed-composer-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="feed-composer-title">
     <div class="feed-composer-drawer__chrome">
-      <p class="feed-composer-drawer__eyebrow mb-0">Compose</p>
+      <p class="feed-composer-drawer__eyebrow mb-0">Add a note</p>
       <%= link_to feed_path, class: 'feed-composer-drawer__close', aria: { label: 'Close composer' } do %>
         <i class="bi bi-x-lg"></i>
       <% end %>

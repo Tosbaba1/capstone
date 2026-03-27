@@ -1,13 +1,13 @@
 <% if @user == current_user %>
   <ul class="nav nav-tabs mb-4">
     <li class="nav-item">
-      <%= link_to 'Public', library_path(tab: 'public'), class: "nav-link #{@active_tab == 'public' ? 'active' : ''}" %>
+      <%= link_to 'Shared Shelf', library_path(tab: 'public'), class: "nav-link #{@active_tab == 'public' ? 'active' : ''}" %>
     </li>
     <li class="nav-item">
-      <%= link_to 'Private', library_path(tab: 'private'), class: "nav-link #{@active_tab == 'private' ? 'active' : ''}" %>
+      <%= link_to 'Private Shelf', library_path(tab: 'private'), class: "nav-link #{@active_tab == 'private' ? 'active' : ''}" %>
     </li>
     <li class="nav-item">
-      <%= link_to 'Ask Librarian', library_path(tab: 'ai'), class: "nav-link #{@active_tab == 'ai' ? 'active' : ''}" %>
+      <%= link_to 'Librarian', library_path(tab: 'ai'), class: "nav-link #{@active_tab == 'ai' ? 'active' : ''}" %>
     </li>
   </ul>
 <% end %>
@@ -21,16 +21,25 @@
 
   <section class="library-shell">
     <header class="library-hero mb-4">
-      <p class="library-hero__eyebrow mb-2">Reading Journal</p>
+      <p class="library-hero__eyebrow mb-2">Library</p>
       <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end">
         <div>
           <h1 class="library-hero__title mb-2"><%= library_title %></h1>
           <p class="library-hero__copy mb-0">
-            A calmer shelf view for the books you are keeping close right now.
+            Keep the books that support your next session close at hand, then step back into reading.
           </p>
         </div>
-        <div class="library-hero__pill">
-          <span><%= shelf_label %></span>
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
+          <div class="library-hero__pill">
+            <span><%= shelf_label %></span>
+          </div>
+          <% if editable %>
+            <% if @current_session_participant.present? %>
+              <%= link_to "Return to Session", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+            <% else %>
+              <%= link_to "Start Reading Session", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+            <% end %>
+          <% end %>
         </div>
       </div>
     </header>

@@ -82,7 +82,7 @@
           <p class="profile-progress__eyebrow mb-1">Recent sessions</p>
           <h2 class="profile-progress__panel-title mb-0">A simple log of your reading time</h2>
         </div>
-        <%= link_to "Public profile", user_path(current_user), class: "profile-progress__panel-link" %>
+        <%= link_to "View public profile", user_path(current_user), class: "profile-progress__panel-link" %>
       </div>
 
       <% if @recent_completed_sessions.any? %>

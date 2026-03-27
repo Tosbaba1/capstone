@@ -3,8 +3,8 @@
   <p class="mb-0"><%= @post.content %></p>
 </div>
 
-<h2 class="mb-3">Comments</h2>
-<%= link_to 'Back to Feed', posts_path %>
+<h2 class="mb-3">Responses</h2>
+<%= link_to 'Back to Activity', posts_path %>
 <hr>
 <% @post.comments.includes(:commenter).each do |comment| %>
   <div class="mb-3 border-bottom pb-2">
@@ -17,6 +17,5 @@
   </div>
 <% end %>
 <% if @post.comments.empty? %>
-  <p>No comments yet.</p>
+  <p>No responses yet.</p>
 <% end %>
-

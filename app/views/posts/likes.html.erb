@@ -3,8 +3,8 @@
   <p class="mb-0"><%= @post.content %></p>
 </div>
 
-<h2 class="mb-3">Likes</h2>
-<%= link_to 'Back to Feed', posts_path %>
+<h2 class="mb-3">Appreciation</h2>
+<%= link_to 'Back to Activity', posts_path %>
 <hr>
 <% @post.likes.includes(:liked).each do |like| %>
   <div class="d-flex align-items-center mb-2">
@@ -13,6 +13,5 @@
   </div>
 <% end %>
 <% if @post.likes.empty? %>
-  <p>No likes yet.</p>
+  <p>No appreciation yet.</p>
 <% end %>
-

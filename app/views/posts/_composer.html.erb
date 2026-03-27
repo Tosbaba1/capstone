@@ -9,10 +9,10 @@
   <div class="feed-composer__header d-flex gap-2 align-items-start">
     <%= image_tag(current_user.avatar.presence || 'default_avatar.png', alt: current_user.name, class: 'avatar feed-post-card__avatar') %>
     <div>
-      <p class="feed-composer__eyebrow mb-1">Share an update</p>
-      <%= content_tag :h2, 'Make it about the book, not the algorithm.', id: heading_id, class: 'feed-composer__title mb-1' %>
+      <p class="feed-composer__eyebrow mb-1">Share a reading note</p>
+      <%= content_tag :h2, 'Leave a note after the session, not instead of one.', id: heading_id, class: 'feed-composer__title mb-1' %>
       <p class="feed-composer__copy mb-0">
-        Pick a book from your library and post the kind of update another reader would actually want to see.
+        Pick a book from your library and share the kind of progress, quote, or reflection another reader would genuinely appreciate.
       </p>
     </div>
   </div>
@@ -113,16 +113,16 @@
 
         <div class="d-flex align-items-center gap-3">
           <%= f.file_field :media, multiple: true, direct_upload: true, class: "d-none", data: { post_form_target: "mediaInput" } %>
-          <%= f.submit "Share to Feed", class: "btn feed-composer__submit" %>
+          <%= f.submit "Share note", class: "btn feed-composer__submit" %>
         </div>
       </div>
     <% end %>
   <% else %>
     <div class="feed-composer__empty">
-      <p class="mb-2">Your composer is ready once there’s at least one book in your library.</p>
+      <p class="mb-2">Your note drawer is ready once there is at least one book in your library.</p>
       <div class="d-flex flex-wrap gap-2">
         <%= link_to 'Open your library', library_path, class: 'btn feed-composer__submit' %>
-        <%= link_to 'Find books', '/books/search', class: 'feed-post-card__view-link' %>
+        <%= link_to 'Discover books', search_path(tab: 'books'), class: 'feed-post-card__view-link' %>
       </div>
     </div>
   <% end %>

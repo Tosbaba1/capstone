@@ -1,0 +1,65 @@
+<section class="session-setup">
+  <article class="session-setup__panel">
+    <p class="sessions-home__section-eyebrow mb-1">Start Session</p>
+    <h1 class="session-setup__title mb-2">Open a Nouvelle reading room.</h1>
+    <p class="sessions-home__section-copy mb-4">This creates a real active session immediately, makes you the host, and starts the timer as soon as you enter.</p>
+
+    <%= form_with model: @session, url: sessions_path, local: true, class: "session-setup__form" do |form| %>
+      <section class="session-setup__group">
+        <h2 class="session-setup__group-title">Choose a duration</h2>
+        <div class="session-choice-grid">
+          <% Session::DURATIONS.each do |duration| %>
+            <label class="session-choice-card">
+              <%= form.radio_button :duration, duration, checked: @session.duration.to_i == duration %>
+              <span class="session-choice-card__label"><%= "#{duration} minutes" %></span>
+              <span class="session-choice-card__copy">A focused reading block with a shared finish line.</span>
+            </label>
+          <% end %>
+        </div>
+      </section>
+
+      <section class="session-setup__group">
+        <h2 class="session-setup__group-title">Choose a mode</h2>
+        <div class="session-choice-grid session-choice-grid--compact">
+          <label class="session-choice-card">
+            <%= form.radio_button :mode, "silent", checked: @session.mode == "silent" %>
+            <span class="session-choice-card__label">Silent Mode</span>
+            <span class="session-choice-card__copy">Quiet co-reading with only presence and the timer.</span>
+          </label>
+
+          <label class="session-choice-card">
+            <%= form.radio_button :mode, "structured", checked: @session.mode == "structured" %>
+            <span class="session-choice-card__label">Structured Mode</span>
+            <span class="session-choice-card__copy">Same timer, but with a clearer shared-session framing for later prompts.</span>
+          </label>
+        </div>
+      </section>
+
+      <div class="session-setup__actions">
+        <%= form.submit "Start Reading Session", class: "sessions-home__primary-action sessions-home__primary-action--button sessions-home__primary-action--hero" %>
+        <%= link_to "Back home", home_path, class: "sessions-home__secondary-action" %>
+      </div>
+    <% end %>
+  </article>
+
+  <aside class="session-setup__sidebar">
+    <article class="session-setup__panel">
+      <p class="sessions-home__section-eyebrow mb-1">Join Instead</p>
+      <h2 class="session-setup__sidebar-title mb-2">Open sessions right now</h2>
+      <p class="sessions-home__section-copy mb-0">If a room is already active, you can step into it instead of creating another.</p>
+
+      <% if @active_sessions.any? %>
+        <div class="session-stack">
+          <% @active_sessions.each do |session| %>
+            <%= render "pages/session_card", session: session, current_session_participant: current_user.active_session_participant %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="sessions-home__empty-state mt-3">
+          <p class="mb-1">No active sessions yet.</p>
+          <p class="mb-0">Starting one now will make it available for the next reader who arrives.</p>
+        </div>
+      <% end %>
+    </article>
+  </aside>
+</section>

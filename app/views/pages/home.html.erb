@@ -23,11 +23,11 @@
       <% if @presence_readers.any? %>
         <div class="presence-rail__readers">
           <div class="presence-avatars" aria-hidden="true">
-            <% @presence_readers.first(4).each do |reading| %>
-              <%= image_tag(reading.user.avatar.presence || "default_avatar.png", alt: "", class: "presence-avatars__image") %>
+            <% @presence_readers.first(4).each do |reader| %>
+              <%= image_tag(reader.avatar.presence || "default_avatar.png", alt: "", class: "presence-avatars__image") %>
             <% end %>
           </div>
-          <% reader_names = @presence_readers.first(3).map { |reading| reading.user.name.presence || reading.user.username.presence || "A reader" } %>
+          <% reader_names = @presence_readers.first(3).map { |reader| reader.name.presence || reader.username.presence || "A reader" } %>
           <p class="presence-rail__caption mb-0">
             <%= reader_names.to_sentence %>
             <% if @live_presence_count > 3 %>
@@ -49,14 +49,14 @@
         <div>
           <p class="sessions-home__section-eyebrow mb-1">Active Sessions</p>
           <h2 class="sessions-home__section-title mb-1">Open tables you can join right now.</h2>
-          <p class="sessions-home__section-copy mb-0">Each card is a lightweight reading room built from current activity while the dedicated session backend is still in progress.</p>
+          <p class="sessions-home__section-copy mb-0">These rooms now run on real session records, presence polling, and completion tracking.</p>
         </div>
       </div>
 
       <% if @active_sessions.any? %>
         <div class="session-stack">
           <% @active_sessions.each do |session| %>
-            <%= render "session_card", session: session, readings_by_book_id: @readings_by_book_id %>
+            <%= render "session_card", session: session, current_session_participant: @current_session_participant %>
           <% end %>
         </div>
       <% else %>
@@ -143,26 +143,17 @@
     <div>
       <p class="sessions-home__section-eyebrow mb-1">Primary Action</p>
       <h2 class="sessions-home__section-title mb-1">Start reading before anything else competes for attention.</h2>
-      <p class="sessions-home__section-copy mb-0">This is now the dominant action on Home, whether you are resuming a current book or opening your first session.</p>
+      <p class="sessions-home__section-copy mb-0">Choose a duration, pick silent or structured mode, and step straight into the timer.</p>
     </div>
 
     <div class="sessions-home__cta-actions">
-      <% if @priority_reading.present? %>
-        <% primary_progress = @priority_reading.status == "finished" ? 0 : @priority_reading.progress.to_i %>
-        <% if @priority_reading.status == "reading" %>
-          <%= link_to "Start Reading Session", book_path(@priority_reading.book), class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
-        <% else %>
-          <%= button_to "Start Reading Session",
-            update_reading_path(@priority_reading),
-            method: :post,
-            params: { status: "reading", progress: primary_progress, return_to: home_path },
-            class: "sessions-home__primary-action sessions-home__primary-action--button sessions-home__primary-action--hero" %>
-        <% end %>
+      <% if @current_session_participant.present? %>
+        <%= link_to "Return to Active Session", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
+        <%= link_to "Start New Session", new_session_path, class: "sessions-home__secondary-action" %>
       <% else %>
-        <%= link_to "Start Reading Session", search_path(tab: "books"), class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
+        <%= link_to "Start Reading Session", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
+        <%= link_to "Open library", library_path, class: "sessions-home__secondary-action" %>
       <% end %>
-
-      <%= link_to "Open library", library_path, class: "sessions-home__secondary-action" %>
     </div>
   </section>
 

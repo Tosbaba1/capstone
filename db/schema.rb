@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_21_001000) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_26_090200) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -159,6 +159,31 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_21_001000) do
     t.index ["user_id"], name: "index_search_histories_on_user_id"
   end
 
+  create_table "session_participants", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "session_id", null: false
+    t.datetime "join_time", null: false
+    t.datetime "leave_time"
+    t.boolean "completed", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id", "leave_time"], name: "index_session_participants_on_session_id_and_leave_time"
+    t.index ["session_id", "user_id"], name: "index_session_participants_on_session_id_and_user_id", unique: true
+    t.index ["session_id"], name: "index_session_participants_on_session_id"
+    t.index ["user_id"], name: "index_session_participants_on_user_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "host_user_id", null: false
+    t.integer "duration", null: false
+    t.string "mode", default: "silent", null: false
+    t.string "status", default: "NOT_STARTED", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["host_user_id"], name: "index_sessions_on_host_user_id"
+    t.index ["status"], name: "index_sessions_on_status"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -174,6 +199,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_21_001000) do
     t.datetime "updated_at", null: false
     t.string "banner"
     t.boolean "is_private", default: false
+    t.datetime "last_active"
+    t.integer "total_reading_time", default: 0, null: false
+    t.integer "sessions_completed", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -185,4 +213,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_21_001000) do
   add_foreign_key "renous", "posts"
   add_foreign_key "renous", "users"
   add_foreign_key "search_histories", "users"
+  add_foreign_key "session_participants", "sessions"
+  add_foreign_key "session_participants", "users"
+  add_foreign_key "sessions", "users", column: "host_user_id"
 end

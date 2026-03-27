@@ -1,53 +1,51 @@
-<% book = session.book %>
-<% author_name = book.author&.name.presence || "Unknown author" %>
-<% existing_reading = readings_by_book_id[book.id] %>
-<% next_progress = existing_reading&.status == "finished" ? 0 : existing_reading&.progress.to_i %>
+<% host_name = session.host_user.name.presence || session.host_user.username.presence || "A reader" %>
+<% active_readers = session.active_readers %>
+<% current_session_id = current_session_participant&.session_id %>
+<% remaining_minutes = ((session.ends_at - Time.current) / 60.0).ceil %>
 
 <article class="home-session-card">
   <div class="home-session-card__top">
     <div>
-      <p class="home-session-card__eyebrow mb-1"><%= session.mode %></p>
-      <h3 class="home-session-card__title mb-1"><%= book.title %></h3>
-      <p class="home-session-card__author mb-0">by <%= author_name %></p>
+      <p class="home-session-card__eyebrow mb-1"><%= session.mode.titleize %> Mode</p>
+      <h3 class="home-session-card__title mb-1"><%= "#{session.duration}-minute reading session" %></h3>
+      <p class="home-session-card__author mb-0">Hosted by <%= host_name %></p>
     </div>
-    <span class="home-session-card__count"><%= pluralize(session.reader_count, "reader") %></span>
+    <span class="home-session-card__count"><%= pluralize(session.active_reader_count, "reader") %></span>
   </div>
 
   <div class="home-session-card__meta">
-    <span><%= pluralize(session.reader_count, "person") %> reading</span>
-    <span>Started <%= time_ago_in_words(session.started_at) %> ago</span>
-    <span><%= session.mode %></span>
+    <span><%= pluralize(session.active_reader_count, "person") %> present</span>
+    <span>Ends in <%= pluralize([remaining_minutes, 1].max, "minute") %></span>
+    <span><%= session.mode.titleize %></span>
   </div>
 
-  <% if session.readers.any? %>
+  <% if active_readers.any? %>
     <div class="home-session-card__readers">
-      <% session.readers.first(4).each do |reader| %>
+      <% active_readers.first(4).each do |reader| %>
         <% reader_label = reader.name.presence || reader.username.presence || "Reader" %>
         <div class="home-session-card__reader">
           <%= image_tag(reader.avatar.presence || "default_avatar.png", alt: reader_label, class: "home-session-card__avatar") %>
-          <span><%= reader_label %></span>
+          <span>
+            <%= reader_label %>
+            <% if reader.id == session.host_user_id %>
+              <small>(Host)</small>
+            <% end %>
+          </span>
         </div>
       <% end %>
     </div>
   <% end %>
 
   <div class="home-session-card__actions">
-    <% if existing_reading&.status == "reading" %>
-      <%= link_to "Join Session", book_path(book), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
-    <% elsif existing_reading.present? %>
-      <%= button_to "Join Session",
-        update_reading_path(existing_reading),
-        method: :post,
-        params: { status: "reading", progress: next_progress, return_to: home_path },
-        class: "sessions-home__primary-action sessions-home__primary-action--button sessions-home__primary-action--inline" %>
+    <% if current_session_id == session.id %>
+      <%= link_to "Return to Session", session_path(session), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
     <% else %>
       <%= button_to "Join Session",
-        "/insert_reading",
+        join_session_path(session),
         method: :post,
-        params: { book_id: book.id, status: "reading", return_to: home_path },
         class: "sessions-home__primary-action sessions-home__primary-action--button sessions-home__primary-action--inline" %>
     <% end %>
 
-    <%= link_to "View book", book_path(book), class: "entry-card__link" %>
+    <%= link_to "View session", session_path(session), class: "entry-card__link" %>
   </div>
 </article>

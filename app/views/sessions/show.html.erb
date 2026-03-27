@@ -1,0 +1,98 @@
+<% participant_status = @participant.completed? ? "Completed" : "Abandoned" %>
+<% credited_minutes = (@participant.elapsed_seconds(at: @participant.leave_time || Time.current) / 60.0).round %>
+
+<section class="session-room">
+  <article class="session-room__panel">
+    <div class="session-room__header">
+      <div>
+        <p class="sessions-home__section-eyebrow mb-1">Reading Session</p>
+        <h1 class="session-room__title mb-1"><%= "#{@session.duration}-minute #{@session.mode.titleize.downcase} session" %></h1>
+        <p class="sessions-home__section-copy mb-0">
+          Hosted by <%= @session.host_user.name.presence || @session.host_user.username.presence || "A reader" %>.
+        </p>
+      </div>
+
+      <div class="session-room__pill-group">
+        <span class="session-room__pill"><%= @session.mode.titleize %> Mode</span>
+        <span class="session-room__pill"><%= @session.status.titleize %></span>
+      </div>
+    </div>
+
+    <% if @participant.leave_time.present? %>
+      <div class="session-room__summary">
+        <p class="session-room__summary-label mb-1"><%= participant_status %></p>
+        <h2 class="session-room__summary-title mb-2">
+          <% if @participant.completed? %>
+            Your reading time counted.
+          <% else %>
+            This one ended as an early exit.
+          <% end %>
+        </h2>
+        <p class="sessions-home__section-copy mb-0">
+          <%= "#{credited_minutes} minutes credited in this session." %>
+          You now have <%= pluralize(current_user.sessions_completed, "completed session") %> and
+          <%= "#{(current_user.total_reading_time / 60.0).round} total minutes logged." %>
+        </p>
+      </div>
+
+      <div class="session-room__actions">
+        <%= link_to "Back Home", home_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+        <%= link_to "Start Another Session", new_session_path, class: "sessions-home__secondary-action" %>
+      </div>
+    <% else %>
+      <div
+        class="session-room__active"
+        data-controller="session-room"
+        data-session-room-active-value="true"
+        data-session-room-ends-at-value="<%= @presence_snapshot[:ends_at] %>"
+        data-session-room-heartbeat-url-value="<%= heartbeat_session_path(@session) %>"
+        data-session-room-presence-url-value="<%= presence_session_path(@session) %>"
+        data-session-room-complete-url-value="<%= complete_session_path(@session) %>"
+        data-session-room-default-avatar-url-value="<%= asset_path("default_avatar.png") %>"
+      >
+        <div class="session-room__timer-card">
+          <p class="session-room__timer-label mb-1">Time remaining</p>
+          <strong class="session-room__timer-value" data-session-room-target="countdown"></strong>
+          <p class="sessions-home__section-copy mb-0">Staying for more than half the timer counts as a completed session even if you leave early.</p>
+        </div>
+
+        <div class="session-room__presence">
+          <div class="session-room__presence-head">
+            <div>
+              <p class="session-room__timer-label mb-1">Active readers</p>
+              <h2 class="session-room__presence-count mb-0" data-session-room-target="readerCount">
+                <%= pluralize(@presence_snapshot[:active_reader_count], "reader") %>
+              </h2>
+            </div>
+            <span class="session-room__pill">Polling every 5 seconds</span>
+          </div>
+
+          <div class="session-room__reader-list" data-session-room-target="readerList">
+            <% @presence_snapshot[:readers].each do |reader| %>
+              <article class="session-room__reader">
+                <%= image_tag(reader[:avatar].presence || "default_avatar.png", alt: reader[:name], class: "session-room__reader-avatar") %>
+                <div>
+                  <strong><%= reader[:name] %></strong>
+                  <p class="mb-0">
+                    <% if reader[:host] %>
+                      Host
+                    <% elsif reader[:current_user] %>
+                      You
+                    <% else %>
+                      Reading now
+                    <% end %>
+                  </p>
+                </div>
+              </article>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="session-room__actions">
+          <%= button_to "Leave Session", leave_session_path(@session), method: :post, class: "sessions-home__secondary-action sessions-home__secondary-action--button" %>
+          <%= link_to "Back Home", home_path, class: "entry-card__link" %>
+        </div>
+      </div>
+    <% end %>
+  </article>
+</section>

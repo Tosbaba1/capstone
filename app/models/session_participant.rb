@@ -6,7 +6,7 @@ class SessionParticipant < ApplicationRecord
 
   scope :completed, -> { where(completed: true) }
   scope :current, -> { where(leave_time: nil) }
-  scope :active_now, ->(window: PRESENCE_WINDOW) { current.where(updated_at: window.ago..Time.current) }
+  scope :active_now, ->(window: PRESENCE_WINDOW, at: Time.current) { current.where(updated_at: (at - window)..at) }
 
   validates :join_time, presence: true
   validates :user_id, uniqueness: { scope: :session_id }

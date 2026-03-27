@@ -23,5 +23,26 @@ RSpec.describe SessionPresenceSnapshot do
       expect(snapshot[:active_reader_count]).to eq(3)
       expect(snapshot[:readers].map { |reader| reader[:name] }).to eq(["Host Reader", "Current Reader", "Guest Reader"])
     end
+
+    it "omits reader identities when presence visibility is count only" do
+      now = Time.zone.parse("2026-03-26 09:30:00")
+      host = create(:user, name: "Host Reader")
+      guest = create(:user, name: "Guest Reader")
+      session = create(:session, host_user: host, duration: 25, created_at: now - 5.minutes)
+
+      create(:session_participant, session: session, user: guest, join_time: now - 4.minutes, updated_at: now - 4.seconds)
+      create(:session_participant, session: session, user: host, join_time: now - 5.minutes, updated_at: now - 2.seconds)
+
+      snapshot = described_class.new(
+        session: session,
+        current_user: host,
+        at: now,
+        presence_visibility: "count_only"
+      ).as_json
+
+      expect(snapshot[:presence_visibility]).to eq("count_only")
+      expect(snapshot[:active_reader_count]).to eq(2)
+      expect(snapshot[:readers]).to eq([])
+    end
   end
 end

@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
   def new
     SessionLifecycle.finalize_expired_sessions!
     @page_title = "Start Session"
-    @session = Session.new(duration: 25, mode: "silent")
+    @session = Session.new(duration: feature_flags.session_length, mode: feature_flags.session_type)
     @active_sessions = HomeSessionSnapshot.new(current_user: current_user).active_sessions
   end
 
@@ -30,10 +30,17 @@ class SessionsController < ApplicationController
       .where(status: "reading")
       .order(updated_at: :desc)
       .first
-    @presence_snapshot = SessionPresenceSnapshot.new(session: @session, current_user: current_user).as_json
+    @presence_snapshot = SessionPresenceSnapshot.new(
+      session: @session,
+      current_user: current_user,
+      presence_visibility: feature_flags.presence_visibility
+    ).as_json
     @immersive_session_room = @participant.present? && @participant.leave_time.blank? && @session.active?
 
-    return if @participant.present?
+    if @participant.present?
+      track_completion_view if @participant.leave_time.present?
+      return
+    end
 
     redirect_to home_path, alert: "Join the session from Home or the session list first."
   end
@@ -51,7 +58,11 @@ class SessionsController < ApplicationController
 
   def heartbeat
     SessionLifecycle.new(user: current_user, session: @session).heartbeat!
-    render json: SessionPresenceSnapshot.new(session: @session, current_user: current_user).as_json
+    render json: SessionPresenceSnapshot.new(
+      session: @session,
+      current_user: current_user,
+      presence_visibility: feature_flags.presence_visibility
+    ).as_json
   end
 
   def complete
@@ -61,7 +72,11 @@ class SessionsController < ApplicationController
 
   def presence
     SessionLifecycle.finalize_expired_session!(@session)
-    render json: SessionPresenceSnapshot.new(session: @session, current_user: current_user).as_json
+    render json: SessionPresenceSnapshot.new(
+      session: @session,
+      current_user: current_user,
+      presence_visibility: feature_flags.presence_visibility
+    ).as_json
   end
 
   private
@@ -80,5 +95,18 @@ class SessionsController < ApplicationController
 
   def handle_not_participant(exception)
     redirect_to home_path, alert: exception.message
+  end
+
+  def track_completion_view
+    track_analytics_event(
+      Analytics::EventNames::COMPLETION_VIEWED,
+      session_record: @session,
+      properties: {
+        completed: @participant.completed?,
+        credited_minutes: @participant.credited_minutes,
+        session_duration: @session.duration,
+        session_mode: @session.mode
+      }
+    )
   end
 end

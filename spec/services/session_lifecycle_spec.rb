@@ -14,6 +14,7 @@ RSpec.describe SessionLifecycle do
       expect(session.session_participants.count).to eq(1)
       expect(session.session_participants.first.user).to eq(user)
       expect(session.session_participants.first.join_time.to_i).to eq(now.to_i)
+      expect(AnalyticsEvent.named(Analytics::EventNames::SESSION_STARTED).count).to eq(1)
     end
   end
 
@@ -30,6 +31,7 @@ RSpec.describe SessionLifecycle do
       expect(participant).to be_persisted
       expect(participant.user).to eq(joiner)
       expect(session.session_participants.count).to eq(2)
+      expect(AnalyticsEvent.named(Analytics::EventNames::SESSION_JOINED).count).to eq(1)
     end
   end
 
@@ -49,6 +51,7 @@ RSpec.describe SessionLifecycle do
       expect(user.sessions_completed).to eq(1)
       expect(user.total_reading_time).to be >= 12.minutes.to_i
       expect(session.status).to eq("COMPLETED")
+      expect(AnalyticsEvent.named(Analytics::EventNames::SESSION_COMPLETED).count).to eq(1)
     end
 
     it "marks the session abandoned when the only participant leaves too early" do
@@ -66,6 +69,7 @@ RSpec.describe SessionLifecycle do
       expect(user.sessions_completed).to eq(0)
       expect(user.total_reading_time).to eq(0)
       expect(session.status).to eq("ABANDONED")
+      expect(AnalyticsEvent.named(Analytics::EventNames::SESSION_ABANDONED).count).to eq(1)
     end
   end
 end

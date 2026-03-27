@@ -29,6 +29,15 @@ class PagesController < ApplicationController
       queued: current_user.readings.where(status: "want_to_read").count,
       finished: current_user.readings.where(status: "finished").count
     }
+
+    track_analytics_event(
+      Analytics::EventNames::HOME_VIEWED,
+      properties: {
+        active_session_count: @active_sessions.count,
+        live_presence_count: @live_presence_count,
+        has_active_session: @current_session_participant.present?
+      }
+    )
   end
 
   def library
@@ -101,6 +110,15 @@ class PagesController < ApplicationController
       .order(leave_time: :desc)
       .limit(3)
     @current_session_participant = current_user.active_session_participant
+
+    track_analytics_event(
+      Analytics::EventNames::PROFILE_VIEWED,
+      properties: {
+        sessions_completed: @sessions_completed,
+        sessions_this_week: @sessions_this_week,
+        current_streak: @current_streak
+      }
+    )
   end
 
   private

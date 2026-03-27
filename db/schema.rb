@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_26_090200) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
+ActiveRecord::Schema[7.1].define(version: 2026_03_27_110000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -43,12 +40,27 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_26_090200) do
   end
 
   create_table "ai_chat_messages", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.integer "user_id", null: false
     t.string "role"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_ai_chat_messages_on_user_id"
+  end
+
+  create_table "analytics_events", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "session_id"
+    t.string "name", null: false
+    t.datetime "occurred_at", null: false
+    t.json "properties", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "occurred_at"], name: "index_analytics_events_on_name_and_occurred_at"
+    t.index ["session_id", "name"], name: "index_analytics_events_on_session_id_and_name"
+    t.index ["session_id"], name: "index_analytics_events_on_session_id"
+    t.index ["user_id", "name", "occurred_at"], name: "index_analytics_events_on_user_id_and_name_and_occurred_at"
+    t.index ["user_id"], name: "index_analytics_events_on_user_id"
   end
 
   create_table "authors", force: :cascade do |t|
@@ -61,7 +73,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_26_090200) do
   end
 
   create_table "badges", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.integer "user_id", null: false
     t.string "name"
     t.string "description"
     t.string "image_url"
@@ -125,7 +137,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_26_090200) do
     t.integer "comments_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "poll_data"
+    t.json "poll_data"
   end
 
   create_table "readings", force: :cascade do |t|
@@ -142,8 +154,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_26_090200) do
   end
 
   create_table "renous", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "post_id", null: false
+    t.integer "user_id", null: false
+    t.integer "post_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_renous_on_post_id"
@@ -152,7 +164,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_26_090200) do
   end
 
   create_table "search_histories", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.integer "user_id", null: false
     t.string "query"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -160,8 +172,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_26_090200) do
   end
 
   create_table "session_participants", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "session_id", null: false
+    t.integer "user_id", null: false
+    t.integer "session_id", null: false
     t.datetime "join_time", null: false
     t.datetime "leave_time"
     t.boolean "completed", default: false, null: false
@@ -174,7 +186,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_26_090200) do
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.bigint "host_user_id", null: false
+    t.integer "host_user_id", null: false
     t.integer "duration", null: false
     t.string "mode", default: "silent", null: false
     t.string "status", default: "NOT_STARTED", null: false
@@ -209,6 +221,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_26_090200) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "ai_chat_messages", "users"
+  add_foreign_key "analytics_events", "sessions"
+  add_foreign_key "analytics_events", "users"
   add_foreign_key "badges", "users"
   add_foreign_key "renous", "posts"
   add_foreign_key "renous", "users"

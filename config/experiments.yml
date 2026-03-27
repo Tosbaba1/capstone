@@ -1,0 +1,17 @@
+default:
+  session_type:
+    default: silent
+    variants:
+      - silent
+      - structured
+  session_length:
+    default: 25
+    variants:
+      - 20
+      - 25
+      - 30
+  presence_visibility:
+    default: avatars
+    variants:
+      - avatars
+      - count_only

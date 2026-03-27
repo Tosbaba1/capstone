@@ -1,8 +1,9 @@
 class SessionPresenceSnapshot
-  def initialize(session:, current_user: nil, at: Time.current)
+  def initialize(session:, current_user: nil, at: Time.current, presence_visibility: "avatars")
     @session = session
     @current_user = current_user
     @at = at
+    @presence_visibility = presence_visibility
   end
 
   def as_json(*)
@@ -15,26 +16,33 @@ class SessionPresenceSnapshot
       server_now: at.iso8601,
       remaining_seconds: remaining_seconds,
       active_reader_count: active_reader_count,
-      readers: active_readers.first(6).map { |reader| reader_payload(reader) }
+      presence_visibility: presence_visibility,
+      readers: visible_readers
     }
   end
 
   private
 
-  attr_reader :at, :current_user, :session
+  attr_reader :at, :current_user, :presence_visibility, :session
 
   def active_reader_count
     active_readers.size
   end
 
   def active_readers
-    @active_readers ||= session.active_participants.includes(:user).map(&:user).sort_by do |reader|
+    @active_readers ||= session.active_participants(at: at).includes(:user).map(&:user).sort_by do |reader|
       [
         session.host_user_id == reader.id ? 0 : 1,
         current_user&.id == reader.id ? 0 : 1,
         display_name(reader).downcase
       ]
     end
+  end
+
+  def visible_readers
+    return [] unless presence_visibility == "avatars"
+
+    active_readers.first(6).map { |reader| reader_payload(reader) }
   end
 
   def remaining_seconds

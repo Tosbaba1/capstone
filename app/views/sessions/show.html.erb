@@ -8,6 +8,7 @@
 <% initial_countdown = format("%02d:%02d", @presence_snapshot[:remaining_seconds] / 60, @presence_snapshot[:remaining_seconds] % 60) %>
 <% other_reader_count = @session.other_reader_count_for(current_user) %>
 <% current_streak = current_user.current_reading_streak %>
+<% show_presence_avatars = @presence_snapshot[:presence_visibility] == "avatars" %>
 
 <section class="session-room <%= "session-room--immersive" if @immersive_session_room %>">
   <article class="session-room__panel <%= "session-room__panel--immersive" if @immersive_session_room %>">
@@ -83,6 +84,7 @@
         data-session-room-presence-url-value="<%= presence_session_path(@session) %>"
         data-session-room-complete-url-value="<%= complete_session_path(@session) %>"
         data-session-room-default-avatar-url-value="<%= asset_path("default_avatar.png") %>"
+        data-session-room-presence-visibility-value="<%= @presence_snapshot[:presence_visibility] %>"
       >
         <header class="session-room__topbar">
           <div class="session-room__topbar-copy">
@@ -139,39 +141,47 @@
             <h2 class="session-room__presence-count mb-1" data-session-room-target="readerCount">
               <%= pluralize(@presence_snapshot[:active_reader_count], "reader") %>
             </h2>
-            <p class="session-room__presence-caption mb-0">Presence is intentionally light here. No chat, no comments, just other readers keeping time with you.</p>
+            <p class="session-room__presence-caption mb-0">
+              <% if show_presence_avatars %>
+                Presence is intentionally light here. No chat, no comments, just other readers keeping time with you.
+              <% else %>
+                Presence stays intentionally abstract here. You can feel the room without exposing who is inside it.
+              <% end %>
+            </p>
           </div>
 
           <div class="session-room__presence-body">
-            <div class="session-room__presence-avatars" data-session-room-target="avatarStack">
-              <% @presence_snapshot[:readers].each do |reader| %>
-                <%= image_tag(reader[:avatar].presence || "default_avatar.png", alt: reader[:name], class: "session-room__presence-avatar") %>
-              <% end %>
+            <% if show_presence_avatars %>
+              <div class="session-room__presence-avatars" data-session-room-target="avatarStack">
+                <% @presence_snapshot[:readers].each do |reader| %>
+                  <%= image_tag(reader[:avatar].presence || "default_avatar.png", alt: reader[:name], class: "session-room__presence-avatar") %>
+                <% end %>
 
-              <% overflow_count = @presence_snapshot[:active_reader_count] - @presence_snapshot[:readers].size %>
-              <% if overflow_count.positive? %>
-                <span class="session-room__presence-overflow"><%= "+#{overflow_count}" %></span>
-              <% end %>
-            </div>
+                <% overflow_count = @presence_snapshot[:active_reader_count] - @presence_snapshot[:readers].size %>
+                <% if overflow_count.positive? %>
+                  <span class="session-room__presence-overflow"><%= "+#{overflow_count}" %></span>
+                <% end %>
+              </div>
 
-            <div class="session-room__reader-list" data-session-room-target="readerList">
-              <% @presence_snapshot[:readers].each do |reader| %>
-                <span class="session-room__reader-pill">
-                  <strong><%= reader[:name] %></strong>
-                  <small>
-                    <% if reader[:host] && reader[:current_user] %>
-                      You, hosting
-                    <% elsif reader[:host] %>
-                      Host
-                    <% elsif reader[:current_user] %>
-                      You
-                    <% else %>
-                      Reading now
-                    <% end %>
-                  </small>
-                </span>
-              <% end %>
-            </div>
+              <div class="session-room__reader-list" data-session-room-target="readerList">
+                <% @presence_snapshot[:readers].each do |reader| %>
+                  <span class="session-room__reader-pill">
+                    <strong><%= reader[:name] %></strong>
+                    <small>
+                      <% if reader[:host] && reader[:current_user] %>
+                        You, hosting
+                      <% elsif reader[:host] %>
+                        Host
+                      <% elsif reader[:current_user] %>
+                        You
+                      <% else %>
+                        Reading now
+                      <% end %>
+                    </small>
+                  </span>
+                <% end %>
+              </div>
+            <% end %>
           </div>
         </footer>
       </div>

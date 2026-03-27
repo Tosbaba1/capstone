@@ -20,7 +20,7 @@
         <span class="presence-rail__value"><%= @progress_snapshot[:reading] + @progress_snapshot[:queued] %></span>
       </div>
 
-      <% if @presence_readers.any? %>
+      <% if feature_flags.presence_visibility == "avatars" && @presence_readers.any? %>
         <div class="presence-rail__readers">
           <div class="presence-avatars" aria-hidden="true">
             <% @presence_readers.first(4).each do |reader| %>
@@ -37,6 +37,10 @@
             <% end %>
           </p>
         </div>
+      <% elsif @live_presence_count.positive? %>
+        <p class="presence-rail__caption mb-0">
+          <%= "#{pluralize(@live_presence_count, "reader")} are already in live sessions right now." %>
+        </p>
       <% else %>
         <p class="presence-rail__caption mb-0">The room is quiet right now, which makes it a good moment to begin.</p>
       <% end %>
@@ -144,6 +148,9 @@
       <p class="sessions-home__section-eyebrow mb-1">Primary Action</p>
       <h2 class="sessions-home__section-title mb-1">Start reading before anything else competes for attention.</h2>
       <p class="sessions-home__section-copy mb-0">Choose a duration, pick silent or structured mode, and step straight into the timer.</p>
+      <p class="sessions-home__section-copy mb-0">
+        Your current experiment defaults to <%= feature_flags.session_length %> minutes in <%= feature_flags.session_type.titleize %> Mode.
+      </p>
     </div>
 
     <div class="sessions-home__cta-actions">

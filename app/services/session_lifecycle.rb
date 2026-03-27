@@ -20,7 +20,8 @@ class SessionLifecycle
           participant,
           completed: true,
           leave_time: session.ends_at,
-          credited_seconds: session.duration.minutes.to_i
+          credited_seconds: session.duration.minutes.to_i,
+          outcome_source: "timer_finished"
         )
       end
 
@@ -52,6 +53,15 @@ class SessionLifecycle
     )
 
     touch_user!
+    track_session_event!(
+      Analytics::EventNames::SESSION_STARTED,
+      session: created_session,
+      properties: {
+        session_duration: created_session.duration,
+        session_mode: created_session.mode,
+        participant_role: "host"
+      }
+    )
     created_session
   end
 
@@ -71,6 +81,15 @@ class SessionLifecycle
     end
 
     touch_user!
+    track_session_event!(
+      Analytics::EventNames::SESSION_JOINED,
+      session: session,
+      properties: {
+        session_duration: session.duration,
+        session_mode: session.mode,
+        participant_role: session.host_user_id == user.id ? "host" : "guest"
+      }
+    )
     participant
   end
 
@@ -132,13 +151,14 @@ class SessionLifecycle
       participant,
       completed: completed,
       leave_time: leave_time,
-      credited_seconds: credited_seconds
+      credited_seconds: credited_seconds,
+      outcome_source: outcome_source(force_complete: force_complete, completed: completed)
     )
     refresh_session_status!
     participant
   end
 
-  def finalize_participant!(participant, completed:, leave_time:, credited_seconds:)
+  def finalize_participant!(participant, completed:, leave_time:, credited_seconds:, outcome_source:)
     already_completed = participant.completed?
 
     participant.update!(
@@ -157,6 +177,13 @@ class SessionLifecycle
     else
       user.update_column(:last_active, leave_time)
     end
+
+    track_participant_outcome!(
+      participant: participant,
+      completed: completed,
+      credited_seconds: credited_seconds,
+      outcome_source: outcome_source
+    )
   end
 
   def refresh_session_status!
@@ -174,5 +201,42 @@ class SessionLifecycle
 
   def touch_user!
     user.update_column(:last_active, at)
+  end
+
+  def outcome_source(force_complete:, completed:)
+    return "manual_complete" if force_complete
+    return "left_after_halfway" if completed
+
+    "left_early"
+  end
+
+  def track_participant_outcome!(participant:, completed:, credited_seconds:, outcome_source:)
+    event_name = completed ? Analytics::EventNames::SESSION_COMPLETED : Analytics::EventNames::SESSION_ABANDONED
+
+    track_session_event!(
+      event_name,
+      session: participant.session,
+      occurred_at: participant.leave_time || at,
+      properties: {
+        session_duration: participant.session.duration,
+        session_mode: participant.session.mode,
+        credited_minutes: (credited_seconds / 60.0).round,
+        completion_ratio: participant.completion_ratio(at: participant.leave_time || at).round(2),
+        outcome_source: outcome_source,
+        participant_role: participant.session.host_user_id == user.id ? "host" : "guest"
+      }
+    )
+  end
+
+  def track_session_event!(name, session:, properties:, occurred_at: at)
+    Analytics.track(
+      name: name,
+      user: user,
+      session: session,
+      occurred_at: occurred_at,
+      properties: {
+        experiments: FeatureFlags.new(user: user).assignments
+      }.merge(properties)
+    )
   end
 end

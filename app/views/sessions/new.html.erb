@@ -3,6 +3,9 @@
     <p class="sessions-home__section-eyebrow mb-1">Start Session</p>
     <h1 class="session-setup__title mb-2">Open a Nouvelle reading room.</h1>
     <p class="sessions-home__section-copy mb-4">This creates a real active session immediately, makes you the host, and starts the timer as soon as you enter.</p>
+    <p class="sessions-home__section-copy mb-4">
+      Experiment defaults are currently set to <%= feature_flags.session_length %> minutes and <%= feature_flags.session_type.titleize %> Mode for your account.
+    </p>
 
     <%= form_with model: @session, url: sessions_path, local: true, class: "session-setup__form" do |form| %>
       <section class="session-setup__group">

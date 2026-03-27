@@ -8,6 +8,7 @@ export default class extends Controller {
     defaultAvatarUrl: String,
     endsAt: String,
     heartbeatUrl: String,
+    presenceVisibility: String,
     presenceUrl: String,
     serverNow: String
   }
@@ -90,6 +91,7 @@ export default class extends Controller {
     }
 
     this.endsAtValue = snapshot.ends_at || this.endsAtValue
+    this.presenceVisibilityValue = snapshot.presence_visibility || this.presenceVisibilityValue
     this.serverOffsetMs = this.calculateServerOffset(snapshot.server_now)
     this.readerCountTarget.textContent = `${snapshot.active_reader_count} ${snapshot.active_reader_count === 1 ? "reader" : "readers"}`
     this.renderAvatarStack(snapshot)
@@ -104,6 +106,10 @@ export default class extends Controller {
 
   renderAvatarStack(snapshot) {
     if (!this.hasAvatarStackTarget) return
+    if (this.presenceVisibilityValue !== "avatars") {
+      this.avatarStackTarget.innerHTML = ""
+      return
+    }
 
     this.avatarStackTarget.innerHTML = ""
 
@@ -126,6 +132,12 @@ export default class extends Controller {
   }
 
   renderReaderList(snapshot) {
+    if (!this.hasReaderListTarget) return
+    if (this.presenceVisibilityValue !== "avatars") {
+      this.readerListTarget.innerHTML = ""
+      return
+    }
+
     this.readerListTarget.innerHTML = ""
 
     snapshot.readers.forEach((reader) => {

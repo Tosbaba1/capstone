@@ -21,16 +21,16 @@ class Session < ApplicationRecord
     created_at.present? && at >= ends_at
   end
 
-  def active_participants(window: SessionParticipant::PRESENCE_WINDOW)
-    session_participants.active_now(window: window)
+  def active_participants(window: SessionParticipant::PRESENCE_WINDOW, at: Time.current)
+    session_participants.active_now(window: window, at: at)
   end
 
-  def active_readers(window: SessionParticipant::PRESENCE_WINDOW)
-    active_participants(window: window).map(&:user)
+  def active_readers(window: SessionParticipant::PRESENCE_WINDOW, at: Time.current)
+    active_participants(window: window, at: at).map(&:user)
   end
 
-  def active_reader_count(window: SessionParticipant::PRESENCE_WINDOW)
-    active_participants(window: window).distinct.count(:user_id)
+  def active_reader_count(window: SessionParticipant::PRESENCE_WINDOW, at: Time.current)
+    active_participants(window: window, at: at).distinct.count(:user_id)
   end
 
   def other_reader_count_for(user)

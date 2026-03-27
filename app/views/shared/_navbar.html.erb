@@ -6,7 +6,13 @@
       label: "Home",
       path: root_path,
       icon: "bi-house-door",
-      active: request.path == root_path || request.path == posts_path
+      active: request.path == root_path || request.path == home_path
+    },
+    {
+      label: "Sessions",
+      path: library_path,
+      icon: "bi-book-half",
+      active: request.path == library_path
     },
     {
       label: "Search",
@@ -15,18 +21,10 @@
       active: request.path == search_path
     },
     {
-      label: "Quill",
-      path: posts_path(anchor: "feed-composer"),
-      icon: "bi-feather",
-      active: false,
-      compose: true,
-      aria_label: "Create a post"
-    },
-    {
-      label: "Library",
-      path: library_path,
-      icon: "bi-journal-richtext",
-      active: request.path == library_path
+      label: "Feed",
+      path: posts_path,
+      icon: "bi-layout-text-window-reverse",
+      active: request.path == posts_path
     },
     {
       label: "Alerts",
@@ -48,13 +46,13 @@
           </span>
           <span class="nouvelle-mark__wording">
             <span class="nouvelle-mark__name">Nouvelle</span>
-            <span class="nouvelle-mark__tag">Reading society</span>
+            <span class="nouvelle-mark__tag">Quiet reading company</span>
           </span>
         <% end %>
       </div>
 
       <div class="app-header__meta">
-        <p class="app-header__eyebrow mb-0">Editorial social reading</p>
+        <p class="app-header__eyebrow mb-0">Session-based social reading</p>
         <p class="app-header__title mb-0"><%= page_label %></p>
       </div>
 
@@ -79,7 +77,7 @@
       <div class="app-bottom-nav__surface">
         <div class="app-bottom-nav__items">
           <% nav_items.each do |item| %>
-            <% link_classes = ["app-bottom-nav__link", ("app-bottom-nav__link--compose" if item[:compose]), ("is-active" if item[:active])].compact.join(" ") %>
+            <% link_classes = ["app-bottom-nav__link", ("is-active" if item[:active])].compact.join(" ") %>
             <% link_label = item[:label] == "Alerts" && unread_count.positive? ? "#{item[:label]}, #{unread_count} unread" : item[:aria_label].presence || item[:label] %>
             <%= link_to item[:path], class: link_classes, aria: { label: link_label } do %>
               <span class="app-bottom-nav__icon-wrap">

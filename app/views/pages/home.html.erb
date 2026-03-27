@@ -1,0 +1,195 @@
+<section class="sessions-home">
+  <header class="sessions-home__hero mb-4">
+    <div class="sessions-home__hero-copy">
+      <p class="sessions-home__eyebrow mb-2">Nouvelle Home</p>
+      <h1 class="sessions-home__title mb-2">Read more often by showing up for a session, not a performance.</h1>
+      <p class="sessions-home__lede mb-0">
+        Start from the book already in your hands, notice who else is reading nearby, and let light progress keep the habit in motion.
+      </p>
+    </div>
+
+    <div class="sessions-home__hero-actions">
+      <%= link_to(@priority_reading.present? ? "Continue your next session" : "Open your shelves", library_path, class: "sessions-home__primary-action") %>
+      <%= link_to "Open the reading feed", posts_path, class: "sessions-home__secondary-action" %>
+    </div>
+  </header>
+
+  <div class="sessions-home__grid">
+    <section class="sessions-home__panel sessions-home__panel--focus">
+      <div class="sessions-home__panel-head">
+        <div>
+          <p class="sessions-home__section-eyebrow mb-1">Next Session</p>
+          <h2 class="sessions-home__section-title mb-0">Keep the path into reading friction-light.</h2>
+        </div>
+      </div>
+
+      <% if @priority_reading.present? %>
+        <% book = @priority_reading.book %>
+        <% author_name = book.author&.name.presence || "Unknown author" %>
+        <article class="session-focus-card">
+          <div class="session-focus-card__cover-wrap">
+            <% if book.image_url.present? %>
+              <%= image_tag(book.image_url, class: "session-focus-card__cover", alt: "#{book.title} cover") %>
+            <% else %>
+              <div class="session-focus-card__cover session-focus-card__cover--placeholder">
+                <span><%= book.title %></span>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="session-focus-card__content">
+            <p class="session-focus-card__status mb-2">
+              <%= @priority_reading.status == "reading" ? "Currently reading" : "Queued for your next sit-down" %>
+            </p>
+            <h3 class="session-focus-card__title mb-1"><%= book.title %></h3>
+            <p class="session-focus-card__author mb-3">by <%= author_name %></p>
+
+            <div class="session-focus-card__meta mb-3">
+              <% if @priority_reading.progress.present? %>
+                <span><%= @priority_reading.progress %>% complete</span>
+              <% end %>
+              <span><%= @priority_reading.is_private? ? "Private shelf" : "Visible to your circle" %></span>
+            </div>
+
+            <p class="session-focus-card__note mb-3">
+              <%= @priority_reading.status == "reading" ? "This is the clearest path back into the habit today." : "You already chose this book. The easiest next move is simply to begin." %>
+            </p>
+
+            <div class="sessions-home__inline-actions">
+              <%= link_to "Open this book", book_path(book), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+              <%= link_to "Manage on shelf", library_path, class: "sessions-home__secondary-action" %>
+            </div>
+          </div>
+        </article>
+      <% else %>
+        <div class="sessions-home__empty-state">
+          <p class="mb-2">Your next session starts once there is a book on your shelf.</p>
+          <div class="sessions-home__inline-actions">
+            <%= link_to "Find a book", search_path(tab: "books"), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+            <%= link_to "Open library", library_path, class: "sessions-home__secondary-action" %>
+          </div>
+        </div>
+      <% end %>
+    </section>
+
+    <section class="sessions-home__panel">
+      <div class="sessions-home__panel-head">
+        <div>
+          <p class="sessions-home__section-eyebrow mb-1">Presence</p>
+          <h2 class="sessions-home__section-title mb-1">Readers active right now.</h2>
+          <p class="sessions-home__section-copy mb-0">Low-pressure company from people already somewhere inside a book.</p>
+        </div>
+      </div>
+
+      <% if @active_readers.any? %>
+        <div class="presence-list">
+          <% @active_readers.each do |reading| %>
+            <% reader = reading.user %>
+            <article class="presence-card">
+              <div class="presence-card__header">
+                <%= image_tag(reader.avatar.presence || "default_avatar.png", alt: reader.name, class: "presence-card__avatar") %>
+                <div class="presence-card__identity">
+                  <p class="presence-card__name mb-0"><%= link_to reader.name, user_path(reader), class: "presence-card__name-link" %></p>
+                  <p class="presence-card__handle mb-0">@<%= reader.username %></p>
+                </div>
+                <span class="presence-card__badge">Reading</span>
+              </div>
+
+              <div class="presence-card__body">
+                <p class="presence-card__book mb-1"><%= link_to reading.book.title, book_path(reading.book), class: "presence-card__book-link" %></p>
+                <p class="presence-card__author mb-2">by <%= reading.book.author&.name.presence || "Unknown author" %></p>
+                <div class="presence-card__meta">
+                  <% if reading.progress.present? %>
+                    <span><%= reading.progress %>% in</span>
+                  <% else %>
+                    <span>Quietly in progress</span>
+                  <% end %>
+                  <span><%= time_ago_in_words(reading.updated_at) %> ago</span>
+                </div>
+              </div>
+            </article>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="sessions-home__empty-state">
+          <p class="mb-0">No visible reading presence yet. As people add books and mark them in progress, this room will start to feel inhabited.</p>
+        </div>
+      <% end %>
+    </section>
+
+    <section class="sessions-home__panel">
+      <div class="sessions-home__panel-head">
+        <div>
+          <p class="sessions-home__section-eyebrow mb-1">Progress</p>
+          <h2 class="sessions-home__section-title mb-1">Light tracking, enough to reinforce identity.</h2>
+        </div>
+      </div>
+
+      <div class="progress-snapshot">
+        <article class="progress-snapshot__card">
+          <span class="progress-snapshot__value"><%= @progress_snapshot[:reading] %></span>
+          <span class="progress-snapshot__label">In progress</span>
+        </article>
+        <article class="progress-snapshot__card">
+          <span class="progress-snapshot__value"><%= @progress_snapshot[:queued] %></span>
+          <span class="progress-snapshot__label">Queued</span>
+        </article>
+        <article class="progress-snapshot__card">
+          <span class="progress-snapshot__value"><%= @progress_snapshot[:finished] %></span>
+          <span class="progress-snapshot__label">Finished</span>
+        </article>
+        <article class="progress-snapshot__card">
+          <span class="progress-snapshot__value"><%= @progress_snapshot[:tracked] %></span>
+          <span class="progress-snapshot__label">Tracked total</span>
+        </article>
+      </div>
+
+      <% if @current_readings.any? || @next_up_readings.any? %>
+        <div class="reading-stack mt-4">
+          <% @current_readings.each do |reading| %>
+            <article class="reading-stack__item">
+              <div>
+                <p class="reading-stack__status mb-1">Reading now</p>
+                <p class="reading-stack__title mb-0"><%= reading.book.title %></p>
+              </div>
+              <span class="reading-stack__metric"><%= reading.progress.presence || 0 %>%</span>
+            </article>
+          <% end %>
+
+          <% @next_up_readings.each do |reading| %>
+            <article class="reading-stack__item">
+              <div>
+                <p class="reading-stack__status mb-1">Next up</p>
+                <p class="reading-stack__title mb-0"><%= reading.book.title %></p>
+              </div>
+              <span class="reading-stack__metric">Queued</span>
+            </article>
+          <% end %>
+        </div>
+      <% end %>
+    </section>
+  </div>
+
+  <section class="sessions-home__panel mt-4">
+    <div class="sessions-home__panel-head">
+      <div>
+        <p class="sessions-home__section-eyebrow mb-1">Secondary Surface</p>
+        <h2 class="sessions-home__section-title mb-1">The feed still exists, but it follows the reading habit.</h2>
+        <p class="sessions-home__section-copy mb-0">Updates and reactions are useful once the session loop is already in motion.</p>
+      </div>
+      <%= link_to "Open full feed", posts_path, class: "sessions-home__secondary-action" %>
+    </div>
+
+    <% if @recent_posts.any? %>
+      <div class="posts-feed mt-3">
+        <% @recent_posts.each do |post| %>
+          <%= render "posts/post_card", post: post %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="sessions-home__empty-state mt-3">
+        <p class="mb-0">No reading updates yet. The home screen is ready to lead with sessions even before the social layer fills in.</p>
+      </div>
+    <% end %>
+  </section>
+</section>

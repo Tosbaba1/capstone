@@ -1,4 +1,27 @@
 class PagesController < ApplicationController
+  def home
+    @page_title = "Reading Sessions"
+    @current_readings = current_user.readings
+      .includes(book: :author)
+      .where(status: "reading")
+      .order(updated_at: :desc)
+      .limit(3)
+    @next_up_readings = current_user.readings
+      .includes(book: :author)
+      .where(status: "want_to_read")
+      .order(updated_at: :desc)
+      .limit(3)
+    @priority_reading = @current_readings.first || @next_up_readings.first
+    @active_readers = active_readers.limit(6)
+    @recent_posts = recent_posts.limit(2)
+    @progress_snapshot = {
+      tracked: current_user.readings.count,
+      reading: current_user.readings.where(status: "reading").count,
+      queued: current_user.readings.where(status: "want_to_read").count,
+      finished: current_user.readings.where(status: "finished").count
+    }
+  end
+
   def library
     @page_title = "Library"
     @user = current_user
@@ -59,5 +82,32 @@ class PagesController < ApplicationController
 
   def profile
     @page_title = "Profile"
+  end
+
+  private
+
+  def active_readers
+    scope = Reading.includes(:user, book: :author)
+      .where(status: "reading", is_private: false)
+      .where.not(user_id: current_user.id)
+      .order(updated_at: :desc)
+
+    followed_scope = scope.where(user_id: current_user.following.select(:id))
+    return followed_scope if followed_scope.exists?
+
+    scope.joins(:user).merge(User.publicly_visible)
+  end
+
+  def recent_posts
+    timeline_scope = current_user.timeline
+      .includes(:creator, { book: :author }, { comments: :commenter }, :likes, :renous, media_attachments: :blob)
+      .order(created_at: :desc)
+
+    return timeline_scope if timeline_scope.exists?
+
+    Post.joins(:creator)
+      .where(users: { is_private: false })
+      .includes(:creator, { book: :author }, { comments: :commenter }, :likes, :renous, media_attachments: :blob)
+      .order(created_at: :desc)
   end
 end

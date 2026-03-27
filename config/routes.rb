@@ -3,7 +3,8 @@ Rails.application.routes.draw do
     sessions: "users/sessions",
     registrations: "users/registrations"
   }
-  root to: "posts#index"
+  root to: "pages#home"
+  get "/home", to: "pages#home"
   get "/library", to: "pages#library"
   post "/library/ai_chat", to: "pages#ai_chat", as: :library_ai_chat
   get "/notifications", to: "pages#notifications"

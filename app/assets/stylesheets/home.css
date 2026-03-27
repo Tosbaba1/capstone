@@ -409,10 +409,7 @@
 }
 
 .session-setup__title,
-.session-room__title,
-.session-room__summary-title,
-.session-setup__sidebar-title,
-.session-room__presence-count {
+.session-setup__sidebar-title {
   color: #fff8ee !important;
   font-family: Georgia, "Times New Roman", serif;
 }
@@ -423,15 +420,34 @@
   gap: 1rem;
 }
 
+.session-room--immersive {
+  max-width: 60rem;
+}
+
+.session-room__panel--immersive {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
 .session-setup__group {
   display: grid;
   gap: 0.8rem;
 }
 
-.session-setup__group-title,
+.session-setup__group-title {
+  color: rgba(255, 240, 220, 0.76) !important;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
 .session-room__timer-label,
 .session-room__summary-label {
-  color: rgba(255, 240, 220, 0.76) !important;
+  color: #8b6648 !important;
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -450,9 +466,7 @@
 }
 
 .session-choice-card,
-.session-room__timer-card,
-.session-room__presence,
-.session-room__summary {
+.session-room__summary-shell {
   background: linear-gradient(180deg, rgba(255, 250, 244, 0.97), rgba(237, 228, 214, 0.94));
   border: 1px solid rgba(93, 64, 55, 0.16);
   border-radius: 24px;
@@ -483,15 +497,43 @@
 }
 
 .session-setup__actions,
-.session-room__actions,
-.session-room__header,
-.session-room__presence-head,
-.session-room__pill-group {
+.session-room__actions {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   justify-content: space-between;
+}
+
+.session-room__active {
+  background:
+    radial-gradient(circle at top left, rgba(246, 228, 204, 0.86), transparent 34%),
+    linear-gradient(180deg, rgba(255, 251, 247, 0.94), rgba(244, 237, 227, 0.98));
+  border: 1px solid rgba(126, 96, 70, 0.18);
+  border-radius: 32px;
+  box-shadow:
+    0 30px 80px rgba(53, 35, 20, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68);
+  padding: 1.1rem;
+}
+
+.session-room__topbar,
+.session-room__presence-body,
+.session-room__summary-metrics {
+  display: grid;
+  gap: 1rem;
+}
+
+.session-room__topbar {
+  align-items: start;
+}
+
+.session-room__topbar .button_to {
+  margin: 0;
+}
+
+.session-room__focus-copy {
+  align-self: center;
 }
 
 .session-room__timer-value {
@@ -500,46 +542,255 @@
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(2.6rem, 8vw, 4rem);
   line-height: 1;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
 }
 
-.session-room__pill {
-  background: rgba(255, 248, 238, 0.08);
-  border: 1px solid rgba(255, 240, 220, 0.12);
+.session-room__timer-value--compact {
+  font-size: clamp(3.2rem, 17vw, 5.75rem);
+  letter-spacing: -0.05em;
+}
+
+.session-room__meta-line,
+.session-room__summary-copy,
+.session-room__presence-caption,
+.session-room__focus-author,
+.session-room__focus-note-text {
+  color: #6b5847 !important;
+}
+
+.session-room__meta-line {
+  font-size: 0.95rem;
+}
+
+.session-room__exit-button {
+  appearance: none;
+  background: rgba(58, 39, 26, 0.04);
+  border: 1px solid rgba(89, 62, 40, 0.16);
   border-radius: 999px;
+  color: #3a291d !important;
+  cursor: pointer;
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.2;
+  min-height: 2.9rem;
+  padding: 0.75rem 1.05rem;
+  transition:
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.session-room__exit-button:hover {
+  background: rgba(58, 39, 26, 0.08);
+  transform: translateY(-1px);
+}
+
+.session-room__focus-stage {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.52), rgba(248, 242, 235, 0.84)),
+    repeating-linear-gradient(180deg, rgba(173, 145, 118, 0.04) 0, rgba(173, 145, 118, 0.04) 1px, transparent 1px, transparent 2.4rem);
+  border: 1px solid rgba(120, 88, 62, 0.12);
+  border-radius: 28px;
+  display: grid;
+  gap: 1.1rem;
+  min-height: 50vh;
+  padding: 1.15rem;
+}
+
+.session-room__focus-title,
+.session-room__summary-title,
+.session-room__presence-count {
+  color: #2d2118 !important;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.session-room__focus-title {
+  font-size: clamp(2.2rem, 9vw, 4.3rem);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  max-width: 11ch;
+}
+
+.session-room__focus-label,
+.session-room__focus-note-label {
+  color: #936840 !important;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.session-room__focus-author {
+  font-size: 1.02rem;
+  max-width: 36ch;
+}
+
+.session-room__focus-progress {
+  color: #7d624d !important;
+  font-size: 0.92rem;
+  margin-top: 0.85rem;
+}
+
+.session-room__focus-note {
+  background: rgba(255, 252, 248, 0.76);
+  border: 1px solid rgba(118, 89, 63, 0.12);
+  border-radius: 24px;
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.session-room__book-cover,
+.session-room__book-placeholder {
+  border-radius: 22px;
+  box-shadow: 0 18px 36px rgba(63, 41, 21, 0.14);
+  height: 15rem;
+  justify-self: start;
+  width: 10.25rem;
+}
+
+.session-room__book-cover {
+  object-fit: cover;
+}
+
+.session-room__book-placeholder {
+  align-items: center;
+  background: linear-gradient(180deg, #c89863, #8d603d);
   color: #fff8ee !important;
+  display: flex;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 3rem;
+  justify-content: center;
+}
+
+.session-room__focus-note-copy {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.session-room__presence-shell {
+  background: rgba(255, 252, 248, 0.82);
+  border: 1px solid rgba(118, 89, 63, 0.12);
+  border-radius: 24px;
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.session-room__presence-count {
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  line-height: 1;
+}
+
+.session-room__presence-avatars {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.session-room__presence-avatar,
+.session-room__presence-overflow {
+  border: 2px solid rgba(255, 250, 244, 0.95);
+  border-radius: 50%;
+  box-shadow: 0 10px 20px rgba(50, 32, 17, 0.1);
+  height: 3rem;
+  margin-left: -0.65rem;
+  width: 3rem;
+}
+
+.session-room__presence-avatar:first-child,
+.session-room__presence-overflow:first-child {
+  margin-left: 0;
+}
+
+.session-room__presence-avatar {
+  object-fit: cover;
+}
+
+.session-room__presence-overflow {
+  align-items: center;
+  background: #f3e5d4;
+  color: #6b4e34 !important;
   display: inline-flex;
-  font-size: 0.82rem;
-  padding: 0.38rem 0.75rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  justify-content: center;
 }
 
 .session-room__reader-list {
-  display: grid;
-  gap: 0.75rem;
-  margin-top: 1rem;
-}
-
-.session-room__reader {
-  align-items: center;
-  background: rgba(143, 95, 59, 0.1);
-  border-radius: 18px;
-  color: #4f392c !important;
   display: flex;
-  gap: 0.7rem;
-  padding: 0.7rem 0.8rem;
+  flex-wrap: wrap;
+  gap: 0.65rem;
 }
 
-.session-room__reader strong,
-.session-room__reader p {
-  color: #4f392c !important;
+.session-room__reader-pill {
+  background: rgba(120, 88, 62, 0.08);
+  border: 1px solid rgba(120, 88, 62, 0.12);
+  border-radius: 999px;
+  color: #483427 !important;
+  display: inline-flex;
+  gap: 0.45rem;
+  padding: 0.5rem 0.78rem;
 }
 
-.session-room__reader-avatar {
-  border: 2px solid rgba(255, 242, 227, 0.46);
-  border-radius: 50%;
-  height: 2.4rem;
-  object-fit: cover;
-  width: 2.4rem;
+.session-room__presence-body,
+.session-room__reader-pill {
+  align-items: center;
+}
+
+.session-room__reader-pill strong,
+.session-room__reader-pill small {
+  color: #483427 !important;
+}
+
+.session-room__reader-pill small {
+  font-size: 0.8rem;
+}
+
+.session-room__summary-shell {
+  display: grid;
+  gap: 1rem;
+}
+
+.session-room__summary-title {
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 0.98;
+}
+
+.session-room__summary-metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.session-room__summary-metric {
+  background: rgba(120, 88, 62, 0.08);
+  border-radius: 18px;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.85rem 0.95rem;
+}
+
+.session-room__summary-metric span {
+  color: #7d624d !important;
+  font-size: 0.82rem;
+}
+
+.session-room__summary-metric strong {
+  color: #2d2118 !important;
+}
+
+@media (min-width: 768px) {
+  .session-room__topbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .session-room__focus-stage {
+    align-items: end;
+    grid-template-columns: minmax(0, 1.15fr) minmax(15rem, 0.85fr);
+  }
+
+  .session-room__presence-body {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
 }
 
 @media (max-width: 991.98px) {
@@ -553,6 +804,15 @@
 
   .sessions-home__cta-actions {
     justify-content: flex-start;
+  }
+
+  .session-room__focus-stage,
+  .session-room__presence-body {
+    grid-template-columns: 1fr;
+  }
+
+  .session-room__summary-metrics {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -575,6 +835,28 @@
   .session-choice-grid--compact {
     grid-template-columns: 1fr;
   }
+
+  .session-room__panel {
+    padding: 1rem;
+  }
+
+  .session-room__active,
+  .session-room__focus-stage,
+  .session-room__presence-shell,
+  .session-room__summary-shell {
+    border-radius: 26px;
+  }
+
+  .session-room__focus-stage {
+    min-height: 42vh;
+    padding: 1rem;
+  }
+
+  .session-room__book-cover,
+  .session-room__book-placeholder {
+    height: 12.5rem;
+    width: 8.75rem;
+  }
 }
 
 @media (max-width: 575.98px) {
@@ -586,5 +868,17 @@
   .home-session-card__count,
   .entry-card__metric {
     white-space: normal;
+  }
+
+  .session-room__topbar {
+    gap: 0.85rem;
+  }
+
+  .session-room__exit-button {
+    width: 100%;
+  }
+
+  .session-room__reader-pill {
+    width: 100%;
   }
 }

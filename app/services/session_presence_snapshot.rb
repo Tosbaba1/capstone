@@ -12,6 +12,7 @@ class SessionPresenceSnapshot
       mode: session.mode,
       duration: session.duration,
       ends_at: session.ends_at.iso8601,
+      server_now: at.iso8601,
       remaining_seconds: remaining_seconds,
       active_reader_count: active_reader_count,
       readers: active_readers.first(6).map { |reader| reader_payload(reader) }
@@ -23,11 +24,17 @@ class SessionPresenceSnapshot
   attr_reader :at, :current_user, :session
 
   def active_reader_count
-    session.active_reader_count
+    active_readers.size
   end
 
   def active_readers
-    @active_readers ||= session.active_readers
+    @active_readers ||= session.active_participants.includes(:user).map(&:user).sort_by do |reader|
+      [
+        session.host_user_id == reader.id ? 0 : 1,
+        current_user&.id == reader.id ? 0 : 1,
+        display_name(reader).downcase
+      ]
+    end
   end
 
   def remaining_seconds
@@ -37,10 +44,14 @@ class SessionPresenceSnapshot
   def reader_payload(reader)
     {
       id: reader.id,
-      name: reader.name.presence || reader.username.presence || "Reader",
+      name: display_name(reader),
       avatar: reader.avatar.presence,
       host: session.host_user_id == reader.id,
       current_user: current_user&.id == reader.id
     }
+  end
+
+  def display_name(reader)
+    reader.name.presence || reader.username.presence || "Reader"
   end
 end

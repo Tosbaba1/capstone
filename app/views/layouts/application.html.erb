@@ -22,10 +22,10 @@
     }
   </style>
 
-  <body>
-    <%= render 'shared/navbar' %>
+  <body class="<%= "app-shell--immersive" if @immersive_session_room %>">
+    <%= render 'shared/navbar' unless @immersive_session_room %>
 
-    <main class="app-page <%= 'app-page--with-nav' if user_signed_in? %> container">
+    <main class="app-page <%= 'app-page--with-nav' if user_signed_in? && !@immersive_session_room %> <%= 'app-page--immersive' if @immersive_session_room %> container">
       <div class="app-flash-stack">
         <% if notice.present? %>
           <p class="notice app-flash app-flash--notice mb-2"><%= notice %></p>

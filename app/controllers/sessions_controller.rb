@@ -25,7 +25,13 @@ class SessionsController < ApplicationController
     SessionLifecycle.finalize_expired_session!(@session)
     @page_title = "Reading Session"
     @participant = @session.session_participants.includes(:user).find_by(user: current_user)
+    @current_reading = current_user.readings
+      .includes(book: :author)
+      .where(status: "reading")
+      .order(updated_at: :desc)
+      .first
     @presence_snapshot = SessionPresenceSnapshot.new(session: @session, current_user: current_user).as_json
+    @immersive_session_room = @participant.present? && @participant.leave_time.blank? && @session.active?
 
     return if @participant.present?
 

@@ -35,6 +35,17 @@ body {
   min-height: 100vh;
 }
 
+.app-shell--immersive {
+  background:
+    radial-gradient(circle at 15% 12%, rgba(244, 214, 181, 0.16), transparent 20%),
+    radial-gradient(circle at 82% 18%, rgba(255, 246, 234, 0.08), transparent 18%),
+    linear-gradient(180deg, #f6efe6 0%, #efe4d5 26%, #e7dac9 100%);
+}
+
+.app-shell--immersive {
+  color: #2d2118;
+}
+
 .bg-charcoal-gradient {
   background: linear-gradient(to right, var(--cb-1), var(--cb-2), var(--cb-3));
 }
@@ -62,6 +73,12 @@ body {
 .app-page {
   padding-bottom: 1.5rem;
   padding-top: 0.35rem;
+}
+
+.app-page--immersive {
+  max-width: 64rem;
+  padding-bottom: 2rem;
+  padding-top: 1rem;
 }
 
 .app-page--with-nav {

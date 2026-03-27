@@ -1,0 +1,53 @@
+<% book = session.book %>
+<% author_name = book.author&.name.presence || "Unknown author" %>
+<% existing_reading = readings_by_book_id[book.id] %>
+<% next_progress = existing_reading&.status == "finished" ? 0 : existing_reading&.progress.to_i %>
+
+<article class="home-session-card">
+  <div class="home-session-card__top">
+    <div>
+      <p class="home-session-card__eyebrow mb-1"><%= session.mode %></p>
+      <h3 class="home-session-card__title mb-1"><%= book.title %></h3>
+      <p class="home-session-card__author mb-0">by <%= author_name %></p>
+    </div>
+    <span class="home-session-card__count"><%= pluralize(session.reader_count, "reader") %></span>
+  </div>
+
+  <div class="home-session-card__meta">
+    <span><%= pluralize(session.reader_count, "person") %> reading</span>
+    <span>Started <%= time_ago_in_words(session.started_at) %> ago</span>
+    <span><%= session.mode %></span>
+  </div>
+
+  <% if session.readers.any? %>
+    <div class="home-session-card__readers">
+      <% session.readers.first(4).each do |reader| %>
+        <% reader_label = reader.name.presence || reader.username.presence || "Reader" %>
+        <div class="home-session-card__reader">
+          <%= image_tag(reader.avatar.presence || "default_avatar.png", alt: reader_label, class: "home-session-card__avatar") %>
+          <span><%= reader_label %></span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="home-session-card__actions">
+    <% if existing_reading&.status == "reading" %>
+      <%= link_to "Join Session", book_path(book), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+    <% elsif existing_reading.present? %>
+      <%= button_to "Join Session",
+        update_reading_path(existing_reading),
+        method: :post,
+        params: { status: "reading", progress: next_progress, return_to: home_path },
+        class: "sessions-home__primary-action sessions-home__primary-action--button sessions-home__primary-action--inline" %>
+    <% else %>
+      <%= button_to "Join Session",
+        "/insert_reading",
+        method: :post,
+        params: { book_id: book.id, status: "reading", return_to: home_path },
+        class: "sessions-home__primary-action sessions-home__primary-action--button sessions-home__primary-action--inline" %>
+    <% end %>
+
+    <%= link_to "View book", book_path(book), class: "entry-card__link" %>
+  </div>
+</article>

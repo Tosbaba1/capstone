@@ -11,9 +11,15 @@ class PagesController < ApplicationController
       .where(status: "want_to_read")
       .order(updated_at: :desc)
       .limit(3)
+    @readings_by_book_id = current_user.readings.includes(book: :author).index_by(&:book_id)
     @priority_reading = @current_readings.first || @next_up_readings.first
-    @active_readers = active_readers.limit(6)
-    @recent_posts = recent_posts.limit(2)
+    @session_entry_readings = (@current_readings + @next_up_readings).uniq(&:id).first(3)
+
+    snapshot = HomeSessionSnapshot.new(current_user: current_user)
+    @live_presence_count = snapshot.live_presence_count
+    @active_sessions = snapshot.active_sessions
+    @presence_readers = snapshot.presence_readers
+    @recent_post = recent_posts.first
     @progress_snapshot = {
       tracked: current_user.readings.count,
       reading: current_user.readings.where(status: "reading").count,
@@ -85,18 +91,6 @@ class PagesController < ApplicationController
   end
 
   private
-
-  def active_readers
-    scope = Reading.includes(:user, book: :author)
-      .where(status: "reading", is_private: false)
-      .where.not(user_id: current_user.id)
-      .order(updated_at: :desc)
-
-    followed_scope = scope.where(user_id: current_user.following.select(:id))
-    return followed_scope if followed_scope.exists?
-
-    scope.joins(:user).merge(User.publicly_visible)
-  end
 
   def recent_posts
     timeline_scope = current_user.timeline

@@ -13,13 +13,13 @@ class ReadingsController < ApplicationController
                          reading.progress
                        end
     reading.save
-    redirect_to '/library', notice: 'Book added to your library.'
+    redirect_to redirect_destination('/library'), notice: 'Book added to your library.'
   end
 
   def update
     reading = current_user.readings.find(params[:id])
 
-    new_status = params[:status]
+    new_status = params[:status].presence || reading.status
     new_progress = params[:progress].present? ? params[:progress].to_i : reading.progress
 
     if new_status == 'finished'
@@ -32,11 +32,20 @@ class ReadingsController < ApplicationController
 
     reading.update(
       status: new_status,
-      rating: params[:rating],
+      rating: params.key?(:rating) ? params[:rating] : reading.rating,
       progress: new_progress,
-      review: params[:review],
-      is_private: params[:is_private]
+      review: params.key?(:review) ? params[:review] : reading.review,
+      is_private: params.key?(:is_private) ? ActiveModel::Type::Boolean.new.cast(params[:is_private]) : reading.is_private
     )
-    redirect_to '/library', notice: 'Reading updated.'
+    redirect_to redirect_destination('/library'), notice: 'Reading updated.'
+  end
+
+  private
+
+  def redirect_destination(default_path)
+    candidate = params[:return_to].to_s
+    return default_path unless candidate.start_with?("/") && !candidate.start_with?("//")
+
+    candidate
   end
 end

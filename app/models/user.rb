@@ -40,6 +40,9 @@ class User < ApplicationRecord
 
   has_many :readings, dependent: :destroy
   has_many :reading_books, through: :readings, source: :book
+  has_many :hosted_sessions, class_name: "Session", foreign_key: :host_user_id, inverse_of: :host_user, dependent: :destroy
+  has_many :session_participants, dependent: :destroy
+  has_many :reading_sessions, through: :session_participants, source: :session
   has_many :badges, dependent: :destroy
   has_many :renous, dependent: :destroy
   has_many :renoued_posts, through: :renous, source: :post
@@ -94,6 +97,15 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  def active_session_participant
+    session_participants
+      .joins(:session)
+      .merge(Session.active)
+      .where(leave_time: nil)
+      .order("sessions.created_at DESC")
+      .first
+  end
 
   private
 

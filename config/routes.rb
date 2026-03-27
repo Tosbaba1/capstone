@@ -9,6 +9,15 @@ Rails.application.routes.draw do
   post "/library/ai_chat", to: "pages#ai_chat", as: :library_ai_chat
   get "/notifications", to: "pages#notifications"
   get "/search", to: "search#index", as: :search
+  resources :sessions, only: [:new, :create, :show] do
+    member do
+      post :join
+      post :leave
+      post :heartbeat
+      post :complete
+      get :presence
+    end
+  end
   resources :users, only: [:show] do
     member do
       get :followers

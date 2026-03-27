@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
   def home
+    SessionLifecycle.finalize_expired_sessions!
+
     @page_title = "Reading Sessions"
     @current_readings = current_user.readings
       .includes(book: :author)
@@ -14,6 +16,7 @@ class PagesController < ApplicationController
     @readings_by_book_id = current_user.readings.includes(book: :author).index_by(&:book_id)
     @priority_reading = @current_readings.first || @next_up_readings.first
     @session_entry_readings = (@current_readings + @next_up_readings).uniq(&:id).first(3)
+    @current_session_participant = current_user.active_session_participant
 
     snapshot = HomeSessionSnapshot.new(current_user: current_user)
     @live_presence_count = snapshot.live_presence_count

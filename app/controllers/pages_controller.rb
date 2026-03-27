@@ -91,6 +91,16 @@ class PagesController < ApplicationController
 
   def profile
     @page_title = "Profile"
+    @weekly_reading_time = current_user.reading_time_this_week
+    @sessions_completed = current_user.completed_session_count
+    @sessions_this_week = current_user.reading_sessions_this_week
+    @current_streak = current_user.current_reading_streak
+    @latest_completed_session = current_user.latest_completed_session_participant
+    @recent_completed_sessions = current_user.completed_session_participants_scope
+      .includes(session: :session_participants)
+      .order(leave_time: :desc)
+      .limit(3)
+    @current_session_participant = current_user.active_session_participant
   end
 
   private

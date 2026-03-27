@@ -752,9 +752,18 @@
   gap: 1rem;
 }
 
+.session-room__summary-shell--completion {
+  gap: 1.15rem;
+}
+
 .session-room__summary-title {
   font-size: clamp(2rem, 6vw, 3rem);
   line-height: 0.98;
+}
+
+.session-room__summary-encouragement {
+  color: #4b382a !important;
+  font-size: 1rem;
 }
 
 .session-room__summary-metrics {
@@ -778,6 +787,180 @@
   color: #2d2118 !important;
 }
 
+.profile-progress {
+  display: grid;
+  gap: 1rem;
+  margin: 0 auto;
+  max-width: 72rem;
+  padding-bottom: 2rem;
+}
+
+.profile-progress__hero {
+  background:
+    radial-gradient(circle at top left, rgba(255, 248, 238, 0.14), transparent 34%),
+    linear-gradient(135deg, rgba(14, 22, 34, 0.94), rgba(28, 40, 57, 0.96) 54%, rgba(87, 61, 39, 0.82));
+  border: 1px solid rgba(255, 240, 220, 0.14);
+  border-radius: 28px;
+  box-shadow: 0 20px 46px rgba(5, 10, 20, 0.24);
+  display: grid;
+  gap: 1rem;
+  padding: 1.2rem;
+}
+
+.profile-progress__banner,
+.profile-progress__eyebrow,
+.profile-progress__stat-label,
+.profile-progress__session-date {
+  color: rgba(255, 240, 220, 0.78) !important;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.profile-progress__hero-body,
+.profile-progress__identity {
+  display: grid;
+  gap: 1rem;
+}
+
+.profile-progress__avatar {
+  border: 3px solid rgba(255, 248, 238, 0.32);
+  border-radius: 28px;
+  box-shadow: 0 16px 34px rgba(6, 10, 18, 0.28);
+  height: 5.5rem;
+  object-fit: cover;
+  width: 5.5rem;
+}
+
+.profile-progress__title,
+.profile-progress__panel-title,
+.profile-progress__session-title,
+.profile-progress__stat-value {
+  color: #fff8ee !important;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.profile-progress__title {
+  font-size: clamp(2rem, 8vw, 3.2rem);
+  line-height: 0.95;
+}
+
+.profile-progress__handle,
+.profile-progress__bio {
+  color: rgba(255, 248, 238, 0.8) !important;
+}
+
+.profile-progress__bio {
+  max-width: 36rem;
+}
+
+.profile-progress__actions,
+.profile-progress__stats,
+.profile-progress__panel-head {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.profile-progress__stat,
+.profile-progress__panel,
+.profile-progress__session-item,
+.profile-progress__empty {
+  background: linear-gradient(180deg, rgba(255, 250, 244, 0.97), rgba(237, 228, 214, 0.94));
+  border: 1px solid rgba(93, 64, 55, 0.16);
+  border-radius: 24px;
+  box-shadow: 0 16px 34px rgba(7, 12, 24, 0.14);
+}
+
+.profile-progress__stats {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.profile-progress__stat {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+}
+
+.profile-progress__stat-label {
+  color: #7d624d !important;
+}
+
+.profile-progress__stat-value {
+  color: #2d2118 !important;
+  font-size: clamp(1.8rem, 7vw, 2.4rem);
+  line-height: 1;
+}
+
+.profile-progress__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.profile-progress__panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.profile-progress__panel-title,
+.profile-progress__session-title {
+  color: #2d2118 !important;
+}
+
+.profile-progress__panel-title {
+  font-size: clamp(1.55rem, 5vw, 2.2rem);
+  line-height: 1.02;
+}
+
+.profile-progress__panel-copy,
+.profile-progress__session-copy,
+.profile-progress__panel-link {
+  color: #6b5847 !important;
+}
+
+.profile-progress__panel-link {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.profile-progress__session-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.profile-progress__session-item {
+  align-items: start;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.profile-progress__session-date {
+  color: #936840 !important;
+}
+
+.profile-progress__session-title {
+  font-size: 1.1rem;
+}
+
+.profile-progress__session-badge {
+  background: rgba(120, 88, 62, 0.08);
+  border-radius: 999px;
+  color: #5f4736 !important;
+  display: inline-flex;
+  font-size: 0.88rem;
+  font-weight: 600;
+  justify-self: start;
+  padding: 0.45rem 0.7rem;
+}
+
+.profile-progress__empty {
+  padding: 1rem;
+}
+
 @media (min-width: 768px) {
   .session-room__topbar {
     grid-template-columns: minmax(0, 1fr) auto;
@@ -790,6 +973,25 @@
 
   .session-room__presence-body {
     grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .profile-progress__hero-body {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .profile-progress__actions {
+    justify-items: end;
+  }
+
+  .profile-progress__stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .profile-progress__panel-head,
+  .profile-progress__session-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
   }
 }
 
@@ -812,6 +1014,10 @@
   }
 
   .session-room__summary-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-progress__grid {
     grid-template-columns: 1fr;
   }
 }

@@ -107,9 +107,68 @@ class User < ApplicationRecord
       .first
   end
 
+  def completed_session_participants_scope
+    session_participants
+      .completed
+      .includes(:session)
+      .where.not(leave_time: nil)
+  end
+
+  def completed_session_count
+    completed_session_participants_scope.count
+  end
+
+  def reading_sessions_this_week(reference_time: Time.current)
+    completed_session_participants_scope.where(leave_time: week_range(reference_time)).count
+  end
+
+  def reading_time_this_week(reference_time: Time.current)
+    reading_time_for_range(week_range(reference_time))
+  end
+
+  def current_reading_streak(reference_date: Time.zone.today)
+    completed_dates = completed_session_participants_scope
+      .where("leave_time <= ?", reference_date.end_of_day)
+      .pluck(:leave_time)
+      .map { |time| time.in_time_zone.to_date }
+      .uniq
+
+    return 0 if completed_dates.empty?
+
+    expected_date = if completed_dates.include?(reference_date)
+      reference_date
+    elsif completed_dates.include?(reference_date - 1)
+      reference_date - 1
+    else
+      return 0
+    end
+
+    streak = 0
+
+    while completed_dates.include?(expected_date)
+      streak += 1
+      expected_date -= 1
+    end
+
+    streak
+  end
+
+  def latest_completed_session_participant
+    completed_session_participants_scope.order(leave_time: :desc).first
+  end
+
   private
 
   def downcase_email
     self.email = email.downcase if email.present?
+  end
+
+  def reading_time_for_range(range)
+    completed_session_participants_scope.where(leave_time: range).to_a.sum(&:credited_seconds)
+  end
+
+  def week_range(reference_time)
+    local_time = reference_time.in_time_zone
+    local_time.beginning_of_week..local_time.end_of_week
   end
 end

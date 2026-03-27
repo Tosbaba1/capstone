@@ -33,6 +33,14 @@ class Session < ApplicationRecord
     active_participants(window: window).distinct.count(:user_id)
   end
 
+  def other_reader_count_for(user)
+    if association(:session_participants).loaded?
+      session_participants.reject { |participant| participant.user_id == user.id }.map(&:user_id).uniq.count
+    else
+      session_participants.where.not(user_id: user.id).distinct.count(:user_id)
+    end
+  end
+
   def completed?
     status == "COMPLETED"
   end

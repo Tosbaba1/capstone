@@ -1,50 +1,77 @@
 <% participant_status = @participant.completed? ? "Completed" : "Abandoned" %>
-<% credited_minutes = (@participant.elapsed_seconds(at: @participant.leave_time || Time.current) / 60.0).round %>
+<% credited_minutes = @participant.credited_minutes %>
 <% host_name = @session.host_user.name.presence || @session.host_user.username.presence || "A reader" %>
 <% current_book = @current_reading&.book %>
 <% current_author = current_book&.author&.name %>
 <% mode_name = @session.mode == "structured" ? "Structured Mode" : "Silent Mode" %>
 <% mode_prompt = @session.mode == "structured" ? "Suggested structure: read 10 pages or one short chapter." : "Settle into the quiet. Presence stays in the background while everyone reads." %>
 <% initial_countdown = format("%02d:%02d", @presence_snapshot[:remaining_seconds] / 60, @presence_snapshot[:remaining_seconds] % 60) %>
+<% other_reader_count = @session.other_reader_count_for(current_user) %>
+<% current_streak = current_user.current_reading_streak %>
 
 <section class="session-room <%= "session-room--immersive" if @immersive_session_room %>">
   <article class="session-room__panel <%= "session-room__panel--immersive" if @immersive_session_room %>">
     <% if @participant.leave_time.present? %>
-      <div class="session-room__summary-shell">
-        <p class="session-room__summary-label mb-1"><%= participant_status %></p>
-        <h1 class="session-room__summary-title mb-2">
-          <% if @participant.completed? %>
-            Your reading time counted.
-          <% else %>
-            You stepped out before this one counted.
-          <% end %>
-        </h1>
-        <p class="session-room__summary-copy mb-0">
-          <%= "#{credited_minutes} minutes credited in this session." %>
-          You now have <%= pluralize(current_user.sessions_completed, "completed session") %> and
-          <%= "#{(current_user.total_reading_time / 60.0).round} total minutes logged." %>
-        </p>
+      <% if @participant.completed? %>
+        <div class="session-room__summary-shell session-room__summary-shell--completion">
+          <p class="session-room__summary-label mb-1"><%= participant_status %></p>
+          <h1 class="session-room__summary-title mb-2"><%= "You read for #{credited_minutes} minutes" %></h1>
+          <p class="session-room__summary-copy mb-0">
+            <% if other_reader_count.positive? %>
+              <%= "#{pluralize(other_reader_count, "other person")} read with you." %>
+            <% else %>
+              You read solo — great work.
+            <% end %>
+          </p>
+          <p class="session-room__summary-encouragement mb-0">Come back tomorrow.</p>
 
-        <div class="session-room__summary-metrics">
-          <div class="session-room__summary-metric">
-            <span>Mode</span>
-            <strong><%= mode_name %></strong>
+          <div class="session-room__summary-metrics">
+            <div class="session-room__summary-metric">
+              <span>This week</span>
+              <strong><%= reading_time_label(current_user.reading_time_this_week) %></strong>
+            </div>
+            <div class="session-room__summary-metric">
+              <span>Sessions completed</span>
+              <strong><%= pluralize(current_user.completed_session_count, "session") %></strong>
+            </div>
+            <div class="session-room__summary-metric">
+              <span>Current streak</span>
+              <strong><%= streak_label(current_streak) %></strong>
+            </div>
           </div>
-          <div class="session-room__summary-metric">
-            <span>Duration</span>
-            <strong><%= "#{@session.duration} minutes" %></strong>
-          </div>
-          <div class="session-room__summary-metric">
-            <span>Hosted by</span>
-            <strong><%= host_name %></strong>
+
+          <div class="session-room__actions">
+            <%= link_to "Done", home_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
           </div>
         </div>
+      <% else %>
+        <div class="session-room__summary-shell">
+          <p class="session-room__summary-label mb-1"><%= participant_status %></p>
+          <h1 class="session-room__summary-title mb-2"><%= "You read for #{credited_minutes} minutes" %></h1>
+          <p class="session-room__summary-copy mb-0">
+            This session did not count because you left before the halfway point. Stay for more than half the timer next time and we will save it to your progress.
+          </p>
 
-        <div class="session-room__actions">
-          <%= link_to "Back Home", home_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
-          <%= link_to "Start Another Session", new_session_path, class: "sessions-home__secondary-action" %>
+          <div class="session-room__summary-metrics">
+            <div class="session-room__summary-metric">
+              <span>Mode</span>
+              <strong><%= mode_name %></strong>
+            </div>
+            <div class="session-room__summary-metric">
+              <span>Duration</span>
+              <strong><%= "#{@session.duration} minutes" %></strong>
+            </div>
+            <div class="session-room__summary-metric">
+              <span>Hosted by</span>
+              <strong><%= host_name %></strong>
+            </div>
+          </div>
+
+          <div class="session-room__actions">
+            <%= link_to "Done", home_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% else %>
       <div
         class="session-room__active"

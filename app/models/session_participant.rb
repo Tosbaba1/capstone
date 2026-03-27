@@ -4,6 +4,7 @@ class SessionParticipant < ApplicationRecord
   belongs_to :user
   belongs_to :session
 
+  scope :completed, -> { where(completed: true) }
   scope :current, -> { where(leave_time: nil) }
   scope :active_now, ->(window: PRESENCE_WINDOW) { current.where(updated_at: window.ago..Time.current) }
 
@@ -24,6 +25,16 @@ class SessionParticipant < ApplicationRecord
     return 0 if session.duration.to_i.zero?
 
     elapsed_seconds(at: at).to_f / session.duration.minutes
+  end
+
+  def credited_seconds
+    return 0 unless completed?
+
+    elapsed_seconds(at: leave_time || Time.current)
+  end
+
+  def credited_minutes
+    (credited_seconds / 60.0).round
   end
 
   private

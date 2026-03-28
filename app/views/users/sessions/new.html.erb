@@ -1,31 +1,45 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="mb-3">
-    <%= f.label :email, class: "text-white" %>
-    <%= f.email_field :email, autofocus: true, class: "form-control", autocomplete: "email" %>
-  </div>
-
-  <div class="mb-3" data-controller="password-visibility">
-    <%= f.label :password, class: "text-white" %>
-    <div class="input-group">
-      <%= f.password_field :password, class: "form-control", data: { password_visibility_target: "input" }, autocomplete: "current-password" %>
-      <span class="input-group-text" data-action="click->password-visibility#toggle">
-        <i class="bi bi-eye" data-password-visibility-target="toggle"></i>
-      </span>
+<section class="account-shell">
+  <article class="account-panel">
+    <div>
+      <p class="page-eyebrow mb-1">Welcome back</p>
+      <h1 class="page-title mb-2">Log in</h1>
+      <p class="page-copy mb-0">Step back into your library, your progress, and the next quiet session.</p>
     </div>
-  </div>
 
-  <% if devise_mapping.rememberable? -%>
-    <div class="mb-3 form-check">
-      <%= f.check_box :remember_me, class: "form-check-input" %>
-      <%= f.label :remember_me, class: "form-check-label text-white" %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "account-form" }) do |f| %>
+      <%= devise_error_messages! %>
+
+      <div class="account-form__field">
+        <%= f.label :email, class: "account-form__label" %>
+        <%= f.email_field :email, autofocus: true, class: "form-control", autocomplete: "email" %>
+      </div>
+
+      <div class="account-form__field" data-controller="password-visibility">
+        <%= f.label :password, class: "account-form__label" %>
+        <div class="input-group">
+          <%= f.password_field :password, class: "form-control", data: { password_visibility_target: "input" }, autocomplete: "current-password" %>
+          <span class="input-group-text" data-action="click->password-visibility#toggle">
+            <i class="bi bi-eye" data-password-visibility-target="toggle"></i>
+          </span>
+        </div>
+      </div>
+
+      <% if devise_mapping.rememberable? -%>
+        <div class="account-form__field">
+          <div class="form-check">
+            <%= f.check_box :remember_me, class: "form-check-input" %>
+            <%= f.label :remember_me, class: "form-check-label" %>
+          </div>
+        </div>
+      <% end -%>
+
+      <div>
+        <%= f.submit "Log in", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+
+    <div class="account-form__links">
+      <%= render "devise/shared/links" %>
     </div>
-  <% end -%>
-
-  <%= f.submit "Log in", class: "btn btn-primary" %>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  </article>
+</section>

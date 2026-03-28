@@ -1,47 +1,71 @@
-<h1 class="mb-3 text-white"><%= @work['title'] %></h1>
-
-<p class="text-muted mb-2">
-  by <%= @work.dig('authors', 0, 'name') || @work.dig('authors', 0, 'author', 'name') || 'Unknown' %>
-</p>
-
 <% cover_id = if @edition&.dig('covers', 0)
                 @edition['covers'].first
               else
                 @work.dig('covers', 0)
               end %>
 
-<% if cover_id %>
-  <%= image_tag(OpenLibraryClient.cover_url(cover_id, 'M'), class: 'mb-3 d-block') %>
-<% end %>
-
 <% description = if @work['description'].is_a?(Hash)
                     @work['description']['value']
                   else
                     @work['description']
                   end %>
-<% if description.present? %>
-  <p class="text-white"><%= description %></p>
-<% end %>
-
+<% author_name = @work.dig('authors', 0, 'name') || @work.dig('authors', 0, 'author', 'name') || 'Unknown' %>
 <% page_length = @edition&.[]('number_of_pages') || @work['number_of_pages'] %>
-<% if page_length.present? %>
-  <p class="text-muted">Page length: <%= page_length %></p>
-<% end %>
 
-<% if @edition %>
-  <p class="text-white">Edition: <%= @edition['title'] %></p>
-<% end %>
+<section class="book-detail">
+  <article class="book-detail__panel">
+    <div class="book-detail__layout">
+      <% if cover_id %>
+        <%= image_tag(OpenLibraryClient.cover_url(cover_id, 'L'), class: 'book-detail__cover', alt: "#{@work['title']} cover") %>
+      <% else %>
+        <div class="book-detail__cover-placeholder" aria-hidden="true">
+          <span><%= @work['title'].to_s.first&.upcase || 'N' %></span>
+        </div>
+      <% end %>
 
-<ul class="list-unstyled text-muted mb-3">
-  <li>Finished: <%= @read_count %></li>
-  <li>Reading: <%= @reading_count %></li>
-  <li>Want to read: <%= @want_to_read_count %></li>
-</ul>
+      <div class="book-detail__content">
+        <div>
+          <p class="page-eyebrow mb-1">Discover</p>
+          <h1 class="page-title mb-2"><%= @work['title'] %></h1>
+          <p class="book-detail__author mb-0">by <%= author_name %></p>
+        </div>
 
-<%= form_with url: '/books/import', method: :post, local: true do %>
-  <%= hidden_field_tag :work_id, params[:work_id] %>
-  <%= select_tag :status,
-        options_for_select(Reading::STATUS_OPTIONS, 'want_to_read'),
-        class: 'form-select form-select-sm d-inline w-auto me-2' %>
-  <button class="btn btn-primary">Add to Library</button>
-<% end %>
+        <% if description.present? %>
+          <p class="book-detail__description mb-0"><%= description %></p>
+        <% end %>
+
+        <div class="detail-chip-row">
+          <span class="detail-chip">Finished: <strong><%= @read_count %></strong></span>
+          <span class="detail-chip">Reading: <strong><%= @reading_count %></strong></span>
+          <span class="detail-chip">Want to read: <strong><%= @want_to_read_count %></strong></span>
+        </div>
+
+        <div class="book-detail__meta-list">
+          <% if page_length.present? %>
+            <div class="book-detail__meta-item">
+              <span>Page length</span>
+              <strong><%= "Page length: #{page_length}" %></strong>
+            </div>
+          <% end %>
+          <% if @edition.present? %>
+            <div class="book-detail__meta-item">
+              <span>Edition</span>
+              <strong><%= "Edition: #{@edition['title']}" %></strong>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="book-detail__actions">
+          <%= form_with url: '/books/import', method: :post, local: true do %>
+            <%= hidden_field_tag :work_id, params[:work_id] %>
+            <%= select_tag :status,
+                  options_for_select(Reading::STATUS_OPTIONS, 'want_to_read'),
+                  class: 'form-select form-select-sm' %>
+            <button class="btn btn-primary">Add to Library</button>
+          <% end %>
+          <%= link_to 'Back to Discover', search_path(tab: 'books'), class: 'btn btn-secondary' %>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>

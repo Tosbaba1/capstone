@@ -1,26 +1,51 @@
-<h2><%= @user == current_user ? 'Your followers' : "#{@user.name}'s followers" %></h2>
+<section class="relationship-page">
+  <article class="page-panel">
+    <p class="page-eyebrow mb-1">Followers</p>
+    <h1 class="page-title mb-2"><%= @user == current_user ? 'Your followers' : "#{@user.name}'s followers" %></h1>
+    <p class="page-copy mb-0">Keep the people around this reading life visible, but quiet.</p>
+  </article>
 
-<% if @requests.any? %>
-  <h3>Follower requests</h3>
-  <ul class="list-unstyled mb-3">
-    <% @requests.each do |req| %>
-      <li>
-        <%= link_to (req.sender.name.presence || req.sender.username), user_path(req.sender) %>
-        <% if @user == current_user %>
-          <%= button_to 'Accept', accept_followrequest_path(req), method: :post, class: 'btn btn-sm btn-success ms-2' %>
-          <%= button_to 'Decline', decline_followrequest_path(req), method: :post, class: 'btn btn-sm btn-danger ms-1' %>
+  <% if @requests.any? %>
+    <section class="page-panel page-panel--soft">
+      <p class="page-eyebrow mb-1">Requests</p>
+      <h2 class="h4 mb-3">Follower requests</h2>
+      <div class="relationship-page__list">
+        <% @requests.each do |req| %>
+          <article class="relationship-page__item">
+            <div class="relationship-page__item-main">
+              <%= image_tag(req.sender.avatar.presence || 'default_avatar.png', class: 'relationship-page__item-avatar', alt: req.sender.name) %>
+              <div>
+                <%= link_to (req.sender.name.presence || req.sender.username), user_path(req.sender), class: 'relationship-page__item-name' %>
+                <p class="relationship-page__item-meta mb-0">@<%= req.sender.username %></p>
+              </div>
+            </div>
+            <% if @user == current_user %>
+              <div class="relationship-page__item-actions">
+                <%= button_to 'Accept', accept_followrequest_path(req), method: :post, class: 'btn btn-success' %>
+                <%= button_to 'Decline', decline_followrequest_path(req), method: :post, class: 'btn btn-danger' %>
+              </div>
+            <% end %>
+          </article>
         <% end %>
-      </li>
-    <% end %>
-  </ul>
-  <hr>
-<% end %>
-
-<ul class="list-unstyled">
-  <% @followers.each do |u| %>
-    <li><%= link_to (u.name.presence || u.username), user_path(u) %></li>
+      </div>
+    </section>
   <% end %>
-</ul>
-<% if @followers.empty? %>
-<p class="text-white">No followers yet.</p>
-<% end %>
+
+  <% if @followers.any? %>
+    <div class="relationship-page__list">
+      <% @followers.each do |u| %>
+        <article class="relationship-page__item">
+          <div class="relationship-page__item-main">
+            <%= image_tag(u.avatar.presence || 'default_avatar.png', class: 'relationship-page__item-avatar', alt: u.name) %>
+            <div>
+              <%= link_to (u.name.presence || u.username), user_path(u), class: 'relationship-page__item-name' %>
+              <p class="relationship-page__item-meta mb-0">@<%= u.username %></p>
+            </div>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="relationship-page__empty">No followers yet.</div>
+  <% end %>
+</section>

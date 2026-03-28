@@ -1,65 +1,78 @@
-<h2>Edit Profile</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="mb-3">
-    <%= f.label :name, class: 'text-white' %>
-    <%= f.text_field :name, value: resource.name, autofocus: true, class: "form-control" %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :username, class: 'text-white' %>
-    <%= f.text_field :username, value: resource.username, class: "form-control" %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :email, class: 'text-white' %>
-    <%= f.email_field :email, value: resource.email, class: "form-control", autocomplete: "email" %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :avatar, "Profile picture URL", class: 'text-white' %>
-    <%= f.text_field :avatar, value: resource.avatar, class: "form-control" %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :banner, "Banner quote", class: 'text-white' %>
-    <%= f.text_field :banner, value: resource.banner, class: "form-control" %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :bio, class: 'text-white' %>
-    <%= f.text_area :bio, value: resource.bio, class: "form-control" %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :is_private, 'Private account', class: 'text-white' %>
-    <%= f.check_box :is_private, checked: resource.is_private %>
-  </div>
-
-  <hr>
-  <p class="text-white">Leave password fields blank if you don't want to change it</p>
-  <div class="mb-3" data-controller="password-visibility">
-    <%= f.label :password, class: 'text-white' %>
-    <div class="input-group">
-      <%= f.password_field :password, autocomplete: "new-password", class: "form-control", data: { password_visibility_target: "input" } %>
-      <span class="input-group-text" data-action="click->password-visibility#toggle">
-        <i class="bi bi-eye" data-password-visibility-target="toggle"></i>
-      </span>
+<section class="account-shell">
+  <article class="account-panel">
+    <div>
+      <p class="page-eyebrow mb-1">Profile</p>
+      <h1 class="page-title mb-2">Edit your profile</h1>
+      <p class="page-copy mb-0">Keep the details around your reading life calm, clear, and easy to update.</p>
     </div>
-  </div>
 
-  <div class="mb-3" data-controller="password-visibility">
-    <%= f.label :password_confirmation, class: 'text-white' %>
-    <div class="input-group">
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", data: { password_visibility_target: "input" } %>
-      <span class="input-group-text" data-action="click->password-visibility#toggle">
-        <i class="bi bi-eye" data-password-visibility-target="toggle"></i>
-      </span>
-    </div>
-  </div>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "account-form" }) do |f| %>
+      <%= devise_error_messages! %>
 
+      <div class="account-form__field">
+        <%= f.label :name, class: 'account-form__label' %>
+        <%= f.text_field :name, value: resource.name, autofocus: true, class: "form-control" %>
+      </div>
 
-  <%= f.submit "Update", class: "btn btn-primary" %>
-<% end %>
+      <div class="account-form__field">
+        <%= f.label :username, class: 'account-form__label' %>
+        <%= f.text_field :username, value: resource.username, class: "form-control" %>
+      </div>
+
+      <div class="account-form__field">
+        <%= f.label :email, class: 'account-form__label' %>
+        <%= f.email_field :email, value: resource.email, class: "form-control", autocomplete: "email" %>
+      </div>
+
+      <div class="account-form__field">
+        <%= f.label :avatar, "Profile picture URL", class: 'account-form__label' %>
+        <%= f.text_field :avatar, value: resource.avatar, class: "form-control" %>
+      </div>
+
+      <div class="account-form__field">
+        <%= f.label :banner, "Banner quote", class: 'account-form__label' %>
+        <%= f.text_field :banner, value: resource.banner, class: "form-control" %>
+      </div>
+
+      <div class="account-form__field">
+        <%= f.label :bio, class: 'account-form__label' %>
+        <%= f.text_area :bio, value: resource.bio, class: "form-control" %>
+      </div>
+
+      <div class="account-form__field">
+        <div class="form-check">
+          <%= f.check_box :is_private, checked: resource.is_private, class: 'form-check-input' %>
+          <%= f.label :is_private, 'Private account', class: 'form-check-label' %>
+        </div>
+      </div>
+
+      <section class="account-form__section">
+        <p class="account-form__helper mb-0">Leave password fields blank if you don't want to change them.</p>
+
+        <div class="account-form__field" data-controller="password-visibility">
+          <%= f.label :password, class: 'account-form__label' %>
+          <div class="input-group">
+            <%= f.password_field :password, autocomplete: "new-password", class: "form-control", data: { password_visibility_target: "input" } %>
+            <span class="input-group-text" data-action="click->password-visibility#toggle">
+              <i class="bi bi-eye" data-password-visibility-target="toggle"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="account-form__field" data-controller="password-visibility">
+          <%= f.label :password_confirmation, class: 'account-form__label' %>
+          <div class="input-group">
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", data: { password_visibility_target: "input" } %>
+            <span class="input-group-text" data-action="click->password-visibility#toggle">
+              <i class="bi bi-eye" data-password-visibility-target="toggle"></i>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <div>
+        <%= f.submit "Update", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </article>
+</section>

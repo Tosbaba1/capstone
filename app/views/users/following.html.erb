@@ -1,20 +1,46 @@
-<h2><%= @user == current_user ? 'You are following' : "#{@user.name} is following" %></h2>
+<section class="relationship-page">
+  <article class="page-panel">
+    <p class="page-eyebrow mb-1">Following</p>
+    <h1 class="page-title mb-2"><%= @user == current_user ? 'You are following' : "#{@user.name} is following" %></h1>
+    <p class="page-copy mb-0">A small list of readers and libraries you have chosen to keep nearby.</p>
+  </article>
 
-<% if @requests.any? %>
-  <h3>Pending follow requests</h3>
-  <ul class="list-unstyled mb-3">
-    <% @requests.each do |req| %>
-      <li><%= link_to (req.recipient.name.presence || req.recipient.username), user_path(req.recipient) %></li>
-    <% end %>
-  </ul>
-  <hr>
-<% end %>
-
-<ul class="list-unstyled">
-  <% @following.each do |u| %>
-    <li><%= link_to (u.name.presence || u.username), user_path(u) %></li>
+  <% if @requests.any? %>
+    <section class="page-panel page-panel--soft">
+      <p class="page-eyebrow mb-1">Pending</p>
+      <h2 class="h4 mb-3">Pending follow requests</h2>
+      <div class="relationship-page__list">
+        <% @requests.each do |req| %>
+          <article class="relationship-page__item">
+            <div class="relationship-page__item-main">
+              <%= image_tag(req.recipient.avatar.presence || 'default_avatar.png', class: 'relationship-page__item-avatar', alt: req.recipient.name) %>
+              <div>
+                <%= link_to (req.recipient.name.presence || req.recipient.username), user_path(req.recipient), class: 'relationship-page__item-name' %>
+                <p class="relationship-page__item-meta mb-0">@<%= req.recipient.username %></p>
+              </div>
+            </div>
+            <span class="public-profile__status">Pending</span>
+          </article>
+        <% end %>
+      </div>
+    </section>
   <% end %>
-</ul>
-<% if @following.empty? %>
-<p class="text-white">Not following anyone yet.</p>
-<% end %>
+
+  <% if @following.any? %>
+    <div class="relationship-page__list">
+      <% @following.each do |u| %>
+        <article class="relationship-page__item">
+          <div class="relationship-page__item-main">
+            <%= image_tag(u.avatar.presence || 'default_avatar.png', class: 'relationship-page__item-avatar', alt: u.name) %>
+            <div>
+              <%= link_to (u.name.presence || u.username), user_path(u), class: 'relationship-page__item-name' %>
+              <p class="relationship-page__item-meta mb-0">@<%= u.username %></p>
+            </div>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="relationship-page__empty">Not following anyone yet.</div>
+  <% end %>
+</section>

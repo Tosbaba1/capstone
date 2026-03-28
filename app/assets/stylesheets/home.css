@@ -1219,9 +1219,9 @@
 }
 
 .sessions-home__presence-dot {
-  background: #dfcca5;
+  background: rgba(198, 169, 105, 0.88);
   border-radius: 50%;
-  box-shadow: 0 0 0 0.25rem rgba(223, 204, 165, 0.14);
+  box-shadow: 0 0 0 0.25rem rgba(198, 169, 105, 0.1);
   height: 0.55rem;
   width: 0.55rem;
 }
@@ -1623,12 +1623,12 @@
 }
 
 .session-room__summary-shell--completion .session-room__summary-metric {
-  background: rgba(240, 231, 213, 0.58) !important;
+  background: rgba(240, 231, 213, 0.46) !important;
   border: 1px solid rgba(33, 40, 66, 0.08) !important;
   border-radius: 20px;
   box-shadow: none !important;
-  min-height: 8.25rem;
-  padding: 1rem;
+  min-height: 7.5rem;
+  padding: 0.9rem 0.95rem;
 }
 
 .session-room__summary-shell--completion .session-room__summary-metric span {
@@ -1640,7 +1640,7 @@
 }
 
 .session-room__summary-shell--completion .session-room__summary-metric strong {
-  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-size: clamp(1.55rem, 2.8vw, 2.05rem);
 }
 
 .session-room__summary-shell--completion .session-room__summary-metric small {
@@ -1751,8 +1751,8 @@
   border-left: 1px solid rgba(33, 40, 66, 0.08);
   border-radius: 0;
   box-shadow: none !important;
-  gap: 0.4rem;
-  padding: 0 1.25rem;
+  gap: 0.32rem;
+  padding: 0 1rem;
 }
 
 .profile-progress__hero .profile-progress__stat:first-child {
@@ -1765,7 +1765,7 @@
 }
 
 .profile-progress__stat-value {
-  font-size: clamp(1.85rem, 3.4vw, 2.6rem);
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
   line-height: 0.95;
 }
 

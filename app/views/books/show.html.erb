@@ -1,81 +1,57 @@
-<div>
-  <div class="d-flex justify-content-between mb-3">
-    <%= link_to '/library', class: 'text-white' do %>
-      <i class="bi bi-arrow-left"></i>
-    <% end %>
-  </div>
+<section class="book-detail">
+  <article class="book-detail__panel">
+    <div class="book-detail__layout">
+      <% if @the_book.image_url.present? %>
+        <%= image_tag(@the_book.image_url, class: 'book-detail__cover', alt: "#{@the_book.title} cover") %>
+      <% else %>
+        <div class="book-detail__cover-placeholder" aria-hidden="true">
+          <span><%= @the_book.title.to_s.first&.upcase || 'N' %></span>
+        </div>
+      <% end %>
 
-    <dl>
-      <dt>
-        Title
-      </dt>
-      <dd>
-        <%= @the_book.title %>
-      </dd>
+      <div class="book-detail__content">
+        <div>
+          <p class="page-eyebrow mb-1">Library</p>
+          <h1 class="page-title mb-2"><%= @the_book.title %></h1>
+          <p class="book-detail__author mb-0">by <%= @the_book.author&.name.presence || 'Unknown author' %></p>
+        </div>
 
-      <dt>
-        Image url
-      </dt>
-      <dd>
-        <%= @the_book.image_url %>
-      </dd>
+        <% if @the_book.description.present? %>
+          <p class="book-detail__description mb-0"><%= @the_book.description %></p>
+        <% else %>
+          <div class="book-detail__empty">No description has been added for this book yet.</div>
+        <% end %>
 
-      <dt>
-        Author
-      </dt>
-      <dd>
-        <%= @the_book.author_id %>
-      </dd>
+        <div class="book-detail__meta-list">
+          <% if @the_book.page_length.present? %>
+            <div class="book-detail__meta-item">
+              <span>Length</span>
+              <strong><%= @the_book.page_length %> pages</strong>
+            </div>
+          <% end %>
+          <% if @the_book.year.present? %>
+            <div class="book-detail__meta-item">
+              <span>Year</span>
+              <strong><%= @the_book.year %></strong>
+            </div>
+          <% end %>
+          <% if @the_book.genre.present? %>
+            <div class="book-detail__meta-item">
+              <span>Genre</span>
+              <strong><%= @the_book.genre %></strong>
+            </div>
+          <% end %>
+          <div class="book-detail__meta-item">
+            <span>Added</span>
+            <strong><%= @the_book.created_at.to_date.strftime('%b %-d, %Y') %></strong>
+          </div>
+        </div>
 
-      <dt>
-        Description
-      </dt>
-      <dd>
-        <%= @the_book.description %>
-      </dd>
-
-      <dt>
-        Page length
-      </dt>
-      <dd>
-        <%= @the_book.page_length %>
-      </dd>
-
-      <dt>
-        Year
-      </dt>
-      <dd>
-        <%= @the_book.year %>
-      </dd>
-
-      <dt>
-        Library
-      </dt>
-      <dd>
-        <%= @the_book.library_id %>
-      </dd>
-
-      <dt>
-        Genre
-      </dt>
-      <dd>
-        <%= @the_book.genre %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_book.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_book.updated_at) %> ago
-      </dd>
-    </dl>
-  </div>
-</div>
-
+        <div class="book-detail__actions">
+          <%= link_to 'Back to Library', library_path, class: 'btn btn-secondary' %>
+          <%= link_to 'Discover More Books', search_path(tab: 'books'), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>

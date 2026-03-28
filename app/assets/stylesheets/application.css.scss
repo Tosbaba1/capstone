@@ -402,6 +402,36 @@ img {
   color: var(--color-on-depth-primary) !important;
 }
 
+.btn-success {
+  background: var(--accent-fill);
+  border: 1px solid rgba(177, 145, 76, 0.72);
+  box-shadow: var(--shadow-accent);
+  color: var(--color-depth) !important;
+}
+
+.btn-success:hover,
+.btn-success:focus-visible {
+  background: var(--accent-fill-hover);
+  border-color: rgba(177, 145, 76, 0.9);
+  color: var(--color-depth) !important;
+}
+
+.btn-danger,
+.app-button--danger {
+  background: rgba(125, 115, 95, 0.12);
+  border: 1px solid rgba(125, 115, 95, 0.28);
+  color: var(--color-text-primary) !important;
+}
+
+.btn-danger:hover,
+.btn-danger:focus-visible,
+.app-button--danger:hover,
+.app-button--danger:focus-visible {
+  background: rgba(125, 115, 95, 0.18);
+  border-color: rgba(125, 115, 95, 0.38);
+  color: var(--color-depth) !important;
+}
+
 .app-header__action,
 .app-header__profile,
 .feed-composer-drawer__close {
@@ -525,6 +555,12 @@ img {
 .modal-footer,
 .offcanvas-header {
   border-color: var(--color-divider);
+}
+
+.badge.bg-primary {
+  background: rgba(198, 169, 105, 0.16) !important;
+  border: 1px solid rgba(33, 40, 66, 0.12);
+  color: var(--color-depth) !important;
 }
 
 @media (min-width: 992px) {

@@ -1,17 +1,24 @@
-<h2 class="h5 mb-3">Ask the Librarian</h2>
-<%= form_with url: library_ai_chat_path, method: :post, local: true do %>
-  <div class="mb-2">
-    <%= text_area_tag :message, nil, class: 'form-control', placeholder: 'Describe your mood or what you want to read...' %>
+<div class="library-chat">
+  <div>
+    <p class="page-eyebrow mb-1">Conversation</p>
+    <h2 class="page-title mb-2">Ask the Librarian</h2>
+    <p class="page-copy mb-0">Describe a mood, pace, or kind of reading evening, and let the reply stay suggestive instead of overwhelming.</p>
   </div>
-  <%= submit_tag 'Ask Librarian', class: 'btn btn-primary' %>
-<% end %>
 
-<div class="mt-4">
-  <% @chat_history.each do |msg| %>
-    <% next if msg.role == 'system' %>
-    <div class="mb-2 text-white">
-      <strong><%= msg.role == 'user' ? 'You' : 'Librarian' %>:</strong>
-      <%= simple_format(msg.content) %>
+  <%= form_with url: library_ai_chat_path, method: :post, local: true do %>
+    <div class="mb-3">
+      <%= text_area_tag :message, nil, class: 'form-control', placeholder: 'Describe your mood or what you want to read...' %>
     </div>
+    <%= submit_tag 'Ask Librarian', class: 'btn btn-primary' %>
   <% end %>
+
+  <div class="library-chat__messages">
+    <% @chat_history.each do |msg| %>
+      <% next if msg.role == 'system' %>
+      <article class="library-chat__message <%= 'library-chat__message--assistant' if msg.role == 'assistant' %>">
+        <p class="library-chat__speaker mb-2"><%= msg.role == 'user' ? 'You' : 'Librarian' %></p>
+        <%= simple_format(msg.content, {}, wrapper_tag: 'div') %>
+      </article>
+    <% end %>
+  </div>
 </div>

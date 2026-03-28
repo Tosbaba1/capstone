@@ -1,4 +1,4 @@
-<section class="library-shell">
+<section class="library-shell discover-search">
   <header class="library-hero mb-4">
     <p class="library-hero__eyebrow mb-2">Discover</p>
     <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end">
@@ -20,7 +20,7 @@
     </li>
   </ul>
 
-  <%= form_with url: search_path, method: :get, local: true, class: 'mb-4' do %>
+  <%= form_with url: search_path, method: :get, local: true, class: 'discover-search__form mb-4' do %>
     <%= hidden_field_tag :tab, @active_tab %>
     <div class="input-group">
       <% if @active_tab == 'books' %>
@@ -34,45 +34,73 @@
   <% end %>
 
   <% if @active_tab == 'books' %>
-    <% Array(@external_books['docs']).each do |book| %>
-      <div class="mb-2 p-2 border rounded content-box">
-        <% if book['cover_i'] %>
-          <%= image_tag(OpenLibraryClient.cover_url(book['cover_i'], 'S'), class: 'me-2', size: '50x75') %>
-        <% end %>
-          <strong class="text-white"><%= link_to book['title'], book_details_path(work_id: book['key'].split('/').last, edition_id: book['edition_key']&.first), class: 'text-white' %></strong>
-        <% if book['author_name'] %>
-          <span class="text-muted">by <%= book['author_name'].join(', ') %></span>
-        <% end %>
-        <%= link_to 'Details', book_details_path(work_id: book['key'].split('/').last, edition_id: book['edition_key']&.first), class: 'btn btn-link btn-sm text-decoration-none' %>
-        <%= form_with url: '/books/import', method: :post, local: true, class: 'd-inline ms-2' do %>
-          <%= hidden_field_tag :work_id, book['key'].split('/').last %>
-          <%= select_tag :status,
-            options_for_select(Reading::STATUS_OPTIONS, 'want_to_read'),
-            class: 'form-select form-select-sm d-inline w-auto me-2' %>
-          <button class="btn btn-sm btn-primary">Add</button>
-        <% end %>
-      </div>
-    <% end %>
+    <div class="discover-search__results">
+      <% Array(@external_books['docs']).each do |book| %>
+        <article class="discover-search__card">
+          <div class="discover-search__book">
+            <% if book['cover_i'] %>
+              <%= image_tag(OpenLibraryClient.cover_url(book['cover_i'], 'M'), class: 'discover-search__cover', alt: "#{book['title']} cover") %>
+            <% else %>
+              <div class="discover-search__cover discover-search__cover--placeholder" aria-hidden="true">
+                <span><%= book['title'].to_s.first&.upcase || 'N' %></span>
+              </div>
+            <% end %>
+
+            <div class="discover-search__copy">
+              <h2 class="discover-search__title mb-0">
+                <%= link_to book['title'], book_details_path(work_id: book['key'].split('/').last, edition_id: book['edition_key']&.first) %>
+              </h2>
+              <% if book['author_name'] %>
+                <p class="discover-search__meta mb-0">by <%= book['author_name'].join(', ') %></p>
+              <% end %>
+
+              <div class="discover-search__actions">
+                <%= link_to 'Details', book_details_path(work_id: book['key'].split('/').last, edition_id: book['edition_key']&.first), class: 'btn btn-secondary' %>
+                <%= form_with url: '/books/import', method: :post, local: true do %>
+                  <%= hidden_field_tag :work_id, book['key'].split('/').last %>
+                  <%= select_tag :status,
+                    options_for_select(Reading::STATUS_OPTIONS, 'want_to_read'),
+                    class: 'form-select form-select-sm' %>
+                  <button class="btn btn-primary">Add to Library</button>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </article>
+      <% end %>
+    </div>
     <% if params[:q].present? && Array(@external_books['docs']).empty? %>
-      <p class="text-muted">No books found.</p>
+      <p class="discover-search__empty">No books found.</p>
     <% end %>
   <% else %>
     <% if @recent_searches.any? %>
-      <h2 class="h5 text-white">Recent reader searches</h2>
-      <ul class="list-unstyled mb-3">
-        <% @recent_searches.each do |search| %>
-          <li><%= search.query %></li>
-        <% end %>
-      </ul>
+      <section class="discover-search__recent">
+        <p class="page-eyebrow mb-1">Recent</p>
+        <h2 class="h5 mb-0">Recent reader searches</h2>
+        <ul class="discover-search__recent-list">
+          <% @recent_searches.each do |search| %>
+            <li><%= search.query %></li>
+          <% end %>
+        </ul>
+      </section>
     <% end %>
-    <% @users.each do |user| %>
-      <div class="mb-2 p-2 border rounded content-box">
-        <%= image_tag(user.avatar.presence || 'default_avatar.png', class: 'avatar me-2') %>
-        <%= link_to user.name, user_path(user), class: 'fw-bold text-decoration-none text-white' %>
-      </div>
-    <% end %>
+
+    <div class="discover-search__results">
+      <% @users.each do |user| %>
+        <article class="discover-search__card">
+          <div class="discover-search__reader">
+            <%= image_tag(user.avatar.presence || 'default_avatar.png', class: 'discover-search__avatar', alt: user.name) %>
+            <div class="discover-search__copy">
+              <h2 class="discover-search__title mb-0"><%= link_to user.name, user_path(user) %></h2>
+              <p class="discover-search__meta mb-0">@<%= user.username %></p>
+            </div>
+          </div>
+        </article>
+      <% end %>
+    </div>
+
     <% if params[:q].present? && @users.empty? %>
-      <p class="text-white">No readers found.</p>
+      <p class="discover-search__empty">No readers found.</p>
     <% end %>
   <% end %>
 </section>

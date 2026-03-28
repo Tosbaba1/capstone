@@ -13,7 +13,23 @@
 <% end %>
 
 <% if @active_tab == 'ai' %>
-  <%= render 'library_ai_chat' %>
+  <section class="library-shell">
+    <header class="library-hero mb-4">
+      <p class="library-hero__eyebrow mb-2">Librarian</p>
+      <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end">
+        <div>
+          <h1 class="library-hero__title mb-2">Ask for a quieter recommendation</h1>
+          <p class="library-hero__copy mb-0">
+            Describe the mood you want to read in, and the librarian will keep the suggestions close to that feeling.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-panel page-panel--soft">
+      <%= render 'library_ai_chat' %>
+    </div>
+  </section>
 <% else %>
   <% editable = @user == current_user %>
   <% library_title = editable ? 'Your Library' : "#{@user.name}'s Library" %>

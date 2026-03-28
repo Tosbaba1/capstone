@@ -31,16 +31,16 @@
         <% if current_user.bio.present? %>
           <p class="profile-progress__bio mb-0"><%= current_user.bio %></p>
         <% end %>
-      </div>
-    </div>
 
-    <div class="profile-progress__actions">
-      <% if @current_session_participant.present? %>
-        <%= link_to "Start reading", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
-      <% else %>
-        <%= link_to "Start reading", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
-      <% end %>
-      <%= link_to "Edit profile", edit_user_registration_path, class: "sessions-home__secondary-action" %>
+        <div class="profile-progress__actions">
+          <% if @current_session_participant.present? %>
+            <%= link_to "Start reading", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+          <% else %>
+            <%= link_to "Start reading", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+          <% end %>
+          <%= link_to "Edit profile", edit_user_registration_path, class: "sessions-home__secondary-action" %>
+        </div>
+      </div>
     </div>
   </article>
 
@@ -57,7 +57,7 @@
   </ul>
 
   <% if profile_tab == "overview" %>
-    <section class="profile-progress__summary-grid">
+    <section class="profile-progress__panel profile-progress__panel--overview">
       <div class="profile-progress__stats">
         <div class="profile-progress__stat">
           <span class="profile-progress__stat-label">This week</span>
@@ -72,26 +72,26 @@
           <strong class="profile-progress__stat-value"><%= streak_label(@current_streak) %></strong>
         </div>
       </div>
-    </section>
 
-    <section class="profile-progress__panel profile-progress__panel--latest">
-      <p class="profile-progress__eyebrow mb-1">Latest session</p>
-      <% if latest_session.present? %>
-        <h2 class="profile-progress__panel-title mb-2">
-          <%= "#{latest_session.credited_minutes} minute #{latest_session.session.mode == "structured" ? "Structured" : "Silent"} session" %>
-        </h2>
-        <p class="profile-progress__panel-copy mb-0">
-          <%= latest_session.leave_time.in_time_zone.strftime("%b %-d at %-I:%M %p") %>.
-          <% if latest_companion_count.positive? %>
-            <%= "#{pluralize(latest_companion_count, "other reader")} joined you." %>
-          <% else %>
-            Solo reading session.
-          <% end %>
-        </p>
-      <% else %>
-        <h2 class="profile-progress__panel-title mb-2">Your next session starts here.</h2>
-        <p class="profile-progress__panel-copy mb-0">Keep the page light and let the reading speak for itself.</p>
-      <% end %>
+      <div class="profile-progress__overview-detail">
+        <p class="profile-progress__eyebrow mb-1">Latest session</p>
+        <% if latest_session.present? %>
+          <h2 class="profile-progress__panel-title mb-2">
+            <%= "#{latest_session.credited_minutes} minute #{latest_session.session.mode == "structured" ? "Structured" : "Silent"} session" %>
+          </h2>
+          <p class="profile-progress__panel-copy mb-0">
+            <%= latest_session.leave_time.in_time_zone.strftime("%b %-d at %-I:%M %p") %>.
+            <% if latest_companion_count.positive? %>
+              <%= "#{pluralize(latest_companion_count, "other reader")} joined you." %>
+            <% else %>
+              Solo reading session.
+            <% end %>
+          </p>
+        <% else %>
+          <h2 class="profile-progress__panel-title mb-2">No sessions yet.</h2>
+          <p class="profile-progress__panel-copy mb-0">Start reading to build your log.</p>
+        <% end %>
+      </div>
     </section>
   <% else %>
     <section class="profile-progress__panel profile-progress__panel--timeline">

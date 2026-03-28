@@ -87,7 +87,18 @@
   --nouvelle-radius-lg: var(--radius-lg);
   --nouvelle-radius-md: var(--radius-md);
   --nouvelle-radius-sm: var(--radius-sm);
-  --app-bottom-nav-height: 5.75rem;
+  --app-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --app-bottom-nav-height: 5.5rem;
+  --app-bottom-nav-offset: 1rem;
+  --app-bottom-nav-shadow-footprint: 0.85rem;
+  --app-bottom-nav-breathing-room: 1.5rem;
+  --app-bottom-nav-clearance: calc(
+    var(--app-bottom-nav-height) +
+    var(--app-bottom-nav-offset) +
+    var(--app-bottom-nav-shadow-footprint) +
+    var(--app-bottom-nav-breathing-room) +
+    var(--app-safe-area-bottom)
+  );
   --heading-font: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Cormorant Garamond", Georgia, serif;
   --body-font: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --bs-body-bg: var(--color-background);
@@ -225,7 +236,15 @@ img {
 }
 
 .app-page--with-nav {
-  padding-bottom: calc(var(--app-bottom-nav-height) + 1.65rem + env(safe-area-inset-bottom));
+  padding-bottom: 0;
+  scroll-padding-bottom: var(--app-bottom-nav-clearance);
+}
+
+.app-page--with-nav::after {
+  content: "";
+  display: block;
+  height: var(--app-bottom-nav-clearance);
+  width: 100%;
 }
 
 .app-flash-stack {
@@ -582,12 +601,24 @@ img {
 }
 
 @media (min-width: 992px) {
+  :root {
+    --app-bottom-nav-breathing-room: 1.85rem;
+    --app-bottom-nav-shadow-footprint: 0.95rem;
+  }
+
   .app-page--with-nav {
-    padding-bottom: calc(var(--app-bottom-nav-height) + 2rem + env(safe-area-inset-bottom));
+    padding-bottom: 0;
   }
 }
 
 @media (max-width: 575.98px) {
+  :root {
+    --app-bottom-nav-height: 5.35rem;
+    --app-bottom-nav-offset: 0.7rem;
+    --app-bottom-nav-shadow-footprint: 0.75rem;
+    --app-bottom-nav-breathing-room: 1.25rem;
+  }
+
   body::before {
     height: 16rem;
     left: -5rem;

@@ -163,9 +163,10 @@ img {
 
 .app-shell--immersive {
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.34), transparent 30%),
-    radial-gradient(circle at 84% 14%, rgba(33, 40, 66, 0.08), transparent 24%),
-    linear-gradient(180deg, var(--color-surface-elevated) 0%, rgba(240, 229, 212, 0.96) 42%, rgba(232, 215, 197, 0.94) 100%);
+    radial-gradient(circle at 50% -6%, rgba(255, 255, 255, 0.42), transparent 24%),
+    radial-gradient(circle at 88% 10%, rgba(33, 40, 66, 0.08), transparent 18%),
+    radial-gradient(circle at 14% 22%, rgba(198, 169, 105, 0.14), transparent 18%),
+    linear-gradient(180deg, rgba(248, 241, 231, 0.98) 0%, rgba(241, 231, 215, 0.96) 44%, rgba(232, 215, 197, 0.94) 100%);
 }
 
 .bg-charcoal-gradient {
@@ -206,9 +207,21 @@ img {
 }
 
 .app-page--immersive {
-  max-width: 68rem;
+  max-width: 70rem;
   padding-bottom: 2rem;
-  padding-top: 1rem;
+  padding-top: 0.8rem;
+}
+
+.app-shell--immersive .app-flash-stack {
+  margin-bottom: 0.5rem;
+}
+
+.app-shell--immersive .app-flash {
+  background: rgba(246, 239, 228, 0.76);
+  box-shadow: 0 14px 32px rgba(33, 40, 66, 0.08);
+  font-size: 0.88rem;
+  max-width: 26rem;
+  padding: 0.7rem 0.9rem;
 }
 
 .app-page--with-nav {

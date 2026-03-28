@@ -87,22 +87,23 @@
         data-session-room-presence-visibility-value="<%= @presence_snapshot[:presence_visibility] %>"
       >
         <header class="session-room__topbar">
-          <div class="session-room__topbar-copy">
-            <p class="session-room__timer-label mb-0">Your session is waiting.</p>
-          </div>
-          <%= button_to "Leave session", leave_session_path(@session), method: :post, class: "session-room__exit-button" %>
+          <p class="session-room__topbar-kicker mb-0">Reading room</p>
+          <%= button_to "Leave session", leave_session_path(@session), method: :post, class: "session-room__exit-button session-room__exit-button--quiet" %>
         </header>
 
         <section class="session-room__timer-stage">
-          <p class="session-room__timer-label mb-0">Reading Session</p>
-          <strong class="session-room__timer-value" data-session-room-target="countdown"><%= initial_countdown %></strong>
-          <p class="session-room__meta-line mb-0"><%= "#{@session.duration} min • #{mode_name} • Hosted by #{host_name}" %></p>
+          <div class="session-room__timer-stage-glow" aria-hidden="true"></div>
+          <div class="session-room__timer-shell">
+            <p class="session-room__timer-label mb-0"><%= mode_name %></p>
+            <strong class="session-room__timer-value" data-session-room-target="countdown"><%= initial_countdown %></strong>
+            <p class="session-room__meta-line mb-0"><%= "#{@session.duration} minutes • Hosted by #{host_name}" %></p>
+          </div>
         </section>
 
         <section class="session-room__focus-stage">
           <div class="session-room__focus-copy">
             <% if current_book.present? %>
-              <p class="session-room__focus-label mb-1">Currently reading</p>
+              <p class="session-room__focus-label mb-1">Now reading</p>
               <h1 class="session-room__focus-title mb-2"><%= current_book.title %></h1>
               <p class="session-room__focus-author mb-0">
                 <% if current_author.present? %>
@@ -117,23 +118,25 @@
             <% else %>
               <p class="session-room__focus-label mb-1">Settle in</p>
               <h1 class="session-room__focus-title mb-2">A calm room for uninterrupted reading.</h1>
-              <p class="session-room__focus-author mb-0">Bring the book you want to spend time with. The room stays quiet while everyone reads.</p>
+              <p class="session-room__focus-author mb-0">Bring the book you want to stay with. The room keeps time quietly while everyone reads.</p>
             <% end %>
           </div>
 
           <aside class="session-room__focus-note">
-            <% if current_book&.image_url.present? %>
-              <%= image_tag(current_book.image_url, alt: "#{current_book.title} cover", class: "session-room__book-cover") %>
-            <% else %>
-              <div class="session-room__book-placeholder" aria-hidden="true">
-                <span><%= current_book&.title&.first&.upcase || "N" %></span>
-              </div>
-            <% end %>
+            <div class="session-room__focus-note-media">
+              <% if current_book&.image_url.present? %>
+                <%= image_tag(current_book.image_url, alt: "#{current_book.title} cover", class: "session-room__book-cover") %>
+              <% else %>
+                <div class="session-room__book-placeholder" aria-hidden="true">
+                  <span><%= current_book&.title&.first&.upcase || "N" %></span>
+                </div>
+              <% end %>
+            </div>
 
             <div class="session-room__focus-note-copy">
-              <p class="session-room__focus-note-label mb-1"><%= mode_name %></p>
-              <p class="session-room__focus-note-text mb-2"><%= mode_prompt %></p>
-              <p class="session-room__focus-note-text mb-0">Staying for more than half the timer counts as a completed session, even if you leave before the end.</p>
+              <p class="session-room__focus-note-label mb-1">Room note</p>
+              <p class="session-room__focus-note-text mb-0"><%= mode_prompt %></p>
+              <p class="session-room__focus-rule mb-0">Stay past halfway for session credit.</p>
             </div>
           </aside>
         </section>
@@ -146,15 +149,15 @@
             </h2>
             <p class="session-room__presence-caption mb-0">
               <% if show_presence_avatars %>
-                Presence is intentionally light here. No chat, no comments, just other readers keeping time with you.
+                Presence stays at the edges. No chat, no comments, just other readers keeping time with you.
               <% else %>
-                Presence stays intentionally abstract here. You can feel the room without exposing who is inside it.
+                Presence stays intentionally abstract. You can feel the room without exposing who is inside it.
               <% end %>
             </p>
           </div>
 
-          <div class="session-room__presence-body">
-            <% if show_presence_avatars %>
+          <% if show_presence_avatars %>
+            <div class="session-room__presence-body">
               <div class="session-room__presence-avatars" data-session-room-target="avatarStack">
                 <% @presence_snapshot[:readers].each do |reader| %>
                   <%= image_tag(reader[:avatar].presence || "default_avatar.png", alt: reader[:name], class: "session-room__presence-avatar") %>
@@ -166,26 +169,29 @@
                 <% end %>
               </div>
 
-              <div class="session-room__reader-list" data-session-room-target="readerList">
-                <% @presence_snapshot[:readers].each do |reader| %>
-                  <span class="session-room__reader-pill">
-                    <strong><%= reader[:name] %></strong>
-                    <small>
-                      <% if reader[:host] && reader[:current_user] %>
-                        You, hosting
-                      <% elsif reader[:host] %>
-                        Host
-                      <% elsif reader[:current_user] %>
-                        You
-                      <% else %>
-                        Reading now
-                      <% end %>
-                    </small>
-                  </span>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
+              <details class="session-room__presence-details">
+                <summary class="session-room__presence-summary">View readers</summary>
+                <div class="session-room__reader-list" data-session-room-target="readerList">
+                  <% @presence_snapshot[:readers].each do |reader| %>
+                    <span class="session-room__reader-pill">
+                      <strong><%= reader[:name] %></strong>
+                      <small>
+                        <% if reader[:host] && reader[:current_user] %>
+                          You, hosting
+                        <% elsif reader[:host] %>
+                          Host
+                        <% elsif reader[:current_user] %>
+                          You
+                        <% else %>
+                          Reading now
+                        <% end %>
+                      </small>
+                    </span>
+                  <% end %>
+                </div>
+              </details>
+            </div>
+          <% end %>
         </footer>
       </div>
     <% end %>

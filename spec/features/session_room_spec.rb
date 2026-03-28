@@ -24,8 +24,9 @@ RSpec.describe "Session room", type: :feature do
     expect(page).to have_content("by Toni Morrison")
     expect(page).to have_content("42% through")
     expect(page).to have_content("2 readers")
-    expect(page).to have_content("Nina")
-    expect(page).to have_content("Presence is intentionally light here")
+    expect(page).to have_content("Reading room")
+    expect(page).to have_content("View readers")
+    expect(page).to have_content("Presence stays at the edges")
     expect(page).to have_button("Leave session")
     expect(page).not_to have_css(".app-header")
   end

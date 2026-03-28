@@ -6,7 +6,7 @@
 
 <div class="row align-items-center mb-4">
   <div class="col-auto">
-    <%= image_tag(@user.avatar.presence || 'default_avatar.png', class: 'avatar rounded-circle', style: 'width:80px;height:80px;') %>
+    <%= image_tag(@user.avatar.presence || 'default_avatar.png', class: 'avatar avatar--lg rounded-circle') %>
   </div>
   <div class="col">
     <div class="d-flex justify-content-between">
@@ -14,7 +14,7 @@
         <h4 class="mb-0 text-white"><%= @user.name %></h4>
         <p class="mb-1 text-white">@<%= @user.username %></p>
         <% if @user.bio.present? %>
-          <p class="mb-1 text-white text-truncate" style="max-width: 250px;"><%= @user.bio %></p>
+          <p class="mb-1 text-white text-truncate user-profile__bio"><%= @user.bio %></p>
         <% end %>
       </div>
       <div class="text-end text-white">

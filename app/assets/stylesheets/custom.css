@@ -1,14 +1,10 @@
 .btn-primary {
-  background: linear-gradient(135deg, var(--nouvelle-accent), var(--nouvelle-accent-deep));
-  border-color: var(--nouvelle-accent-deep);
-  color: var(--nouvelle-ink);
+  color: var(--color-depth);
 }
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  background: linear-gradient(135deg, #d3b77f, var(--nouvelle-accent-deep));
-  border-color: var(--nouvelle-accent-deep);
-  color: var(--nouvelle-ink);
+  color: var(--color-depth);
 }
 
 .btn-primary:focus-visible {
@@ -22,9 +18,9 @@
 
 .nav-tabs .nav-link {
   background: rgba(240, 231, 213, 0.58);
-  border: 1px solid rgba(63, 61, 60, 0.12);
-  border-radius: 999px;
-  color: var(--nouvelle-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -32,26 +28,22 @@
 .nav-tabs .nav-link:focus-visible {
   background: rgba(240, 231, 213, 0.88);
   border-color: rgba(33, 40, 66, 0.14);
-  color: var(--nouvelle-ink);
+  color: var(--color-depth);
 }
 
 .nav-tabs .nav-link.active {
-  background: linear-gradient(135deg, var(--nouvelle-ink), #344062);
+  background: var(--depth-fill);
   border-color: rgba(33, 40, 66, 0.4);
-  color: #f8f2e8;
+  color: var(--color-on-depth-primary);
 }
 
 .btn-royal {
-  background: linear-gradient(135deg, var(--nouvelle-ink), #344062);
-  border-color: rgba(33, 40, 66, 0.4);
-  color: #f8f2e8;
+  color: var(--color-on-depth-primary);
 }
 
 .btn-royal:hover,
 .btn-royal:focus-visible {
-  background: linear-gradient(135deg, #2a3352, #40507a);
-  border-color: rgba(33, 40, 66, 0.5);
-  color: #f8f2e8;
+  color: var(--color-on-depth-primary);
 }
 
 .book-cover {

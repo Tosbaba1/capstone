@@ -22,18 +22,14 @@
 .session-setup__panel,
 .profile-progress__hero,
 .profile-progress__panel {
-  background: linear-gradient(180deg, rgba(240, 231, 213, 0.94), rgba(247, 241, 233, 0.96));
-  border: 1px solid var(--nouvelle-border);
-  border-radius: var(--nouvelle-radius-lg);
-  box-shadow: var(--nouvelle-shadow);
+  border-radius: var(--radius-lg);
 }
 
 .sessions-home__hero {
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.2), transparent 34%),
-    linear-gradient(135deg, rgba(33, 40, 66, 0.98), rgba(49, 58, 88, 0.95) 56%, rgba(91, 79, 70, 0.9));
-  border-color: rgba(255, 255, 255, 0.2);
-  color: #f8f2e8;
+    var(--surface-depth-fill);
+  color: var(--color-on-depth-primary);
   display: grid;
   gap: 1.5rem;
   padding: 1.8rem;
@@ -61,7 +57,7 @@
 
 .sessions-home__hero-note,
 .sessions-home__section-note {
-  color: rgba(248, 242, 232, 0.72) !important;
+  color: var(--color-on-depth-secondary) !important;
   font-size: 0.92rem;
   margin: 0;
 }
@@ -82,7 +78,7 @@
 .profile-progress__banner,
 .profile-progress__stat-label,
 .profile-progress__session-date {
-  color: rgba(33, 40, 66, 0.7) !important;
+  color: var(--color-depth-emphasis) !important;
   font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -95,7 +91,7 @@
 .sessions-home__hero .presence-rail__summary,
 .session-setup__panel > .sessions-home__section-eyebrow,
 .session-room__timer-stage .session-room__timer-label {
-  color: rgba(248, 242, 232, 0.72) !important;
+  color: var(--color-on-depth-secondary) !important;
 }
 
 .sessions-home__title,
@@ -117,7 +113,7 @@
 }
 
 .sessions-home__hero .sessions-home__title {
-  color: #fbf5eb !important;
+  color: var(--color-on-depth-primary) !important;
   font-size: clamp(2.6rem, 5vw, 4.4rem);
   line-height: 0.98;
   max-width: 10ch;
@@ -145,7 +141,7 @@
 
 .sessions-home__hero .sessions-home__lede,
 .sessions-home__hero .presence-rail__caption {
-  color: rgba(248, 242, 232, 0.82) !important;
+  color: var(--color-on-depth-secondary) !important;
 }
 
 .sessions-home__lede {
@@ -156,7 +152,7 @@
 }
 
 .presence-rail {
-  background: rgba(240, 231, 213, 0.13);
+  background: var(--surface-depth-soft);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: calc(var(--nouvelle-radius-lg) - 4px);
   display: grid;
@@ -165,7 +161,7 @@
 }
 
 .presence-rail__summary {
-  color: #fbf5eb !important;
+  color: var(--color-on-depth-primary) !important;
   font-family: var(--heading-font);
   font-size: 1.55rem;
   line-height: 1.15;
@@ -187,7 +183,7 @@
 }
 
 .presence-rail__value {
-  color: #fbf5eb !important;
+  color: var(--color-on-depth-primary) !important;
   font-family: var(--heading-font);
   font-size: clamp(1.75rem, 3vw, 2.2rem);
   line-height: 1;
@@ -208,8 +204,6 @@
 
 .presence-avatars__image {
   border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  box-shadow: 0 12px 22px rgba(17, 22, 36, 0.14);
   height: 2.65rem;
   margin-left: -0.5rem;
   object-fit: cover;
@@ -266,10 +260,7 @@
 .profile-progress__stat,
 .profile-progress__session-item,
 .profile-progress__empty {
-  background: linear-gradient(180deg, rgba(255, 252, 248, 0.98), rgba(238, 229, 214, 0.96));
-  border: 1px solid rgba(63, 61, 60, 0.12);
-  border-radius: var(--nouvelle-radius-md);
-  box-shadow: var(--nouvelle-shadow-soft);
+  border-radius: var(--radius-md);
 }
 
 .home-session-card,
@@ -311,9 +302,6 @@
 .home-session-card__count,
 .entry-card__metric,
 .profile-progress__session-badge {
-  background: rgba(198, 169, 105, 0.16);
-  border-radius: 999px;
-  color: var(--nouvelle-ink) !important;
   flex-shrink: 0;
   font-size: 0.84rem;
   font-weight: 600;
@@ -334,9 +322,6 @@
 
 .home-session-card__meta span,
 .profile-progress__banner {
-  background: rgba(240, 231, 213, 0.82);
-  border-radius: 999px;
-  color: var(--nouvelle-text) !important;
   display: inline-flex;
   font-size: 0.8rem;
   justify-content: center;
@@ -365,8 +350,6 @@
 
 .home-session-card__avatar {
   border: 2px solid rgba(240, 231, 213, 0.86);
-  border-radius: 50%;
-  box-shadow: 0 10px 18px rgba(17, 22, 36, 0.1);
   height: 2.1rem;
   object-fit: cover;
   width: 2.1rem;
@@ -383,7 +366,6 @@
 .profile-progress__panel-link,
 .session-room__exit-button {
   appearance: none;
-  border-radius: 999px;
   display: inline-flex;
   font-size: 0.94rem;
   font-weight: 600;
@@ -393,20 +375,11 @@
   padding: 0.82rem 1.15rem;
   text-align: center;
   text-decoration: none;
-  transition:
-    transform 160ms ease,
-    background 160ms ease,
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    color 160ms ease;
 }
 
 .sessions-home__primary-action,
 .session-room__exit-button {
-  background: linear-gradient(135deg, var(--nouvelle-accent), var(--nouvelle-accent-deep));
-  border: 1px solid rgba(177, 145, 76, 0.72);
-  box-shadow: 0 12px 24px rgba(198, 169, 105, 0.22);
-  color: var(--nouvelle-ink) !important;
+  color: var(--color-depth) !important;
 }
 
 .sessions-home__primary-action:hover,
@@ -430,9 +403,7 @@
 .sessions-home__secondary-action,
 .entry-card__link,
 .profile-progress__panel-link {
-  background: rgba(240, 231, 213, 0.72);
-  border: 1px solid rgba(63, 61, 60, 0.14);
-  color: var(--nouvelle-text) !important;
+  color: var(--color-text-primary) !important;
 }
 
 .sessions-home__secondary-action--compact {
@@ -443,13 +414,6 @@
 .sessions-home__secondary-action--button,
 .session-room__exit-button {
   cursor: pointer;
-}
-
-.sessions-home__secondary-action:hover,
-.entry-card__link:hover,
-.profile-progress__panel-link:hover {
-  background: rgba(240, 231, 213, 0.96);
-  border-color: rgba(33, 40, 66, 0.18);
 }
 
 .progress-strip {
@@ -576,7 +540,7 @@
 .session-choice-card:has(input:checked) {
   border-color: rgba(33, 40, 66, 0.3);
   box-shadow:
-    var(--nouvelle-shadow-soft),
+    var(--shadow-soft),
     inset 0 0 0 1px rgba(198, 169, 105, 0.5);
 }
 
@@ -612,11 +576,9 @@
 .session-room__timer-stage {
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 32%),
-    linear-gradient(135deg, rgba(33, 40, 66, 0.98), rgba(49, 58, 88, 0.95) 60%, rgba(91, 79, 70, 0.9));
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 32px;
-  box-shadow: 0 24px 50px rgba(33, 40, 66, 0.18);
-  color: #fbf5eb;
+    var(--surface-depth-fill);
+  border-radius: var(--radius-xl);
+  color: var(--color-on-depth-primary);
   display: grid;
   gap: 0.55rem;
   padding: 2.15rem 1.4rem;
@@ -624,7 +586,7 @@
 }
 
 .session-room__timer-value {
-  color: #fbf5eb !important;
+  color: var(--color-on-depth-primary) !important;
   font-family: var(--heading-font);
   font-size: clamp(4.2rem, 11vw, 6.4rem);
   letter-spacing: -0.04em;
@@ -680,14 +642,14 @@
 }
 
 .session-room__book-cover {
-  box-shadow: 0 18px 36px rgba(17, 22, 36, 0.14);
+  box-shadow: var(--shadow-surface);
   object-fit: cover;
 }
 
 .session-room__book-placeholder {
   align-items: center;
-  background: linear-gradient(160deg, var(--nouvelle-accent), #9f7a43);
-  color: #fbf5eb !important;
+  background: var(--accent-fill);
+  color: var(--color-on-depth-primary) !important;
   display: flex;
   font-family: var(--heading-font);
   font-size: 2.8rem;
@@ -727,7 +689,6 @@
 
 .session-room__presence-avatar,
 .session-room__presence-overflow {
-  border-radius: 50%;
   height: 2.75rem;
   margin-left: -0.48rem;
   width: 2.75rem;
@@ -745,9 +706,8 @@
 
 .session-room__presence-overflow {
   align-items: center;
-  background: rgba(240, 231, 213, 0.92);
   border: 2px solid rgba(240, 231, 213, 0.88);
-  color: var(--nouvelle-ink) !important;
+  color: var(--color-depth) !important;
   display: inline-flex;
   font-size: 0.9rem;
   font-weight: 700;
@@ -761,9 +721,6 @@
 }
 
 .session-room__reader-pill {
-  background: rgba(240, 231, 213, 0.82);
-  border: 1px solid rgba(63, 61, 60, 0.12);
-  border-radius: 999px;
   display: inline-flex;
   flex-direction: column;
   gap: 0.1rem;
@@ -785,8 +742,9 @@
 
 .session-room__summary-shell--completion {
   background:
-    radial-gradient(circle at top right, rgba(198, 169, 105, 0.18), transparent 34%),
-    linear-gradient(180deg, rgba(255, 252, 248, 0.98), rgba(238, 229, 214, 0.96));
+    radial-gradient(circle at top right, var(--color-success-surface), transparent 34%),
+    var(--surface-fill-elevated);
+  border-color: var(--color-success-border);
 }
 
 .session-room__summary-encouragement {
@@ -827,7 +785,7 @@
 .profile-progress__avatar {
   border: 3px solid rgba(240, 231, 213, 0.94);
   border-radius: 24px;
-  box-shadow: 0 18px 36px rgba(17, 22, 36, 0.14);
+  box-shadow: var(--shadow-surface);
   height: 7.5rem;
   object-fit: cover;
   width: 7.5rem;

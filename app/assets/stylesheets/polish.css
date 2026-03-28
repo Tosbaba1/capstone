@@ -861,3 +861,66 @@
   gap: 0.75rem;
   justify-content: flex-start;
 }
+
+.discover-search {
+  gap: 1rem;
+}
+
+.discover-search__form .input-group {
+  padding: 0.25rem;
+}
+
+.discover-search__results {
+  gap: 0.75rem;
+}
+
+.discover-search__card {
+  padding: 0.875rem;
+}
+
+.discover-search__copy {
+  gap: 0.5rem;
+}
+
+.discover-search__actions {
+  gap: 0.5rem;
+}
+
+.discover-search__actions form,
+.discover-search__add-form {
+  gap: 0.5rem;
+}
+
+.discover-search__action-button {
+  min-width: 6.75rem;
+}
+
+.discover-search__status {
+  min-width: 8rem;
+}
+
+.discover-search__recent {
+  padding: 0.875rem 1rem;
+}
+
+.notifications-page {
+  gap: 0.875rem;
+}
+
+.notifications-page > .app-tabs-row,
+.notifications-page > .nav-tabs {
+  gap: 0.5rem;
+}
+
+.notifications-page__list {
+  gap: 0.75rem;
+}
+
+.notification-card {
+  gap: 0.625rem;
+  padding: 0.875rem 1rem;
+}
+
+.notification-card__actions {
+  gap: 0.5rem;
+}

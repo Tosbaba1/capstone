@@ -14,17 +14,7 @@
 
 <% if @active_tab == 'ai' %>
   <section class="library-shell app-page-stack">
-    <header class="library-hero mb-4">
-      <div class="library-hero__header">
-        <div>
-          <h1 class="library-hero__title mb-0">Librarian</h1>
-        </div>
-      </div>
-    </header>
-
-    <div class="page-panel page-panel--soft">
-      <%= render 'library_ai_chat' %>
-    </div>
+    <%= render 'library_ai_chat' %>
   </section>
 <% else %>
   <% editable = @user == current_user %>

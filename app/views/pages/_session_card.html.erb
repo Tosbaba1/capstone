@@ -38,12 +38,12 @@
 
   <div class="home-session-card__actions">
     <% if current_session_id == session.id %>
-      <%= link_to "Return to Room", session_path(session), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+      <%= link_to "Return to Room", session_path(session), class: "sessions-home__secondary-action sessions-home__secondary-action--compact" %>
     <% else %>
-      <%= button_to "Join This Room",
+      <%= button_to "Join room",
         join_session_path(session),
         method: :post,
-        class: "sessions-home__primary-action sessions-home__primary-action--button sessions-home__primary-action--inline" %>
+        class: "sessions-home__secondary-action sessions-home__secondary-action--button sessions-home__secondary-action--compact" %>
     <% end %>
 
     <%= link_to "View room", session_path(session), class: "entry-card__link" %>

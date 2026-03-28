@@ -30,6 +30,14 @@
     else
       "Even when the room is still, Home should feel warm, welcoming, and ready for a quiet start."
     end
+
+  continue_reading = @session_entry_readings.first
+  additional_shelf_readings =
+    if continue_reading.present?
+      @session_entry_readings.drop(1)
+    else
+      @session_entry_readings
+    end
 %>
 
 <section class="sessions-home">
@@ -37,7 +45,7 @@
     <div class="sessions-home__hero-layout">
       <div class="sessions-home__hero-copy">
         <p class="sessions-home__eyebrow mb-2">Welcome back</p>
-        <h1 class="sessions-home__title mb-3">Make a little room to read.</h1>
+        <h1 class="sessions-home__title mb-2">Make a little room to read.</h1>
         <p class="sessions-home__lede">
           Settle into a quiet session, join a room already underway, or ease back into a book that is waiting for you.
         </p>
@@ -98,107 +106,149 @@
         <div class="sessions-home__hero-actions">
           <% if @current_session_participant.present? %>
             <%= link_to "Return to Active Session", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
-            <%= link_to "Start Another Session", new_session_path, class: "sessions-home__secondary-action" %>
           <% else %>
             <%= link_to "Start Reading Session", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
-            <%= link_to "Open library", library_path, class: "sessions-home__secondary-action" %>
           <% end %>
         </div>
 
         <p class="sessions-home__hero-note">
           Your usual start is <%= feature_flags.session_length %> quiet minutes in <%= feature_flags.session_type.titleize %> Mode.
+          <% if @current_session_participant.present? %>
+            <%= link_to "Start another session", new_session_path, class: "sessions-home__hero-note-link" %>
+          <% else %>
+            <%= link_to "Open library", library_path, class: "sessions-home__hero-note-link" %>
+          <% end %>
         </p>
       </aside>
     </div>
   </header>
 
-  <div class="sessions-home__supporting-grid">
-    <section class="sessions-home__panel">
-      <div class="sessions-home__panel-head">
-        <div>
-          <p class="sessions-home__section-eyebrow mb-1">Reading now</p>
-          <h2 class="sessions-home__section-title mb-1">Rooms already in progress.</h2>
-          <p class="sessions-home__section-copy mb-0">See who is settled in, notice the pace of the room, and join without friction when one feels right.</p>
-        </div>
-      </div>
-
+  <% if @active_sessions.any? || continue_reading.present? %>
+    <div class="sessions-home__topfold <%= "sessions-home__topfold--single" if @active_sessions.blank? || continue_reading.blank? %>">
       <% if @active_sessions.any? %>
-        <div class="session-stack">
-          <% @active_sessions.each do |session| %>
-            <%= render "session_card", session: session, current_session_participant: @current_session_participant %>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="sessions-home__empty-state">
-          <p class="mb-1">No rooms are open right now, but the space still feels ready.</p>
-          <p class="mb-3">Starting a session now creates a calm place for the next reader who arrives.</p>
-          <div class="sessions-home__inline-actions">
-            <%= link_to "Start Reading Session", new_session_path, class: "sessions-home__secondary-action sessions-home__secondary-action--compact" %>
-            <%= link_to "Open library", library_path, class: "entry-card__link" %>
+        <section class="sessions-home__panel sessions-home__panel--rooms">
+          <div class="sessions-home__panel-head">
+            <div>
+              <p class="sessions-home__section-eyebrow mb-1">Active rooms</p>
+              <h2 class="sessions-home__section-title mb-1">Join a room already underway.</h2>
+              <p class="sessions-home__section-copy mb-0">See who is settled in and step in when one feels right.</p>
+            </div>
+          </div>
+
+          <div class="session-stack">
+            <% @active_sessions.each do |session| %>
+              <%= render "session_card", session: session, current_session_participant: @current_session_participant %>
+            <% end %>
+          </div>
+        </section>
+      <% end %>
+
+      <% if continue_reading.present? %>
+        <% book = continue_reading.book %>
+        <% author_name = book.author&.name.presence || "Unknown author" %>
+        <% action_label = continue_reading.status == "reading" ? "Continue reading" : "Start from this book" %>
+        <% next_progress = continue_reading.status == "finished" ? 0 : continue_reading.progress.to_i %>
+
+        <aside class="sessions-home__panel sessions-home__panel--quiet sessions-home__continue-panel">
+          <div class="sessions-home__panel-head sessions-home__panel-head--compact">
+            <div>
+              <p class="sessions-home__section-eyebrow mb-1">Continue reading</p>
+              <h2 class="sessions-home__section-title mb-1">Keep one nearby next step.</h2>
+              <p class="sessions-home__section-copy mb-0">A single book, kept close without crowding the page.</p>
+            </div>
+          </div>
+
+          <article class="entry-card entry-card--compact">
+            <div class="entry-card__top">
+              <div>
+                <p class="entry-card__eyebrow mb-1"><%= continue_reading.status == "reading" ? "Continue gently" : "Ready when you are" %></p>
+                <h3 class="entry-card__title mb-1"><%= book.title %></h3>
+                <p class="entry-card__author mb-0">by <%= author_name %></p>
+              </div>
+              <span class="entry-card__metric">
+                <%= continue_reading.status == "reading" ? "#{continue_reading.progress.presence || 0}% in" : "On your shelf" %>
+              </span>
+            </div>
+
+            <div class="entry-card__actions">
+              <% if continue_reading.status == "reading" %>
+                <%= link_to action_label, book_path(book), class: "sessions-home__secondary-action sessions-home__secondary-action--compact" %>
+              <% else %>
+                <%= button_to action_label,
+                  update_reading_path(continue_reading),
+                  method: :post,
+                  params: { status: "reading", progress: next_progress, return_to: home_path },
+                  class: "sessions-home__secondary-action sessions-home__secondary-action--button sessions-home__secondary-action--compact" %>
+              <% end %>
+              <%= link_to "Open book", book_path(book), class: "entry-card__link" %>
+            </div>
+          </article>
+        </aside>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="sessions-home__deferred-stack">
+    <% if continue_reading.blank? || additional_shelf_readings.any? %>
+      <section class="sessions-home__panel">
+        <div class="sessions-home__panel-head">
+          <div>
+            <p class="sessions-home__section-eyebrow mb-1">Your shelf</p>
+            <h2 class="sessions-home__section-title mb-1">More ways to ease back in.</h2>
+            <p class="sessions-home__section-copy mb-0">A few nearby reading options, kept lower on the page.</p>
           </div>
         </div>
-      <% end %>
-    </section>
 
-    <section class="sessions-home__panel">
-      <div class="sessions-home__panel-head">
-        <div>
-          <p class="sessions-home__section-eyebrow mb-1">Pick up a book</p>
-          <h2 class="sessions-home__section-title mb-1">Start from something already close.</h2>
-          <p class="sessions-home__section-copy mb-0">If you would rather begin with your own shelf, these are the easiest ways to ease back into reading.</p>
-        </div>
-      </div>
+        <% if additional_shelf_readings.any? %>
+          <div class="entry-stack">
+            <% additional_shelf_readings.each do |reading| %>
+              <% book = reading.book %>
+              <% author_name = book.author&.name.presence || "Unknown author" %>
+              <% action_label = reading.status == "reading" ? "Continue reading" : "Start from this book" %>
+              <% next_progress = reading.status == "finished" ? 0 : reading.progress.to_i %>
 
-      <% if @session_entry_readings.any? %>
-        <div class="entry-stack">
-          <% @session_entry_readings.each do |reading| %>
-            <% book = reading.book %>
-            <% author_name = book.author&.name.presence || "Unknown author" %>
-            <% action_label = reading.status == "reading" ? "Continue reading" : "Start from this book" %>
-            <% next_progress = reading.status == "finished" ? 0 : reading.progress.to_i %>
-
-            <article class="entry-card">
-              <div class="entry-card__top">
-                <div>
-                  <p class="entry-card__eyebrow mb-1"><%= reading.status == "reading" ? "Continue gently" : "Ready when you are" %></p>
-                  <h3 class="entry-card__title mb-1"><%= book.title %></h3>
-                  <p class="entry-card__author mb-0">by <%= author_name %></p>
+              <article class="entry-card">
+                <div class="entry-card__top">
+                  <div>
+                    <p class="entry-card__eyebrow mb-1"><%= reading.status == "reading" ? "Continue gently" : "Ready when you are" %></p>
+                    <h3 class="entry-card__title mb-1"><%= book.title %></h3>
+                    <p class="entry-card__author mb-0">by <%= author_name %></p>
+                  </div>
+                  <span class="entry-card__metric">
+                    <%= reading.status == "reading" ? "#{reading.progress.presence || 0}% in" : "On your shelf" %>
+                  </span>
                 </div>
-                <span class="entry-card__metric">
-                  <%= reading.status == "reading" ? "#{reading.progress.presence || 0}% in" : "On your shelf" %>
-                </span>
-              </div>
 
-              <div class="entry-card__actions">
-                <% if reading.status == "reading" %>
-                  <%= link_to action_label, book_path(book), class: "sessions-home__secondary-action sessions-home__secondary-action--compact" %>
-                <% else %>
-                  <%= button_to action_label,
-                    update_reading_path(reading),
-                    method: :post,
-                    params: { status: "reading", progress: next_progress, return_to: home_path },
-                    class: "sessions-home__secondary-action sessions-home__secondary-action--button sessions-home__secondary-action--compact" %>
-                <% end %>
-                <%= link_to "Open book", book_path(book), class: "entry-card__link" %>
-              </div>
-            </article>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="sessions-home__empty-state">
-          <p class="mb-1">Your shelf is still quiet.</p>
-          <p class="mb-3">Add a book first, then Home can turn it into a softer place to begin.</p>
-          <div class="sessions-home__inline-actions">
-            <%= link_to "Find a book", search_path(tab: "books"), class: "sessions-home__secondary-action sessions-home__secondary-action--compact" %>
-            <%= link_to "Open library", library_path, class: "entry-card__link" %>
+                <div class="entry-card__actions">
+                  <% if reading.status == "reading" %>
+                    <%= link_to action_label, book_path(book), class: "sessions-home__secondary-action sessions-home__secondary-action--compact" %>
+                  <% else %>
+                    <%= button_to action_label,
+                      update_reading_path(reading),
+                      method: :post,
+                      params: { status: "reading", progress: next_progress, return_to: home_path },
+                      class: "sessions-home__secondary-action sessions-home__secondary-action--button sessions-home__secondary-action--compact" %>
+                  <% end %>
+                  <%= link_to "Open book", book_path(book), class: "entry-card__link" %>
+                </div>
+              </article>
+            <% end %>
           </div>
-        </div>
-      <% end %>
-    </section>
-  </div>
+        <% else %>
+          <div class="sessions-home__empty-state">
+            <p class="mb-1">Your shelf is still quiet.</p>
+            <p class="mb-3">Add a book first, then Home can turn it into a softer place to begin.</p>
+            <div class="sessions-home__inline-actions">
+              <%= link_to "Find a book", search_path(tab: "books"), class: "sessions-home__secondary-action sessions-home__secondary-action--compact" %>
+              <%= link_to "Open library", library_path, class: "entry-card__link" %>
+            </div>
+          </div>
+        <% end %>
+      </section>
+    <% end %>
 
-  <div class="sessions-home__secondary-grid">
-    <section class="sessions-home__panel sessions-home__panel--quiet">
+    <div class="sessions-home__secondary-grid">
+      <section class="sessions-home__panel sessions-home__panel--quiet">
       <div>
         <p class="sessions-home__section-eyebrow mb-1">Your rhythm</p>
         <h2 class="sessions-home__section-title mb-1">Progress stays available, not loud.</h2>
@@ -210,50 +260,51 @@
         <span class="progress-list__item"><strong><%= @progress_snapshot[:queued] %></strong> queued</span>
         <span class="progress-list__item"><strong><%= @progress_snapshot[:finished] %></strong> finished</span>
       </div>
-    </section>
+      </section>
 
-    <section class="sessions-home__panel sessions-home__panel--quiet">
-      <div class="sessions-home__panel-head">
-        <div>
-          <p class="sessions-home__section-eyebrow mb-1">Elsewhere in Nouvelle</p>
-          <h2 class="sessions-home__section-title mb-1">The rest of the app, kept nearby.</h2>
-          <p class="sessions-home__section-copy mb-0">Library, discovery, and notes stay within reach without crowding the start of your visit.</p>
-        </div>
-      </div>
-
-      <div class="secondary-surface-grid mt-3">
-        <%= link_to library_path, class: "secondary-surface-card" do %>
-          <span class="secondary-surface-card__eyebrow">Library</span>
-          <strong class="secondary-surface-card__title">Tend your shelves</strong>
-          <span class="secondary-surface-card__copy">Update status, privacy, and progress when you want to make small adjustments.</span>
-        <% end %>
-
-        <%= link_to search_path(tab: "books"), class: "secondary-surface-card" do %>
-          <span class="secondary-surface-card__eyebrow">Discover</span>
-          <strong class="secondary-surface-card__title">Find a next book</strong>
-          <span class="secondary-surface-card__copy">Browse when you want a fresh option without losing the calm of the page.</span>
-        <% end %>
-
-        <%= link_to posts_path, class: "secondary-surface-card" do %>
-          <span class="secondary-surface-card__eyebrow">Activity</span>
-          <strong class="secondary-surface-card__title">Reading notes and updates</strong>
-          <span class="secondary-surface-card__copy">Visit the social layer when you want it, not before you have had a chance to settle in.</span>
-        <% end %>
-      </div>
-
-      <% if @recent_post.present? %>
-        <% recent_author = @recent_post.creator.name.presence || @recent_post.creator.username.presence || "A reader" %>
-        <% recent_book = @recent_post.book&.title.presence || "their current read" %>
-        <article class="feed-teaser mt-3">
-          <p class="feed-teaser__eyebrow mb-0">A recent note</p>
-          <p class="feed-teaser__copy mb-0">
-            <strong><%= recent_author %></strong> shared an update about <strong><%= recent_book %></strong>.
-          </p>
-          <div class="sessions-home__inline-actions">
-            <%= link_to "Open activity", posts_path, class: "entry-card__link" %>
+      <section class="sessions-home__panel sessions-home__panel--quiet">
+        <div class="sessions-home__panel-head">
+          <div>
+            <p class="sessions-home__section-eyebrow mb-1">Elsewhere in Nouvelle</p>
+            <h2 class="sessions-home__section-title mb-1">The rest of the app, kept nearby.</h2>
+            <p class="sessions-home__section-copy mb-0">Library, discovery, and notes stay within reach without crowding the start of your visit.</p>
           </div>
-        </article>
-      <% end %>
-    </section>
+        </div>
+
+        <div class="secondary-surface-grid mt-3">
+          <%= link_to library_path, class: "secondary-surface-card" do %>
+            <span class="secondary-surface-card__eyebrow">Library</span>
+            <strong class="secondary-surface-card__title">Tend your shelves</strong>
+            <span class="secondary-surface-card__copy">Update status, privacy, and progress when you want to make small adjustments.</span>
+          <% end %>
+
+          <%= link_to search_path(tab: "books"), class: "secondary-surface-card" do %>
+            <span class="secondary-surface-card__eyebrow">Discover</span>
+            <strong class="secondary-surface-card__title">Find a next book</strong>
+            <span class="secondary-surface-card__copy">Browse when you want a fresh option without losing the calm of the page.</span>
+          <% end %>
+
+          <%= link_to posts_path, class: "secondary-surface-card" do %>
+            <span class="secondary-surface-card__eyebrow">Activity</span>
+            <strong class="secondary-surface-card__title">Reading notes and updates</strong>
+            <span class="secondary-surface-card__copy">Visit the social layer when you want it, not before you have had a chance to settle in.</span>
+          <% end %>
+        </div>
+
+        <% if @recent_post.present? %>
+          <% recent_author = @recent_post.creator.name.presence || @recent_post.creator.username.presence || "A reader" %>
+          <% recent_book = @recent_post.book&.title.presence || "their current read" %>
+          <article class="feed-teaser mt-3">
+            <p class="feed-teaser__eyebrow mb-0">A recent note</p>
+            <p class="feed-teaser__copy mb-0">
+              <strong><%= recent_author %></strong> shared an update about <strong><%= recent_book %></strong>.
+            </p>
+            <div class="sessions-home__inline-actions">
+              <%= link_to "Open activity", posts_path, class: "entry-card__link" %>
+            </div>
+          </article>
+        <% end %>
+      </section>
+    </div>
   </div>
 </section>

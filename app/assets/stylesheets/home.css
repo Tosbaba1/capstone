@@ -2339,7 +2339,7 @@ turbo-frame#home_deferred {
 
 .sessions-home {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.625rem;
   max-width: 70rem;
   padding-bottom: 2rem;
 }
@@ -2351,22 +2351,23 @@ turbo-frame#home_deferred {
     linear-gradient(145deg, rgba(102, 76, 57, 0.96), rgba(89, 66, 49, 0.94) 56%, rgba(124, 97, 75, 0.82));
   border-color: rgba(255, 250, 243, 0.14);
   box-shadow: 0 12px 24px rgba(84, 62, 43, 0.1);
-  gap: 0.75rem;
-  min-height: clamp(8.5rem, 16vw, 9.75rem);
-  padding: 1rem 1.125rem;
+  gap: 0.625rem;
+  min-height: clamp(7.5rem, 13vw, 8.5rem);
+  padding: 0.875rem 1rem;
 }
 
 .sessions-home__hero-copy {
   display: grid;
-  gap: 0.5rem;
-  max-width: 24rem;
+  gap: 0.4rem;
+  max-width: 22rem;
 }
 
 .sessions-home__hero--simple .sessions-home__title {
   color: var(--color-on-depth-primary) !important;
-  font-size: clamp(1.85rem, 3vw, 2.5rem);
-  line-height: 1.02;
-  max-width: 16ch;
+  font-size: clamp(1.65rem, 2.6vw, 2.15rem);
+  line-height: 1;
+  max-width: none;
+  white-space: nowrap;
 }
 
 .sessions-home__hero--simple .sessions-home__lede {
@@ -2378,6 +2379,7 @@ turbo-frame#home_deferred {
 
 .sessions-home__hero--simple .sessions-home__hero-note {
   color: rgba(255, 250, 243, 0.72) !important;
+  font-size: 0.84rem;
 }
 
 .sessions-home__primary-action--hero {
@@ -2385,8 +2387,8 @@ turbo-frame#home_deferred {
   border-color: rgba(183, 132, 82, 0.8) !important;
   box-shadow: 0 12px 22px rgba(200, 154, 106, 0.24);
   color: #ffffff !important;
-  max-width: 10rem;
-  padding: 0.75rem 1.25rem;
+  max-width: 9.5rem;
+  padding: 0.75rem 1.2rem;
 }
 
 .sessions-home__primary-action--hero:hover,
@@ -2397,7 +2399,7 @@ turbo-frame#home_deferred {
 }
 
 .sessions-home__panel {
-  padding: 0.875rem 1rem;
+  padding: 0.75rem 0.875rem;
 }
 
 .sessions-home__panel-head--stack {
@@ -2414,12 +2416,12 @@ turbo-frame#home_deferred {
 }
 
 .sessions-home__room-scroller {
-  gap: 0.625rem;
+  gap: 0.5rem;
   grid-auto-columns: minmax(15rem, 18rem);
 }
 
 .sessions-home__book-row {
-  gap: 0.625rem;
+  gap: 0.5rem;
   grid-auto-columns: minmax(15rem, 17rem);
 }
 
@@ -2433,7 +2435,7 @@ turbo-frame#home_deferred {
 .home-book-chip,
 .secondary-surface-card,
 .feed-teaser {
-  padding: 0.875rem;
+  padding: 0.75rem;
 }
 
 .home-room-card__title {
@@ -2575,7 +2577,7 @@ turbo-frame#home_deferred {
 @media (max-width: 575.98px) {
   .sessions-home__hero--simple {
     min-height: 0;
-    padding: 0.875rem 0.9375rem;
+    padding: 0.8125rem 0.875rem;
   }
 
   .sessions-home__room-scroller,

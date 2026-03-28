@@ -1,4 +1,3 @@
 <%= turbo_frame_tag "home_deferred" do %>
   <%= render "pages/home/your_books", readings: @session_entry_readings %>
-  <%= render "pages/home/progress", yesterday_reading_minutes: @yesterday_reading_minutes, progress_snapshot: @progress_snapshot %>
 <% end %>

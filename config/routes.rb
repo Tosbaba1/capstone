@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     registrations: "users/registrations"
   }
   root to: "pages#home"
+  get "/home/deferred", to: "pages#home_deferred", as: :home_deferred
   get "/home", to: "pages#home"
   get "/library", to: "pages#library"
   post "/library/ai_chat", to: "pages#ai_chat", as: :library_ai_chat

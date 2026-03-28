@@ -2033,3 +2033,233 @@
     border-radius: 22px;
   }
 }
+
+turbo-frame#home_deferred {
+  display: block;
+}
+
+.sessions-home {
+  gap: 1.1rem;
+}
+
+.sessions-home__hero--simple,
+.sessions-home__section,
+.sessions-home__progress,
+turbo-frame#home_deferred {
+  margin: 0 auto;
+  max-width: 68rem;
+  width: 100%;
+}
+
+.sessions-home__hero--simple {
+  min-height: 0;
+}
+
+.sessions-home__hero--simple .sessions-home__hero-copy {
+  gap: 1rem;
+  max-width: 34rem;
+}
+
+.sessions-home__hero--simple .sessions-home__title {
+  max-width: 12ch;
+}
+
+.sessions-home__hero--simple .sessions-home__hero-actions {
+  margin-top: 0.15rem;
+}
+
+.sessions-home__hero--simple .sessions-home__hero-note {
+  margin-top: 0.1rem;
+}
+
+.sessions-home__section {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.sessions-home__section--books {
+  gap: 0.75rem;
+}
+
+.sessions-home__section-headline {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.sessions-home__panel-head--stack {
+  justify-content: flex-start;
+}
+
+.sessions-home__room-scroller,
+.sessions-home__book-row {
+  display: grid;
+  gap: 0.85rem;
+  grid-auto-columns: minmax(18rem, 21rem);
+  grid-auto-flow: column;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-bottom: 0.2rem;
+  scrollbar-width: thin;
+}
+
+.sessions-home__book-row {
+  grid-auto-columns: minmax(16rem, 18rem);
+}
+
+.home-room-card,
+.home-book-chip {
+  background: linear-gradient(180deg, rgba(250, 244, 236, 0.96), rgba(244, 236, 224, 0.9));
+  border: 1px solid rgba(63, 61, 60, 0.08);
+  border-radius: 24px;
+  min-height: 100%;
+}
+
+.home-room-card {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+}
+
+.home-room-card__meta {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: space-between;
+}
+
+.home-room-card__badge,
+.home-room-card__time {
+  border-radius: var(--radius-pill);
+  color: var(--nouvelle-ink-soft) !important;
+  display: inline-flex;
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0.42rem 0.7rem;
+}
+
+.home-room-card__badge {
+  background: rgba(198, 169, 105, 0.18);
+}
+
+.home-room-card__time {
+  background: rgba(240, 231, 213, 0.78);
+}
+
+.home-room-card__title,
+.home-book-chip__title {
+  color: var(--nouvelle-ink) !important;
+  font-family: var(--heading-font);
+  line-height: 1.15;
+}
+
+.home-room-card__title {
+  font-size: 1.15rem;
+}
+
+.home-room-card__copy,
+.home-book-chip__meta {
+  color: var(--nouvelle-text-soft) !important;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.home-room-card__actions,
+.home-book-chip__actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.home-room-card__link,
+.home-book-chip__link {
+  padding: 0.68rem 0.9rem;
+}
+
+.home-book-chip {
+  align-items: start;
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+}
+
+.home-book-chip__eyebrow {
+  color: var(--color-depth-emphasis) !important;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home-book-chip__title {
+  font-size: 1rem;
+}
+
+.sessions-home__progress {
+  background: rgba(250, 245, 238, 0.92);
+  border: 1px solid rgba(63, 61, 60, 0.08);
+  border-radius: var(--radius-pill);
+  padding: 0.8rem 1rem;
+}
+
+.sessions-home__progress-copy {
+  color: var(--nouvelle-text) !important;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.sessions-home__stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sessions-home__presence-strip {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.sessions-home__empty-state--inline {
+  margin-top: 0;
+  min-height: 0;
+}
+
+.sessions-home__panel--placeholder {
+  min-height: 9.5rem;
+}
+
+@media (max-width: 991.98px) {
+  .sessions-home__room-scroller,
+  .sessions-home__book-row {
+    grid-auto-columns: minmax(18rem, 85vw);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .sessions-home__hero--simple {
+    padding: 1.2rem;
+  }
+
+  .sessions-home__room-scroller,
+  .sessions-home__book-row {
+    grid-auto-columns: minmax(15rem, 86vw);
+  }
+
+  .home-room-card,
+  .home-book-chip {
+    border-radius: 22px;
+  }
+
+  .home-room-card__meta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sessions-home__presence-strip {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

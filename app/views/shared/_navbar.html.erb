@@ -1,5 +1,6 @@
 <%
   page_label = @page_title.presence || "Welcome back"
+  compact_header = @home_top_bar.present?
   unread_count = user_signed_in? ? current_user.notifications.unread.count : 0
   reading_active = request.path == root_path || request.path == home_path || request.path == new_session_path
   library_active = request.path == library_path || request.path.match?(%r{\A/users/\d+/library\z})
@@ -43,7 +44,7 @@
 
 <header class="app-header">
   <div class="container">
-    <div class="app-header__inner">
+    <div class="app-header__inner <%= "app-header__inner--compact" if compact_header %>">
       <div class="app-header__lead">
         <%= link_to root_path, class: "nouvelle-mark", aria: { label: "Nouvelle home" } do %>
           <span class="nouvelle-mark__seal" aria-hidden="true">
@@ -56,8 +57,10 @@
         <% end %>
       </div>
 
-      <div class="app-header__meta">
-        <p class="app-header__eyebrow mb-0">A quiet place to read together</p>
+      <div class="app-header__meta <%= "app-header__meta--compact" if compact_header %>">
+        <% unless compact_header %>
+          <p class="app-header__eyebrow mb-0">A quiet place to read together</p>
+        <% end %>
         <p class="app-header__title mb-0"><%= page_label %></p>
       </div>
 

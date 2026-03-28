@@ -136,6 +136,18 @@
   width: 2.35rem;
 }
 
+.app-header__inner--compact .nouvelle-mark {
+  gap: 0;
+}
+
+.app-header__inner--compact .nouvelle-mark__wording {
+  display: none;
+}
+
+.app-header__meta--compact {
+  max-width: none;
+}
+
 .app-bottom-bar {
   bottom: 0;
   left: 0;
@@ -250,6 +262,16 @@
     text-align: center;
     width: 100%;
   }
+
+  .app-header__inner--compact {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+
+  .app-header__meta--compact {
+    grid-column: auto;
+    order: 0;
+    max-width: none;
+  }
 }
 
 @media (max-width: 575.98px) {
@@ -260,6 +282,10 @@
   .app-header__inner {
     gap: 0.8rem;
     padding: 0.95rem 1rem;
+  }
+
+  .app-header__inner--compact .app-header__title {
+    font-size: 0.95rem;
   }
 
   .nouvelle-mark__seal {

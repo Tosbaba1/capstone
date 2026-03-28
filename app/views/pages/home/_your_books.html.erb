@@ -1,0 +1,18 @@
+<section class="sessions-home__section sessions-home__section--books">
+  <div class="sessions-home__section-headline">
+    <p class="sessions-home__section-eyebrow mb-1">Your books</p>
+    <h2 class="sessions-home__section-title mb-0">Keep your next book nearby</h2>
+  </div>
+
+  <% if readings.any? %>
+    <div class="sessions-home__book-row" aria-label="Your books">
+      <% readings.each do |reading| %>
+        <%= render "pages/home/book_item", reading: reading %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="sessions-home__empty-state sessions-home__empty-state--inline">
+      <p class="mb-0">Add a book to keep it handy here.</p>
+    </div>
+  <% end %>
+</section>

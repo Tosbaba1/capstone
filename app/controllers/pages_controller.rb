@@ -1,34 +1,6 @@
 class PagesController < ApplicationController
   def home
-    SessionLifecycle.finalize_expired_sessions!
-
-    @page_title = "Reading Sessions"
-    @current_readings = current_user.readings
-      .includes(book: :author)
-      .where(status: "reading")
-      .order(updated_at: :desc)
-      .limit(3)
-    @next_up_readings = current_user.readings
-      .includes(book: :author)
-      .where(status: "want_to_read")
-      .order(updated_at: :desc)
-      .limit(3)
-    @readings_by_book_id = current_user.readings.includes(book: :author).index_by(&:book_id)
-    @priority_reading = @current_readings.first || @next_up_readings.first
-    @session_entry_readings = (@current_readings + @next_up_readings).uniq(&:id).first(3)
-    @current_session_participant = current_user.active_session_participant
-
-    snapshot = HomeSessionSnapshot.new(current_user: current_user)
-    @live_presence_count = snapshot.live_presence_count
-    @active_sessions = snapshot.active_sessions
-    @presence_readers = snapshot.presence_readers
-    @recent_post = recent_posts.first
-    @progress_snapshot = {
-      tracked: current_user.readings.count,
-      reading: current_user.readings.where(status: "reading").count,
-      queued: current_user.readings.where(status: "want_to_read").count,
-      finished: current_user.readings.where(status: "finished").count
-    }
+    load_home_page_data
 
     track_analytics_event(
       Analytics::EventNames::HOME_VIEWED,
@@ -38,6 +10,11 @@ class PagesController < ApplicationController
         has_active_session: @current_session_participant.present?
       }
     )
+  end
+
+  def home_deferred
+    load_home_page_data
+    render layout: false
   end
 
   def library
@@ -124,6 +101,40 @@ class PagesController < ApplicationController
 
   private
 
+  def load_home_page_data
+    SessionLifecycle.finalize_expired_sessions!
+
+    @page_title = "Home"
+    @home_top_bar = true
+    @current_readings = current_user.readings
+      .includes(book: :author)
+      .where(status: "reading")
+      .order(updated_at: :desc)
+      .limit(3)
+    @next_up_readings = current_user.readings
+      .includes(book: :author)
+      .where(status: "want_to_read")
+      .order(updated_at: :desc)
+      .limit(3)
+    @readings_by_book_id = current_user.readings.includes(book: :author).index_by(&:book_id)
+    @priority_reading = @current_readings.first || @next_up_readings.first
+    @session_entry_readings = (@current_readings + @next_up_readings).uniq(&:id).first(3)
+    @current_session_participant = current_user.active_session_participant
+
+    snapshot = HomeSessionSnapshot.new(current_user: current_user)
+    @live_presence_count = snapshot.live_presence_count
+    @active_sessions = snapshot.active_sessions
+    @presence_readers = snapshot.presence_readers
+    @recent_post = recent_posts.first
+    @progress_snapshot = {
+      tracked: current_user.readings.count,
+      reading: current_user.readings.where(status: "reading").count,
+      queued: current_user.readings.where(status: "want_to_read").count,
+      finished: current_user.readings.where(status: "finished").count
+    }
+    @yesterday_reading_minutes = reading_minutes_for_day(Time.zone.yesterday)
+  end
+
   def recent_posts
     timeline_scope = current_user.timeline
       .includes(:creator, { book: :author }, { comments: :commenter }, :likes, :renous, media_attachments: :blob)
@@ -135,5 +146,11 @@ class PagesController < ApplicationController
       .where(users: { is_private: false })
       .includes(:creator, { book: :author }, { comments: :commenter }, :likes, :renous, media_attachments: :blob)
       .order(created_at: :desc)
+  end
+
+  def reading_minutes_for_day(date)
+    range = date.beginning_of_day..date.end_of_day
+
+    (current_user.completed_session_participants_scope.where(leave_time: range).to_a.sum(&:credited_seconds) / 60.0).round
   end
 end

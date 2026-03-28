@@ -1,0 +1,16 @@
+<% primary_path = current_session_participant.present? ? session_path(current_session_participant.session) : new_session_path %>
+
+<section class="sessions-home__hero sessions-home__hero--simple">
+  <div class="sessions-home__hero-copy">
+    <h1 class="sessions-home__title mb-2">Find your place to begin.</h1>
+    <p class="sessions-home__lede mb-0">Start a quiet session or join others reading right now.</p>
+
+    <div class="sessions-home__hero-actions">
+      <%= link_to "Start reading", primary_path, class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
+    </div>
+
+    <% if current_session_participant.present? %>
+      <p class="sessions-home__hero-note mb-0">Your current session is still active.</p>
+    <% end %>
+  </div>
+</section>

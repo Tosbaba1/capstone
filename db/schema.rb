@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2026_03_27_110000) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,7 +43,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_27_110000) do
   end
 
   create_table "ai_chat_messages", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "role"
     t.text "content"
     t.datetime "created_at", null: false
@@ -49,8 +52,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_27_110000) do
   end
 
   create_table "analytics_events", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "session_id"
+    t.bigint "user_id", null: false
+    t.bigint "session_id"
     t.string "name", null: false
     t.datetime "occurred_at", null: false
     t.json "properties", default: {}, null: false
@@ -73,7 +76,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_27_110000) do
   end
 
   create_table "badges", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "name"
     t.string "description"
     t.string "image_url"
@@ -137,7 +140,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_27_110000) do
     t.integer "comments_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "poll_data"
+    t.jsonb "poll_data"
   end
 
   create_table "readings", force: :cascade do |t|
@@ -154,8 +157,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_27_110000) do
   end
 
   create_table "renous", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "post_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_renous_on_post_id"
@@ -164,7 +167,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_27_110000) do
   end
 
   create_table "search_histories", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "query"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -172,8 +175,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_27_110000) do
   end
 
   create_table "session_participants", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "session_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "session_id", null: false
     t.datetime "join_time", null: false
     t.datetime "leave_time"
     t.boolean "completed", default: false, null: false
@@ -186,7 +189,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_27_110000) do
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.integer "host_user_id", null: false
+    t.bigint "host_user_id", null: false
     t.integer "duration", null: false
     t.string "mode", default: "silent", null: false
     t.string "status", default: "NOT_STARTED", null: false

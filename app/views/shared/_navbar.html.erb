@@ -1,8 +1,8 @@
 <%
   page_label = @page_title.presence || "Read"
-  compact_header = @home_top_bar.present?
   unread_count = user_signed_in? ? current_user.notifications.unread.count : 0
   reading_active = request.path == root_path || request.path == home_path || request.path == new_session_path
+  compact_header = !reading_active
   library_active = request.path == library_path || request.path.match?(%r{\A/users/\d+/library\z})
   discover_active = request.path == search_path || request.path.start_with?("/books")
   activity_active = request.path.start_with?("/posts")

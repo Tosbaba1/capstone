@@ -970,3 +970,151 @@ h6 {
     grid-template-columns: 1fr;
   }
 }
+
+:root {
+  --header-depth-fill: linear-gradient(145deg, rgba(99, 70, 50, 0.96), rgba(82, 58, 42, 0.98) 58%, rgba(61, 43, 31, 0.99));
+  --header-depth-border: rgba(255, 244, 230, 0.16);
+  --header-depth-shadow: 0 18px 34px rgba(74, 54, 38, 0.18);
+  --header-control-bg: rgba(255, 250, 243, 0.14);
+  --header-control-bg-hover: rgba(255, 250, 243, 0.22);
+  --header-control-border: rgba(255, 244, 230, 0.16);
+  --cta-fill: linear-gradient(180deg, #c89a6a 0%, #bb8655 100%);
+  --cta-fill-hover: linear-gradient(180deg, #cf9f6e 0%, #b87f4e 100%);
+  --cta-border: rgba(183, 132, 82, 0.8);
+  --cta-border-hover: rgba(183, 132, 82, 0.92);
+  --cta-shadow: 0 12px 22px rgba(200, 154, 106, 0.24);
+  --cta-text: #fffaf3;
+}
+
+.app-header__inner,
+.app-header__inner--compact {
+  background: var(--header-depth-fill) !important;
+  border: 1px solid var(--header-depth-border) !important;
+  box-shadow: var(--header-depth-shadow) !important;
+  color: var(--color-on-depth-primary);
+}
+
+.app-header__inner {
+  backdrop-filter: blur(18px) saturate(155%);
+  -webkit-backdrop-filter: blur(18px) saturate(155%);
+}
+
+.app-header__inner--compact {
+  gap: 0.65rem;
+  padding: 0.75rem 0.9rem;
+}
+
+.app-header__title,
+.nouvelle-mark__name,
+.app-header__meta--compact .app-header__title,
+.app-header__inner--compact .nouvelle-mark__tag {
+  color: var(--color-on-depth-primary) !important;
+}
+
+.app-header__title {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.nouvelle-mark__seal,
+.app-header__inner--compact .nouvelle-mark__seal {
+  background:
+    radial-gradient(circle at 30% 28%, rgba(255, 250, 243, 0.98), rgba(213, 177, 120, 0.92) 38%, rgba(125, 88, 60, 0.9) 70%, rgba(74, 54, 38, 0.98) 100%) !important;
+  border: 1px solid rgba(255, 244, 230, 0.24);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 12px 26px rgba(45, 31, 23, 0.24) !important;
+}
+
+.app-header__inner--compact .nouvelle-mark__seal {
+  height: 3rem;
+  width: 3rem;
+}
+
+.nouvelle-mark__glyph {
+  color: #422e21 !important;
+}
+
+.app-header__action,
+.app-header__profile,
+.feed-composer-drawer__close {
+  background: var(--header-control-bg) !important;
+  border: 1px solid var(--header-control-border) !important;
+  color: var(--color-on-depth-primary) !important;
+}
+
+.app-header__action:hover,
+.app-header__action:focus-visible,
+.app-header__profile:hover,
+.app-header__profile:focus-visible,
+.feed-composer-drawer__close:hover,
+.feed-composer-drawer__close:focus-visible {
+  background: var(--header-control-bg-hover) !important;
+  border-color: rgba(255, 244, 230, 0.22) !important;
+  color: var(--color-on-depth-primary) !important;
+}
+
+.app-header__avatar {
+  border-color: rgba(255, 244, 230, 0.42) !important;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.sessions-home__primary-action,
+.sessions-home__secondary-action,
+.entry-card__link,
+.profile-progress__panel-link,
+.feed-post-card__view-link,
+.feed-composer__submit,
+.library-book-card__edit-toggle {
+  background: var(--cta-fill) !important;
+  border: 1px solid var(--cta-border) !important;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--cta-shadow) !important;
+  color: var(--cta-text) !important;
+  font-size: 0.94rem;
+  font-weight: 600;
+  min-height: 2.625rem;
+  padding: 0.6875rem 1.2rem;
+  text-decoration: none;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus-visible,
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:focus-visible,
+.btn-success:hover,
+.btn-success:active,
+.btn-success:focus-visible,
+.sessions-home__primary-action:hover,
+.sessions-home__primary-action:active,
+.sessions-home__primary-action:focus-visible,
+.sessions-home__secondary-action:hover,
+.sessions-home__secondary-action:active,
+.sessions-home__secondary-action:focus-visible,
+.entry-card__link:hover,
+.entry-card__link:active,
+.entry-card__link:focus-visible,
+.profile-progress__panel-link:hover,
+.profile-progress__panel-link:active,
+.profile-progress__panel-link:focus-visible,
+.feed-post-card__view-link:hover,
+.feed-post-card__view-link:active,
+.feed-post-card__view-link:focus-visible,
+.feed-composer__submit:hover,
+.feed-composer__submit:active,
+.feed-composer__submit:focus-visible,
+.library-book-card__edit-toggle:hover,
+.library-book-card__edit-toggle:active,
+.library-book-card__edit-toggle:focus-visible {
+  background: var(--cta-fill-hover) !important;
+  border-color: var(--cta-border-hover) !important;
+  box-shadow:
+    var(--cta-shadow),
+    0 0 0 0.2rem rgba(200, 154, 106, 0.16) !important;
+  color: var(--cta-text) !important;
+  outline: none;
+}

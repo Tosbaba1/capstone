@@ -153,14 +153,12 @@
 }
 
 .library-book-card__edit-toggle {
-  border-color: var(--color-border);
-  color: var(--color-text-primary) !important;
   white-space: nowrap;
 }
 
 .library-book-card__edit-toggle:hover,
-.library-book-card__edit-toggle:focus {
-  color: var(--color-depth) !important;
+.library-book-card__edit-toggle:focus-visible {
+  color: var(--color-on-depth-primary) !important;
 }
 
 .library-book-card__editor {

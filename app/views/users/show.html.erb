@@ -46,11 +46,11 @@
             <%= link_to 'Follow', follow_user_path(@user), method: :post, class: 'btn btn-primary' %>
           <% end %>
           <% if !@user.is_private || current_user.following.include?(@user) %>
-            <%= link_to 'View Library', library_user_path(@user), class: 'btn btn-royal' %>
+            <%= link_to 'View Library', library_user_path(@user), class: 'btn btn-secondary' %>
           <% end %>
         <% else %>
           <%= link_to 'View Progress', profile_path, class: 'btn btn-secondary' %>
-          <%= link_to 'My Library', library_path, class: 'btn btn-royal' %>
+          <%= link_to 'My Library', library_path, class: 'btn btn-primary' %>
         <% end %>
       </div>
     </div>

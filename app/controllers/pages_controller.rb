@@ -78,7 +78,7 @@ class PagesController < ApplicationController
   end
 
   def profile
-    @page_title = "Progress"
+    @page_title = "Profile"
     @weekly_reading_time = current_user.reading_time_this_week
     @sessions_completed = current_user.completed_session_count
     @sessions_this_week = current_user.reading_sessions_this_week

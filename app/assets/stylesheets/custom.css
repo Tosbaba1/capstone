@@ -1,10 +1,10 @@
 .btn-primary {
-  color: var(--color-depth);
+  color: var(--color-on-depth-primary);
 }
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  color: var(--color-depth);
+  color: var(--color-on-depth-primary);
 }
 
 .btn-primary:focus-visible {
@@ -32,9 +32,9 @@
 }
 
 .nav-tabs .nav-link.active {
-  background: var(--depth-fill);
-  border-color: rgba(33, 40, 66, 0.4);
-  color: var(--color-on-depth-primary);
+  background: rgba(206, 176, 121, 0.24);
+  border-color: rgba(206, 176, 121, 0.52);
+  color: var(--color-depth);
 }
 
 .btn-royal {

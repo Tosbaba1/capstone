@@ -1,17 +1,14 @@
 .app-header {
-  padding: 0.9rem 0 0.5rem;
+  padding: 0.75rem 0 0.5rem;
 }
 
 .app-header__inner {
   align-items: center;
-  background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.24), transparent 36%),
-    var(--surface-depth-fill);
   border-radius: var(--radius-xl);
   display: grid;
-  gap: 1rem;
+  gap: 0.75rem;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  padding: 1rem 1.25rem;
+  padding: 0.875rem 1rem;
 }
 
 .app-header__lead,
@@ -27,7 +24,7 @@
 .nouvelle-mark {
   align-items: center;
   display: inline-flex;
-  gap: 0.9rem;
+  gap: 0.75rem;
   min-width: 0;
   text-decoration: none;
 }
@@ -64,16 +61,16 @@
 }
 
 .nouvelle-mark__name {
-  color: var(--color-on-depth-primary) !important;
+  color: var(--color-depth) !important;
   font-family: var(--heading-font);
-  font-size: clamp(1.2rem, 2.5vw, 1.52rem);
-  letter-spacing: 0.08em;
+  font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+  letter-spacing: 0.06em;
   line-height: 1;
   text-transform: uppercase;
 }
 
 .nouvelle-mark__tag {
-  color: var(--color-on-depth-secondary) !important;
+  color: var(--color-text-secondary) !important;
   font-size: 0.68rem;
   letter-spacing: 0.2em;
   margin-top: 0.32rem;
@@ -83,23 +80,23 @@
 .app-header__meta {
   display: flex;
   flex-direction: column;
-  gap: 0.18rem;
+  gap: 0;
   justify-self: center;
   min-width: 0;
-  max-width: 28rem;
+  max-width: 24rem;
   text-align: center;
   width: 100%;
 }
 
 .app-header__eyebrow {
-  color: var(--color-on-depth-secondary) !important;
+  color: var(--color-text-secondary) !important;
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .app-header__title {
-  color: var(--color-on-depth-primary) !important;
+  color: var(--color-depth) !important;
   font-family: var(--heading-font);
   font-size: clamp(1.02rem, 2vw, 1.24rem);
   letter-spacing: 0.02em;
@@ -121,7 +118,7 @@
 }
 
 .app-header__action {
-  color: var(--color-on-depth-primary) !important;
+  color: var(--color-depth) !important;
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -140,11 +137,6 @@
 }
 
 .app-header__inner--compact {
-  background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.3), transparent 38%),
-    linear-gradient(180deg, rgba(247, 241, 232, 0.86), rgba(243, 236, 225, 0.72));
-  border: 1px solid rgba(255, 255, 255, 0.36);
-  box-shadow: 0 10px 22px rgba(33, 40, 66, 0.05);
   color: var(--color-depth);
 }
 
@@ -168,7 +160,7 @@
 
 .app-header__inner--compact .app-header__profile {
   background: rgba(255, 255, 255, 0.4);
-  border-color: rgba(33, 40, 66, 0.08);
+  border-color: rgba(95, 70, 50, 0.12);
 }
 
 .app-bottom-bar {
@@ -184,7 +176,7 @@
   border-radius: var(--radius-xl);
   margin: 0 auto;
   max-width: 46rem;
-  padding: 0.88rem 1rem 0.82rem;
+  padding: 0.75rem 0.9rem;
   position: relative;
 }
 
@@ -199,7 +191,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.3rem;
   min-width: 0;
   padding: 0.1rem 0.2rem;
   position: relative;
@@ -222,21 +214,21 @@
   align-items: center;
   background: transparent;
   border-radius: 50%;
-  color: var(--color-depth-emphasis) !important;
+  color: var(--color-depth) !important;
   display: inline-flex;
-  font-size: 1.08rem;
-  height: 2.6rem;
+  font-size: 1.02rem;
+  height: 2.5rem;
   justify-content: center;
   transition:
     background 160ms ease,
     box-shadow 160ms ease,
     color 160ms ease;
-  width: 2.6rem;
+  width: 2.5rem;
 }
 
 .app-bottom-nav__label {
   color: var(--color-text-secondary) !important;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   letter-spacing: 0.04em;
   max-width: 100%;
   overflow: hidden;
@@ -245,8 +237,8 @@
 }
 
 .app-bottom-nav__link.is-active .app-bottom-nav__icon {
-  background: var(--depth-fill);
-  box-shadow: 0 12px 22px rgba(33, 40, 66, 0.18);
+  background: var(--accent-fill);
+  box-shadow: var(--shadow-accent);
   color: var(--color-on-depth-primary) !important;
 }
 
@@ -257,7 +249,7 @@
 
 .app-bottom-nav__badge {
   align-items: center;
-  background: var(--accent-fill);
+  background: rgba(200, 154, 106, 0.2);
   border: 1px solid rgba(33, 40, 66, 0.22);
   border-radius: var(--radius-pill);
   color: var(--color-depth) !important;

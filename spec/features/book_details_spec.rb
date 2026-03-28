@@ -97,7 +97,7 @@ RSpec.describe 'Book details', type: :feature do
     expect(page).to have_content('Want to read: 0')
 
     expect do
-      click_button 'Add to Library'
+      click_button 'Add'
     end.to change(Book, :count).by(1).and change(Reading, :count).by(1)
 
     visit '/books/details/OL789W?edition_id=OL2M'

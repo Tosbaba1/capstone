@@ -311,19 +311,24 @@
 }
 
 .library-hero {
-  padding: 1.125rem 1.25rem;
+  padding: 1rem 1.125rem;
 }
 
 .library-hero__header {
-  align-items: center;
+  align-items: flex-end;
 }
 
 .library-hero__title {
-  font-size: clamp(1.45rem, 2.7vw, 2rem);
+  color: var(--color-depth) !important;
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
 }
 
 .library-hero__copy {
   max-width: 32rem;
+}
+
+.library-hero__eyebrow {
+  color: var(--color-depth-emphasis) !important;
 }
 
 .library-hero__actions .btn {
@@ -332,11 +337,26 @@
 
 .library-shelf {
   gap: 0.875rem;
-  padding: 1rem 1.125rem;
+  padding: 1rem;
 }
 
 .library-shelf__title {
-  font-size: 1.3rem;
+  color: var(--color-depth) !important;
+  font-size: 1.2rem;
+}
+
+.library-shelf__subtitle,
+.library-shelf__count,
+.library-book-card__status,
+.library-book-card__author,
+.library-book-card__review {
+  color: var(--color-text-primary) !important;
+}
+
+.library-book-card__status {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  opacity: 0.8;
 }
 
 .library-book-card__top {
@@ -355,4 +375,14 @@
 .library-book-card__review,
 .library-book-card__author {
   line-height: 1.5;
+}
+
+.library-book-card__meta span {
+  background: rgba(215, 180, 123, 0.18);
+  border: 1px solid rgba(200, 154, 106, 0.22);
+  color: var(--color-depth) !important;
+}
+
+.library-book-card__editor {
+  background: rgba(244, 234, 223, 0.82);
 }

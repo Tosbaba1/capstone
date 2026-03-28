@@ -15,13 +15,9 @@
 <% if @active_tab == 'ai' %>
   <section class="library-shell app-page-stack">
     <header class="library-hero mb-4">
-      <p class="library-hero__eyebrow mb-2">Librarian</p>
       <div class="library-hero__header">
         <div>
-          <h1 class="library-hero__title mb-2">Ask for a quieter recommendation</h1>
-          <p class="library-hero__copy mb-0">
-            Describe the mood you want to read in, and the librarian will keep the suggestions close to that feeling.
-          </p>
+          <h1 class="library-hero__title mb-0">Librarian</h1>
         </div>
       </div>
     </header>
@@ -37,13 +33,10 @@
 
   <section class="library-shell app-page-stack">
     <header class="library-hero mb-4">
-      <p class="library-hero__eyebrow mb-2"><%= editable ? shelf_label : "Library" %></p>
       <div class="library-hero__header">
         <div>
-          <h1 class="library-hero__title mb-2"><%= library_title %></h1>
-          <p class="library-hero__copy mb-0">
-            Keep the books that support your next session close at hand, then step back into reading.
-          </p>
+          <p class="library-hero__eyebrow mb-2"><%= editable ? shelf_label : "Library" %></p>
+          <h1 class="library-hero__title mb-0"><%= library_title %></h1>
         </div>
         <% if editable %>
           <div class="library-hero__actions">
@@ -51,7 +44,7 @@
             <% if @current_session_participant.present? %>
               <%= link_to "Return to Session", session_path(@current_session_participant.session), class: "btn btn-secondary" %>
             <% else %>
-              <%= link_to "Start Reading Session", new_session_path, class: "btn btn-secondary" %>
+              <%= link_to "Start reading", new_session_path, class: "btn btn-secondary" %>
             <% end %>
           </div>
         <% end %>
@@ -60,19 +53,19 @@
 
     <%= render 'library_shelf_section',
       title: 'Currently Reading',
-      subtitle: 'Books with your bookmark still tucked inside.',
+      subtitle: 'In progress',
       readings: @reading_now,
       editable: editable %>
 
     <%= render 'library_shelf_section',
       title: 'Want to Read',
-      subtitle: 'Books waiting patiently in your next-up stack.',
+      subtitle: 'Next up',
       readings: @want_to_read,
       editable: editable %>
 
     <%= render 'library_shelf_section',
       title: 'Finished',
-      subtitle: 'Books you have already carried all the way to the last page.',
+      subtitle: 'Completed',
       readings: @finished,
       editable: editable %>
   </section>

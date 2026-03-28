@@ -1,17 +1,14 @@
 <section class="library-shell discover-search">
   <header class="library-hero mb-4">
-    <p class="library-hero__eyebrow mb-2">Discover</p>
     <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end">
       <div>
-        <h1 class="library-hero__title mb-2">Find the next book, then return to reading</h1>
-        <p class="library-hero__copy mb-0">
-          Books come first here. Reader lookup is still available, but discovery should support your next session rather than distract from it.
-        </p>
+        <p class="library-hero__eyebrow mb-2">Search</p>
+        <h1 class="library-hero__title mb-0">Find your next book</h1>
       </div>
     </div>
   </header>
 
-  <ul class="nav nav-tabs mb-3">
+  <ul class="nav nav-tabs app-tabs-row mb-3">
     <li class="nav-item">
       <%= link_to 'Books', search_path(tab: 'books', q: params[:q]), class: "nav-link #{'active' if @active_tab == 'books'}" %>
     </li>
@@ -56,12 +53,12 @@
 
               <div class="discover-search__actions">
                 <%= link_to 'Details', book_details_path(work_id: book['key'].split('/').last, edition_id: book['edition_key']&.first), class: 'btn btn-secondary' %>
-                <%= form_with url: '/books/import', method: :post, local: true do %>
+                <%= form_with url: '/books/import', method: :post, local: true, class: 'discover-search__add-form' do %>
                   <%= hidden_field_tag :work_id, book['key'].split('/').last %>
                   <%= select_tag :status,
                     options_for_select(Reading::STATUS_OPTIONS, 'want_to_read'),
-                    class: 'form-select form-select-sm' %>
-                  <button class="btn btn-primary">Add to Library</button>
+                    class: 'form-select form-select-sm discover-search__status' %>
+                  <button class="btn btn-primary">Add</button>
                 <% end %>
               </div>
             </div>

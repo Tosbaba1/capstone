@@ -56,12 +56,12 @@
         </div>
 
         <div class="book-detail__actions">
-          <%= form_with url: '/books/import', method: :post, local: true do %>
+          <%= form_with url: '/books/import', method: :post, local: true, class: "book-detail__add-form" do %>
             <%= hidden_field_tag :work_id, params[:work_id] %>
             <%= select_tag :status,
                   options_for_select(Reading::STATUS_OPTIONS, 'want_to_read'),
-                  class: 'form-select form-select-sm' %>
-            <button class="btn btn-primary">Add to Library</button>
+                  class: 'form-select form-select-sm book-detail__status' %>
+            <button class="btn btn-primary">Add</button>
           <% end %>
           <%= link_to 'Back to Discover', search_path(tab: 'books'), class: 'btn btn-secondary' %>
         </div>

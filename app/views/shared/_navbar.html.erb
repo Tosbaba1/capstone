@@ -1,5 +1,5 @@
 <%
-  page_label = @page_title.presence || "Welcome back"
+  page_label = @page_title.presence || "Read"
   compact_header = @home_top_bar.present?
   unread_count = user_signed_in? ? current_user.notifications.unread.count : 0
   reading_active = request.path == root_path || request.path == home_path || request.path == new_session_path
@@ -52,15 +52,11 @@
           </span>
           <span class="nouvelle-mark__wording">
             <span class="nouvelle-mark__name">Nouvelle</span>
-            <span class="nouvelle-mark__tag">Quiet reading sessions</span>
           </span>
         <% end %>
       </div>
 
       <div class="app-header__meta <%= "app-header__meta--compact" if compact_header %>">
-        <% unless compact_header %>
-          <p class="app-header__eyebrow mb-0">A quiet place to read together</p>
-        <% end %>
         <p class="app-header__title mb-0"><%= page_label %></p>
       </div>
 

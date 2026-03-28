@@ -41,10 +41,15 @@ RSpec.describe "Profile progress", type: :feature do
 
     expect(page).to have_content("This week")
     expect(page).to have_content("1 hr 15 min")
-    expect(page).to have_content("Sessions completed")
+    expect(page).to have_content("Sessions")
     expect(page).to have_content("3")
-    expect(page).to have_content("Current streak")
+    expect(page).to have_content("Streak")
     expect(page).to have_content("3 days")
-    expect(page).to have_content("A simple log of your reading time")
+    expect(page).to have_content("Latest session")
+
+    click_link "Sessions"
+
+    expect(page).to have_content("Reading log")
+    expect(page).to have_content("25 minute Silent session")
   end
 end

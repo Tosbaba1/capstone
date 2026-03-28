@@ -160,15 +160,21 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.7rem;
+  gap: 0.625rem;
 }
 
-.discover-search__actions form {
+.discover-search__actions form,
+.discover-search__add-form {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.55rem;
+  gap: 0.625rem;
   margin: 0;
+}
+
+.discover-search__status,
+.book-detail__status {
+  min-width: 8.5rem;
 }
 
 .discover-search__recent {
@@ -558,7 +564,7 @@
 
 .book-detail__content {
   display: grid;
-  gap: 0.95rem;
+  gap: 0.875rem;
   min-width: 0;
 }
 
@@ -606,7 +612,7 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.65rem;
+  gap: 0.625rem;
   margin: 0;
 }
 

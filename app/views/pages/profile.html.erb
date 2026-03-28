@@ -1,97 +1,105 @@
 <% profile_name = current_user.name.presence || current_user.username.presence || "Reader" %>
 <% profile_handle = current_user.username.presence || current_user.email.to_s.split("@").first %>
+<% profile_tab = params[:tab] == "sessions" ? "sessions" : "overview" %>
+<% latest_session = @latest_completed_session %>
+<% latest_companion_count = latest_session.present? ? latest_session.session.other_reader_count_for(current_user) : 0 %>
 
 <section class="profile-progress app-page-stack">
   <article class="profile-progress__hero">
-    <% if current_user.banner.present? %>
-      <p class="profile-progress__banner mb-0"><%= current_user.banner %></p>
-    <% end %>
-
-    <div class="profile-progress__identity">
+    <div class="profile-progress__identity-row">
       <%= image_tag(current_user.avatar.presence || "default_avatar.png", alt: profile_name, class: "profile-progress__avatar") %>
 
       <div class="profile-progress__identity-copy">
-        <p class="profile-progress__eyebrow mb-1">Profile</p>
-        <h1 class="profile-progress__title mb-1"><%= profile_name %></h1>
-        <p class="profile-progress__handle mb-2"><%= "@#{profile_handle}" %></p>
+        <% if current_user.banner.present? %>
+          <p class="profile-progress__banner mb-2"><%= current_user.banner %></p>
+        <% end %>
+
+        <div class="profile-progress__identity-heading">
+          <div>
+            <h1 class="profile-progress__title mb-1"><%= profile_name %></h1>
+            <p class="profile-progress__handle mb-0"><%= "@#{profile_handle}" %></p>
+          </div>
+
+          <% if @current_streak.positive? %>
+            <div class="profile-progress__streak">
+              <span class="profile-progress__streak-marker" aria-hidden="true"></span>
+              <span><%= streak_label(@current_streak) %></span>
+            </div>
+          <% end %>
+        </div>
+
         <% if current_user.bio.present? %>
           <p class="profile-progress__bio mb-0"><%= current_user.bio %></p>
-        <% else %>
-          <p class="profile-progress__bio mb-0">A quiet place to keep your reading habit steady.</p>
         <% end %>
       </div>
+    </div>
+
+    <div class="profile-progress__actions">
+      <% if @current_session_participant.present? %>
+        <%= link_to "Start reading", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+      <% else %>
+        <%= link_to "Start reading", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+      <% end %>
+      <%= link_to "Edit profile", edit_user_registration_path, class: "sessions-home__secondary-action" %>
     </div>
   </article>
 
-  <section class="app-support-grid app-support-grid--split profile-progress__supporting">
-    <div class="page-panel page-panel--soft profile-progress__support-card">
-      <p class="page-eyebrow mb-2">Quick actions</p>
-      <div class="profile-progress__actions">
-        <% if @current_session_participant.present? %>
-          <%= link_to "Return to Session", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
-        <% else %>
-          <%= link_to "Start Reading Session", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
-        <% end %>
-        <%= link_to "Edit Profile", edit_user_registration_path, class: "sessions-home__secondary-action" %>
-      </div>
-    </div>
+  <ul class="nav nav-tabs app-tabs-row profile-progress__tabs">
+    <li class="nav-item">
+      <%= link_to "Overview", profile_path, class: "nav-link #{profile_tab == 'overview' ? 'active' : ''}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Sessions", profile_path(tab: "sessions"), class: "nav-link #{profile_tab == 'sessions' ? 'active' : ''}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Public profile", user_path(current_user), class: "nav-link" %>
+    </li>
+  </ul>
 
-    <section class="page-panel page-panel--soft profile-progress__summary-grid">
-      <p class="page-eyebrow mb-2">Reading summary</p>
+  <% if profile_tab == "overview" %>
+    <section class="profile-progress__summary-grid">
       <div class="profile-progress__stats">
         <div class="profile-progress__stat">
           <span class="profile-progress__stat-label">This week</span>
           <strong class="profile-progress__stat-value"><%= reading_time_label(@weekly_reading_time) %></strong>
-          <p class="profile-progress__stat-copy mb-0">Time you protected for reading.</p>
         </div>
         <div class="profile-progress__stat">
-          <span class="profile-progress__stat-label">Sessions completed</span>
+          <span class="profile-progress__stat-label">Sessions</span>
           <strong class="profile-progress__stat-value"><%= @sessions_completed %></strong>
-          <p class="profile-progress__stat-copy mb-0">Finished sessions, kept lightly.</p>
         </div>
         <div class="profile-progress__stat">
-          <span class="profile-progress__stat-label">Current streak</span>
+          <span class="profile-progress__stat-label">Streak</span>
           <strong class="profile-progress__stat-value"><%= streak_label(@current_streak) %></strong>
-          <p class="profile-progress__stat-copy mb-0">A rhythm built by returning.</p>
         </div>
       </div>
     </section>
-  </section>
 
-  <div class="profile-progress__grid">
-    <section class="profile-progress__panel profile-progress__panel--story">
-      <p class="profile-progress__eyebrow mb-1">Identity through consistency</p>
-      <h2 class="profile-progress__panel-title mb-2">
-        <% if @current_streak.positive? %>
-          <%= "You are building a #{@current_streak}-day reading streak." %>
-        <% elsif @sessions_this_week.positive? %>
-          <%= "You have shown up for #{@sessions_this_week} reading #{'session'.pluralize(@sessions_this_week)} this week." %>
-        <% else %>
-          Your next reading session starts the rhythm.
-        <% end %>
-      </h2>
-      <p class="profile-progress__panel-copy mb-0">
-        <% if @latest_completed_session.present? %>
-          <% latest_company = @latest_completed_session.session.other_reader_count_for(current_user) %>
-          <%= "Your latest session lasted #{@latest_completed_session.credited_minutes} minutes in #{@latest_completed_session.session.mode == "structured" ? "Structured" : "Silent"} Mode." %>
-          <% if latest_company.positive? %>
-            <%= "#{pluralize(latest_company, "other reader")} joined you." %>
+    <section class="profile-progress__panel profile-progress__panel--latest">
+      <p class="profile-progress__eyebrow mb-1">Latest session</p>
+      <% if latest_session.present? %>
+        <h2 class="profile-progress__panel-title mb-2">
+          <%= "#{latest_session.credited_minutes} minute #{latest_session.session.mode == "structured" ? "Structured" : "Silent"} session" %>
+        </h2>
+        <p class="profile-progress__panel-copy mb-0">
+          <%= latest_session.leave_time.in_time_zone.strftime("%b %-d at %-I:%M %p") %>.
+          <% if latest_companion_count.positive? %>
+            <%= "#{pluralize(latest_companion_count, "other reader")} joined you." %>
           <% else %>
-            You read solo that time.
+            Solo reading session.
           <% end %>
-        <% else %>
-          Keep the profile light: read, finish, and let the habit speak for itself.
-        <% end %>
-      </p>
+        </p>
+      <% else %>
+        <h2 class="profile-progress__panel-title mb-2">Your next session starts here.</h2>
+        <p class="profile-progress__panel-copy mb-0">Keep the page light and let the reading speak for itself.</p>
+      <% end %>
     </section>
-
+  <% else %>
     <section class="profile-progress__panel profile-progress__panel--timeline">
       <div class="profile-progress__panel-head">
         <div>
           <p class="profile-progress__eyebrow mb-1">Recent sessions</p>
-          <h2 class="profile-progress__panel-title mb-0">A simple log of your reading time</h2>
+          <h2 class="profile-progress__panel-title mb-0">Reading log</h2>
         </div>
-        <%= link_to "View public profile", user_path(current_user), class: "profile-progress__panel-link" %>
       </div>
 
       <% if @recent_completed_sessions.any? %>
@@ -119,9 +127,9 @@
       <% else %>
         <div class="profile-progress__empty">
           <p class="profile-progress__panel-copy mb-3">You have not completed a reading session yet.</p>
-          <%= link_to "Start your first session", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+          <%= link_to "Start reading", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
         </div>
       <% end %>
     </section>
-  </div>
+  <% end %>
 </section>

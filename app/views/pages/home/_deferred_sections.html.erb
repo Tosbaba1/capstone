@@ -5,13 +5,11 @@
 
 <div class="sessions-home__deferred-stack">
   <section class="sessions-home__panel sessions-home__panel--quiet sessions-home__section">
-    <div class="sessions-home__panel-head sessions-home__panel-head--stack">
-      <div>
-        <p class="sessions-home__section-eyebrow mb-1">Around now</p>
-        <h2 class="sessions-home__section-title mb-1">Extra context when you want it</h2>
-        <p class="sessions-home__section-copy mb-0">Live reading, open rooms, and shelf count stay available without taking over the page.</p>
-      </div>
-    </div>
+    <header class="sessions-home__panel-head sessions-home__panel-head--stack">
+      <p class="sessions-home__section-eyebrow mb-1">Around now</p>
+      <h2 class="sessions-home__section-title mb-1">Extra context when you want it</h2>
+      <p class="sessions-home__section-copy mb-0">Live reading, open rooms, and shelf count stay available without taking over the page.</p>
+    </header>
 
     <div class="sessions-home__stats-row">
       <span class="progress-list__item"><strong><%= @live_presence_count %></strong> reading now</span>
@@ -23,7 +21,7 @@
       <div class="sessions-home__presence-strip">
         <div class="sessions-home__presence-avatars" aria-hidden="true">
           <% @presence_readers.first(4).each do |reader| %>
-            <%= image_tag(reader.avatar.presence || "default_avatar.png", alt: "", class: "sessions-home__presence-avatar app-avatar") %>
+            <%= image_tag(reader.avatar.presence || "default_avatar.png", alt: "", class: "sessions-home__presence-avatar app-avatar", width: 44, height: 44, loading: "lazy", decoding: "async") %>
           <% end %>
         </div>
 
@@ -35,13 +33,11 @@
   </section>
 
   <section class="sessions-home__panel sessions-home__panel--quiet sessions-home__section">
-    <div class="sessions-home__panel-head sessions-home__panel-head--stack">
-      <div>
-        <p class="sessions-home__section-eyebrow mb-1">Elsewhere in Nouvelle</p>
-        <h2 class="sessions-home__section-title mb-1">More to explore</h2>
-        <p class="sessions-home__section-copy mb-0">Library, discovery, and reading updates live below the main reading flow.</p>
-      </div>
-    </div>
+    <header class="sessions-home__panel-head sessions-home__panel-head--stack">
+      <p class="sessions-home__section-eyebrow mb-1">Elsewhere in Nouvelle</p>
+      <h2 class="sessions-home__section-title mb-1">More to explore</h2>
+      <p class="sessions-home__section-copy mb-0">Library, discovery, and reading updates live below the main reading flow.</p>
+    </header>
 
     <div class="secondary-surface-grid mt-3">
       <%= link_to library_path, class: "secondary-surface-card" do %>

@@ -1,14 +1,11 @@
 <section class="sessions-home">
   <%= render "pages/home/hero", current_session_participant: @current_session_participant %>
   <%= render "pages/home/active_rooms", active_sessions: @active_sessions, current_session_participant: @current_session_participant %>
-  <%= render "pages/home/your_books", readings: @session_entry_readings %>
-  <%= render "pages/home/progress", yesterday_reading_minutes: @yesterday_reading_minutes, progress_snapshot: @progress_snapshot %>
 
   <%= turbo_frame_tag "home_deferred", src: home_deferred_path, loading: :lazy do %>
     <section class="sessions-home__panel sessions-home__panel--quiet sessions-home__panel--placeholder">
-      <p class="sessions-home__section-eyebrow mb-1">More</p>
-      <h2 class="sessions-home__section-title mb-1">Loading the rest of Home...</h2>
-      <p class="sessions-home__section-copy mb-0">Library links, live activity, and extra details will appear here.</p>
+      <p class="sessions-home__section-eyebrow mb-1">Loading more</p>
+      <p class="sessions-home__section-copy mb-0">Books, progress, and activity will appear when you scroll.</p>
     </section>
   <% end %>
 </section>

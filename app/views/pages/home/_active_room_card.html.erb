@@ -8,10 +8,8 @@
     <span class="home-room-card__time">Started <%= started_at.strftime("%-I:%M %p") %></span>
   </div>
 
-  <div class="home-room-card__body">
-    <h3 class="home-room-card__title mb-1"><%= "#{session.duration} min #{session.mode.titleize}" %></h3>
-    <p class="home-room-card__copy mb-0">Hosted by <%= host_name %></p>
-  </div>
+  <h3 class="home-room-card__title mb-1"><%= "#{session.duration} min #{session.mode.titleize}" %></h3>
+  <p class="home-room-card__copy mb-0">Hosted by <%= host_name %></p>
 
   <div class="home-room-card__actions">
     <% if current_session_id == session.id %>

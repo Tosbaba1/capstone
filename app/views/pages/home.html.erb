@@ -45,10 +45,8 @@
     <div class="sessions-home__hero-layout">
       <div class="sessions-home__hero-copy">
         <p class="sessions-home__eyebrow mb-2">Welcome back</p>
-        <h1 class="sessions-home__title mb-2">Make a little room to read.</h1>
-        <p class="sessions-home__lede">
-          Settle into a quiet session, join a room already underway, or ease back into a book that is waiting for you.
-        </p>
+        <h1 class="sessions-home__title mb-2">Find your place to begin.</h1>
+        <p class="sessions-home__lede">Start a quiet session or join others reading right now.</p>
 
         <div class="sessions-home__presence-cloud">
           <div class="sessions-home__presence-pill">
@@ -107,7 +105,7 @@
           <% if @current_session_participant.present? %>
             <%= link_to "Return to Active Session", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
           <% else %>
-            <%= link_to "Start Reading Session", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
+            <%= link_to "Start reading", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
           <% end %>
         </div>
 
@@ -116,7 +114,7 @@
           <% if @current_session_participant.present? %>
             <%= link_to "Start another session", new_session_path, class: "sessions-home__hero-note-link" %>
           <% else %>
-            <%= link_to "Open library", library_path, class: "sessions-home__hero-note-link" %>
+            <%= link_to "Go to library", library_path, class: "sessions-home__hero-note-link" %>
           <% end %>
         </p>
       </aside>
@@ -240,7 +238,7 @@
             <p class="mb-3">Add a book first, then Home can turn it into a softer place to begin.</p>
             <div class="sessions-home__inline-actions">
               <%= link_to "Find a book", search_path(tab: "books"), class: "sessions-home__secondary-action sessions-home__secondary-action--compact" %>
-              <%= link_to "Open library", library_path, class: "entry-card__link" %>
+              <%= link_to "Go to library", library_path, class: "entry-card__link" %>
             </div>
           </div>
         <% end %>

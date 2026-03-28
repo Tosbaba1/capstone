@@ -852,14 +852,15 @@ h6 {
 }
 
 .app-header__title {
+  font-weight: 600;
   font-size: clamp(0.98rem, 1.7vw, 1.1rem);
 }
 
 .app-header__inner--compact {
   background:
-    radial-gradient(circle at top left, rgba(255, 250, 243, 0.18), transparent 38%),
-    linear-gradient(145deg, rgba(106, 78, 56, 0.98), rgba(87, 64, 45, 0.96));
-  border: 1px solid rgba(255, 250, 243, 0.14);
+    radial-gradient(circle at top left, rgba(255, 250, 243, 0.2), transparent 38%),
+    linear-gradient(145deg, rgba(98, 72, 52, 0.98), rgba(78, 57, 41, 0.97));
+  border: 1px solid rgba(255, 250, 243, 0.16);
   box-shadow: var(--shadow-depth);
   color: var(--color-on-depth-primary);
 }
@@ -867,6 +868,7 @@ h6 {
 .app-header__meta--compact .app-header__title,
 .app-header__inner--compact .nouvelle-mark__tag {
   color: var(--color-on-depth-primary) !important;
+  text-shadow: 0 1px 1px rgba(44, 29, 18, 0.18);
 }
 
 .app-header__inner--compact .nouvelle-mark__seal {

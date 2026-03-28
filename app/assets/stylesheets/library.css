@@ -186,3 +186,117 @@
     width: 100%;
   }
 }
+
+.library-shell {
+  display: grid;
+  gap: 1rem;
+}
+
+.library-hero {
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  padding: 1.25rem 1.5rem;
+}
+
+.library-hero__header {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.library-hero__eyebrow {
+  color: var(--color-depth-emphasis) !important;
+  font-size: 0.72rem;
+}
+
+.library-hero__title {
+  color: var(--color-depth) !important;
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+}
+
+.library-hero__copy {
+  color: var(--color-text-secondary) !important;
+  line-height: 1.6;
+  max-width: 34rem;
+}
+
+.library-hero__actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.library-shelf {
+  display: grid;
+  gap: 1rem;
+}
+
+.library-shelf__title {
+  color: var(--color-depth) !important;
+  font-size: 1.45rem;
+}
+
+.library-shelf__subtitle,
+.library-shelf__count {
+  color: var(--color-text-secondary) !important;
+}
+
+.library-shelf__empty {
+  background: rgba(247, 238, 228, 0.72);
+  border: 1px dashed var(--card-border);
+  color: var(--color-text-secondary) !important;
+  padding: 1rem 1.25rem;
+}
+
+.library-book-card {
+  background: transparent !important;
+  border-color: rgba(95, 70, 50, 0.08) !important;
+  box-shadow: none !important;
+}
+
+.library-book-card__body,
+.library-book-card__editor {
+  padding: 1rem;
+}
+
+.library-book-card__cover {
+  height: 168px;
+  width: 112px;
+}
+
+.library-book-card__status {
+  color: var(--color-depth-emphasis) !important;
+  font-size: 0.72rem;
+}
+
+.library-book-card__title,
+.library-book-card__title a {
+  color: var(--color-depth) !important;
+  font-size: 1.15rem;
+}
+
+.library-book-card__author,
+.library-book-card__review {
+  color: var(--color-text-secondary) !important;
+}
+
+.library-book-card__meta span {
+  background: rgba(206, 176, 121, 0.18);
+  border: 1px solid rgba(95, 70, 50, 0.08);
+  border-radius: var(--radius-pill);
+}
+
+.library-book-card__editor {
+  background: rgba(239, 228, 213, 0.68);
+}
+
+@media (max-width: 767.98px) {
+  .library-hero__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

@@ -489,3 +489,49 @@
     top: 0.5rem;
   }
 }
+
+.feed-shell {
+  display: grid;
+  gap: 1rem;
+  max-width: 56rem;
+}
+
+.feed-tabs {
+  justify-content: flex-start !important;
+  margin: 0;
+}
+
+.feed-tabs .nav-link {
+  color: var(--color-text-primary) !important;
+}
+
+.posts-feed {
+  display: grid;
+  gap: 1rem;
+}
+
+.feed-composer,
+.feed-post-card {
+  padding: 1.125rem;
+}
+
+.feed-composer__title {
+  color: var(--color-depth) !important;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+}
+
+.feed-composer__copy,
+.feed-composer__helper {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 575.98px) {
+  .posts-feed {
+    gap: 0.75rem;
+  }
+
+  .feed-composer,
+  .feed-post-card {
+    padding: 1rem;
+  }
+}

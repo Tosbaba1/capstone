@@ -16,7 +16,7 @@
   <section class="library-shell">
     <header class="library-hero mb-4">
       <p class="library-hero__eyebrow mb-2">Librarian</p>
-      <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end">
+      <div class="library-hero__header">
         <div>
           <h1 class="library-hero__title mb-2">Ask for a quieter recommendation</h1>
           <p class="library-hero__copy mb-0">
@@ -37,26 +37,24 @@
 
   <section class="library-shell">
     <header class="library-hero mb-4">
-      <p class="library-hero__eyebrow mb-2">Library</p>
-      <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end">
+      <p class="library-hero__eyebrow mb-2"><%= editable ? shelf_label : "Library" %></p>
+      <div class="library-hero__header">
         <div>
           <h1 class="library-hero__title mb-2"><%= library_title %></h1>
           <p class="library-hero__copy mb-0">
             Keep the books that support your next session close at hand, then step back into reading.
           </p>
         </div>
-        <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
-          <div class="library-hero__pill">
-            <span><%= shelf_label %></span>
-          </div>
-          <% if editable %>
+        <% if editable %>
+          <div class="library-hero__actions">
+            <%= link_to "Add Book", search_path(tab: "books"), class: "btn btn-primary" %>
             <% if @current_session_participant.present? %>
-              <%= link_to "Return to Session", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+              <%= link_to "Return to Session", session_path(@current_session_participant.session), class: "btn btn-secondary" %>
             <% else %>
-              <%= link_to "Start Reading Session", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+              <%= link_to "Start Reading Session", new_session_path, class: "btn btn-secondary" %>
             <% end %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
     </header>
 

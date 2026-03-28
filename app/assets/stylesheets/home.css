@@ -2335,3 +2335,244 @@ turbo-frame#home_deferred {
     flex-direction: column;
   }
 }
+
+.sessions-home {
+  display: grid;
+  gap: 1rem;
+  max-width: 70rem;
+  padding-bottom: 2rem;
+}
+
+.sessions-home__hero--simple {
+  gap: 1rem;
+  min-height: clamp(11.5rem, 24vw, 14rem);
+  padding: 1.25rem 1.5rem;
+}
+
+.sessions-home__hero-copy {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 28rem;
+}
+
+.sessions-home__hero--simple .sessions-home__title {
+  color: var(--color-on-depth-primary) !important;
+  font-size: clamp(2.15rem, 4vw, 3.55rem);
+  line-height: 0.96;
+  max-width: 10ch;
+}
+
+.sessions-home__hero--simple .sessions-home__lede {
+  color: rgba(255, 250, 243, 0.84) !important;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  max-width: 27rem;
+}
+
+.sessions-home__hero--simple .sessions-home__hero-note {
+  color: rgba(255, 250, 243, 0.72) !important;
+}
+
+.sessions-home__primary-action--hero {
+  max-width: 13rem;
+  padding: 0.875rem 1.25rem;
+}
+
+.sessions-home__panel {
+  padding: 1rem 1.25rem;
+}
+
+.sessions-home__panel-head--stack {
+  gap: 0.25rem;
+}
+
+.sessions-home__section-title {
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+}
+
+.sessions-home__section-copy {
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.sessions-home__room-scroller {
+  gap: 1rem;
+  grid-auto-columns: minmax(16rem, 19rem);
+}
+
+.sessions-home__book-row {
+  gap: 1rem;
+  grid-auto-columns: minmax(15rem, 17rem);
+}
+
+.sessions-home__section--books,
+.sessions-home__deferred-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.home-room-card,
+.home-book-chip,
+.secondary-surface-card,
+.feed-teaser {
+  padding: 1rem;
+}
+
+.home-room-card__title {
+  font-size: 1.05rem;
+}
+
+.home-book-chip__title,
+.secondary-surface-card__title {
+  font-size: 1rem;
+}
+
+.home-room-card__copy,
+.home-book-chip__meta,
+.secondary-surface-card__copy,
+.feed-teaser__copy {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.sessions-home__progress {
+  padding: 0.75rem 1rem;
+}
+
+.sessions-home__progress-copy {
+  font-size: 0.88rem;
+}
+
+.profile-progress {
+  display: grid;
+  gap: 1rem;
+  max-width: 70rem;
+}
+
+.profile-progress__hero {
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.profile-progress__hero-body {
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.profile-progress__identity {
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.profile-progress__identity-copy {
+  max-width: 32rem;
+}
+
+.profile-progress__avatar {
+  border-radius: 22px;
+  height: 6rem;
+  width: 6rem;
+}
+
+.profile-progress__title {
+  font-size: clamp(1.85rem, 3vw, 2.7rem);
+}
+
+.profile-progress__handle {
+  font-size: 0.78rem;
+}
+
+.profile-progress__bio,
+.profile-progress__panel-copy,
+.profile-progress__session-copy {
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.profile-progress__actions {
+  gap: 0.75rem;
+  justify-content: flex-start;
+}
+
+.profile-progress__summary-grid {
+  display: grid;
+}
+
+.profile-progress__stats {
+  border-top: 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+}
+
+.profile-progress__summary-grid .profile-progress__stat {
+  background: var(--card-background) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft) !important;
+  padding: 1rem 1.125rem;
+}
+
+.profile-progress__stat-value {
+  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+}
+
+.profile-progress__stat-copy {
+  font-size: 0.82rem;
+  max-width: none;
+}
+
+.profile-progress__grid {
+  gap: 1rem;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  margin-top: 0;
+}
+
+.profile-progress__panel {
+  gap: 0.85rem;
+  padding: 1.125rem 1.25rem;
+}
+
+.profile-progress__panel-title {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  max-width: 18ch;
+}
+
+.profile-progress__session-item {
+  padding: 0.875rem 1rem;
+}
+
+.profile-progress__session-title {
+  font-size: 1rem;
+}
+
+@media (max-width: 991.98px) {
+  .profile-progress__stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .sessions-home__hero--simple {
+    min-height: 0;
+    padding: 1.125rem 1.25rem;
+  }
+
+  .sessions-home__room-scroller,
+  .sessions-home__book-row {
+    grid-auto-columns: minmax(15rem, 86vw);
+  }
+
+  .profile-progress__hero,
+  .profile-progress__panel,
+  .sessions-home__panel {
+    padding: 1rem;
+  }
+
+  .profile-progress__avatar {
+    height: 5.25rem;
+    width: 5.25rem;
+  }
+}

@@ -12,7 +12,7 @@
         <%= image_tag(current_user.avatar.presence || "default_avatar.png", alt: profile_name, class: "profile-progress__avatar") %>
 
         <div class="profile-progress__identity-copy">
-          <p class="profile-progress__eyebrow mb-1">Reading rhythm</p>
+          <p class="profile-progress__eyebrow mb-1">Profile</p>
           <h1 class="profile-progress__title mb-1"><%= profile_name %></h1>
           <p class="profile-progress__handle mb-2"><%= "@#{profile_handle}" %></p>
           <% if current_user.bio.present? %>
@@ -32,7 +32,9 @@
         <%= link_to "Edit Profile", edit_user_registration_path, class: "sessions-home__secondary-action" %>
       </div>
     </div>
+  </article>
 
+  <section class="profile-progress__summary-grid">
     <div class="profile-progress__stats">
       <div class="profile-progress__stat">
         <span class="profile-progress__stat-label">This week</span>
@@ -50,7 +52,7 @@
         <p class="profile-progress__stat-copy mb-0">A rhythm built by returning.</p>
       </div>
     </div>
-  </article>
+  </section>
 
   <div class="profile-progress__grid">
     <section class="profile-progress__panel profile-progress__panel--story">

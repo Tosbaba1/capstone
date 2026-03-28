@@ -1,16 +1,4 @@
-<section class="library-shell">
-  <header class="library-hero mb-4">
-    <p class="library-hero__eyebrow mb-2">Reading Inbox</p>
-    <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end">
-      <div>
-        <h1 class="library-hero__title mb-2">Signals around your reading life</h1>
-        <p class="library-hero__copy mb-0">
-          Catch up here after you read. Sessions and progress stay primary; this surface is for everything that can wait.
-        </p>
-      </div>
-    </div>
-  </header>
-
+<section class="notifications-page">
   <ul class="nav nav-tabs mb-3">
     <li class="nav-item">
       <%= link_to 'All', notifications_path, class: "nav-link #{params[:tab].blank? ? 'active' : ''}" %>

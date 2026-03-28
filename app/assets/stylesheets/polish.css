@@ -695,3 +695,104 @@
     width: 100%;
   }
 }
+
+.notifications-page {
+  display: grid;
+  gap: 1rem;
+  margin: 0 auto;
+  max-width: 60rem;
+}
+
+.notifications-page__list {
+  gap: 1rem;
+}
+
+.notification-card {
+  gap: 0.75rem;
+  padding: 1rem 1.125rem;
+}
+
+.notification-card__title {
+  font-size: 0.96rem;
+  line-height: 1.5;
+}
+
+.notification-card__meta {
+  font-size: 0.72rem;
+}
+
+.public-profile {
+  gap: 1rem;
+  max-width: 70rem;
+}
+
+.public-profile__hero {
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.public-profile__hero-body {
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.public-profile__identity {
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.public-profile__avatar {
+  border-radius: 22px;
+  height: 5.75rem;
+  width: 5.75rem;
+}
+
+.public-profile__name {
+  font-size: clamp(1.85rem, 3vw, 2.7rem);
+}
+
+.public-profile__handle {
+  font-size: 0.78rem;
+}
+
+.public-profile__bio {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 32rem;
+}
+
+.public-profile__stats {
+  gap: 0.75rem;
+  justify-content: flex-start;
+}
+
+.public-profile__stat {
+  background: rgba(246, 236, 224, 0.72);
+  padding: 0.5rem 0.75rem;
+}
+
+.public-profile__actions,
+.relationship-page__item-actions,
+.notification-card__actions {
+  gap: 0.75rem;
+}
+
+.public-profile__body {
+  gap: 1rem;
+}
+
+.public-profile__badge-grid {
+  gap: 1rem;
+}
+
+@media (max-width: 575.98px) {
+  .public-profile__hero,
+  .notification-card {
+    padding: 1rem;
+  }
+
+  .public-profile__avatar {
+    height: 5.25rem;
+    width: 5.25rem;
+  }
+}

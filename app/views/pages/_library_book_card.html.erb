@@ -30,7 +30,7 @@
 
           <% if editable %>
             <button
-              class="btn btn-sm btn-outline-light library-book-card__edit-toggle"
+              class="btn btn-sm btn-secondary library-book-card__edit-toggle"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#<%= edit_panel_id %>"
@@ -84,7 +84,7 @@
               <%= f.check_box :is_private, { checked: reading.is_private, class: 'form-check-input' }, '1', '0' %>
               <%= f.label :is_private, 'Private', class: 'form-check-label' %>
             </div>
-            <%= f.submit 'Save', class: 'btn btn-sm btn-royal text-white align-self-start align-self-sm-auto' %>
+            <%= f.submit 'Save', class: 'btn btn-sm btn-primary align-self-start align-self-sm-auto' %>
           </div>
         <% end %>
       </div>

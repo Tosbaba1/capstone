@@ -105,7 +105,7 @@ class PagesController < ApplicationController
   def load_home_core_data
     SessionLifecycle.finalize_expired_sessions!
 
-    @page_title = "Home"
+    @page_title = "Read"
     @home_top_bar = true
     @current_session_participant = current_user.active_session_participant
 

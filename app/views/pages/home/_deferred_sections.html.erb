@@ -23,7 +23,7 @@
       <div class="sessions-home__presence-strip">
         <div class="sessions-home__presence-avatars" aria-hidden="true">
           <% @presence_readers.first(4).each do |reader| %>
-            <%= image_tag(reader.avatar.presence || "default_avatar.png", alt: "", class: "sessions-home__presence-avatar") %>
+            <%= image_tag(reader.avatar.presence || "default_avatar.png", alt: "", class: "sessions-home__presence-avatar app-avatar") %>
           <% end %>
         </div>
 

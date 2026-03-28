@@ -115,7 +115,7 @@ export default class extends Controller {
 
     snapshot.readers.forEach((reader) => {
       const image = document.createElement("img")
-      image.className = "session-room__presence-avatar"
+      image.className = "session-room__presence-avatar app-avatar"
       image.src = reader.avatar || this.defaultAvatarUrlValue
       image.alt = reader.name
 

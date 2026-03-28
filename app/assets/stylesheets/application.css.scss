@@ -274,14 +274,21 @@ img {
   color: var(--color-text-secondary) !important;
 }
 
+:root {
+  --avatar-size-ui: 2.75rem;
+}
+
 .avatar,
 .app-avatar {
   border: 2px solid rgba(240, 231, 213, 0.82);
   border-radius: 50%;
+  display: block;
+  flex-shrink: 0;
   box-shadow: var(--shadow-soft);
-  height: 3.125rem;
+  height: var(--avatar-size-ui);
   object-fit: cover;
-  width: 3.125rem;
+  overflow: hidden;
+  width: var(--avatar-size-ui);
 }
 
 .avatar--sm {
@@ -290,8 +297,8 @@ img {
 }
 
 .avatar--md {
-  height: 3.125rem;
-  width: 3.125rem;
+  height: var(--avatar-size-ui);
+  width: var(--avatar-size-ui);
 }
 
 .avatar--lg {
@@ -438,6 +445,17 @@ img {
   background: var(--surface-depth-soft);
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: var(--color-on-depth-primary) !important;
+}
+
+.app-header__profile {
+  border-radius: 50%;
+  flex-shrink: 0;
+  height: var(--avatar-size-ui);
+  min-height: var(--avatar-size-ui);
+  min-width: var(--avatar-size-ui);
+  overflow: hidden;
+  padding: 0;
+  width: var(--avatar-size-ui);
 }
 
 .app-header__action:hover,

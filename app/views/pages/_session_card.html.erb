@@ -24,7 +24,7 @@
       <% active_readers.first(4).each do |reader| %>
         <% reader_label = reader.name.presence || reader.username.presence || "Reader" %>
         <div class="home-session-card__reader">
-          <%= image_tag(reader.avatar.presence || "default_avatar.png", alt: reader_label, class: "home-session-card__avatar") %>
+          <%= image_tag(reader.avatar.presence || "default_avatar.png", alt: reader_label, class: "home-session-card__avatar app-avatar") %>
           <span>
             <%= reader_label %>
             <% if reader.id == session.host_user_id %>

@@ -282,6 +282,7 @@
 }
 
 .feed-post-card__avatar {
+  align-self: flex-start;
   border: 2px solid rgba(255, 248, 238, 0.8);
   box-shadow: var(--shadow-soft);
 }

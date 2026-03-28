@@ -173,7 +173,7 @@
             <div class="session-room__presence-body">
               <div class="session-room__presence-avatars" data-session-room-target="avatarStack">
                 <% @presence_snapshot[:readers].each do |reader| %>
-                  <%= image_tag(reader[:avatar].presence || "default_avatar.png", alt: reader[:name], class: "session-room__presence-avatar") %>
+                  <%= image_tag(reader[:avatar].presence || "default_avatar.png", alt: reader[:name], class: "session-room__presence-avatar app-avatar") %>
                 <% end %>
 
                 <% overflow_count = @presence_snapshot[:active_reader_count] - @presence_snapshot[:readers].size %>

@@ -957,3 +957,398 @@
     width: 6.2rem;
   }
 }
+
+.sessions-home {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.sessions-home__hero {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.2), transparent 22%),
+    radial-gradient(circle at 82% 24%, rgba(198, 169, 105, 0.18), transparent 24%),
+    linear-gradient(135deg, rgba(47, 56, 74, 0.98), rgba(66, 70, 80, 0.94) 56%, rgba(118, 99, 82, 0.82));
+  margin-bottom: 0;
+  overflow: hidden;
+  padding: clamp(1.65rem, 3vw, 2.45rem);
+  position: relative;
+}
+
+.sessions-home__hero::before,
+.sessions-home__hero::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+}
+
+.sessions-home__hero::before {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 68%);
+  height: 18rem;
+  left: -5rem;
+  top: -4rem;
+  width: 18rem;
+}
+
+.sessions-home__hero::after {
+  background: radial-gradient(circle, rgba(198, 169, 105, 0.18), transparent 72%);
+  bottom: -6rem;
+  height: 16rem;
+  right: -3rem;
+  width: 16rem;
+}
+
+.sessions-home__hero-layout {
+  align-items: end;
+  gap: 1.75rem;
+  grid-template-columns: minmax(0, 1.2fr) minmax(18.5rem, 0.8fr);
+  position: relative;
+  z-index: 1;
+}
+
+.sessions-home__hero-copy,
+.sessions-home__hero-aside {
+  position: relative;
+  z-index: 1;
+}
+
+.sessions-home__hero .sessions-home__title {
+  font-size: clamp(2.9rem, 5.4vw, 4.7rem);
+  line-height: 0.96;
+  max-width: 11ch;
+}
+
+.sessions-home__lede {
+  font-size: 1.08rem;
+  max-width: 34rem;
+}
+
+.sessions-home__presence-cloud {
+  backdrop-filter: blur(12px);
+  background: rgba(251, 245, 235, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 26px;
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1.4rem;
+  max-width: 30rem;
+  padding: 1.05rem 1.1rem;
+}
+
+.sessions-home__presence-pill {
+  align-items: center;
+  background: rgba(240, 231, 213, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-pill);
+  color: var(--color-on-depth-primary) !important;
+  display: inline-flex;
+  font-size: 0.86rem;
+  gap: 0.55rem;
+  padding: 0.45rem 0.75rem;
+  width: fit-content;
+}
+
+.sessions-home__presence-dot {
+  background: #dfcca5;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.25rem rgba(223, 204, 165, 0.14);
+  height: 0.55rem;
+  width: 0.55rem;
+}
+
+.sessions-home__presence-copy {
+  color: var(--color-on-depth-primary) !important;
+  font-size: 0.99rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 28rem;
+}
+
+.sessions-home__presence-soft-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.sessions-home__presence-soft-item,
+.sessions-home__presence-caption {
+  color: var(--color-on-depth-secondary) !important;
+}
+
+.sessions-home__presence-people {
+  align-items: center;
+  display: flex;
+  gap: 0.9rem;
+  padding-top: 0.25rem;
+}
+
+.sessions-home__presence-avatars {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.sessions-home__presence-avatar {
+  border: 2px solid rgba(240, 231, 213, 0.65);
+  border-radius: 50%;
+  height: 2.5rem;
+  margin-left: -0.45rem;
+  object-fit: cover;
+  width: 2.5rem;
+}
+
+.sessions-home__presence-avatar:first-child {
+  margin-left: 0;
+}
+
+.sessions-home__hero-aside {
+  backdrop-filter: blur(12px);
+  background: rgba(240, 231, 213, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 26px;
+  display: grid;
+  gap: 1rem;
+  padding: 1.2rem;
+}
+
+.sessions-home__hero-card-title {
+  color: var(--color-on-depth-primary) !important;
+  font-family: var(--heading-font);
+  font-size: 1.55rem;
+  line-height: 1.12;
+}
+
+.sessions-home__hero-card-copy {
+  color: var(--color-on-depth-secondary) !important;
+  line-height: 1.65;
+}
+
+.sessions-home__hero-actions {
+  align-items: stretch;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.sessions-home__hero-actions .sessions-home__primary-action--hero,
+.sessions-home__hero-actions .sessions-home__secondary-action {
+  max-width: none;
+  width: 100%;
+}
+
+.sessions-home__hero-note {
+  margin: 0;
+}
+
+.sessions-home__supporting-grid,
+.sessions-home__secondary-grid {
+  margin-top: 0;
+}
+
+.sessions-home__supporting-grid {
+  align-items: start;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+}
+
+.sessions-home__panel {
+  overflow: hidden;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.sessions-home__panel--quiet {
+  background: rgba(246, 239, 228, 0.84);
+  box-shadow: var(--shadow-soft);
+}
+
+.sessions-home__panel--quiet::after {
+  background: radial-gradient(circle, rgba(198, 169, 105, 0.12), transparent 72%);
+  content: "";
+  height: 9rem;
+  pointer-events: none;
+  position: absolute;
+  right: -2rem;
+  top: -2rem;
+  width: 9rem;
+}
+
+.sessions-home__section-title,
+.sessions-home__section-copy,
+.session-stack,
+.entry-stack,
+.progress-list,
+.secondary-surface-grid,
+.feed-teaser {
+  position: relative;
+  z-index: 1;
+}
+
+.sessions-home__section-copy {
+  max-width: 34rem;
+}
+
+.session-stack,
+.entry-stack {
+  gap: 1rem;
+  margin-top: 1.1rem;
+}
+
+.home-session-card,
+.entry-card {
+  background: linear-gradient(180deg, rgba(250, 244, 236, 0.96), rgba(244, 236, 224, 0.9));
+  box-shadow: 0 14px 30px rgba(63, 61, 60, 0.08);
+  padding: 1.2rem;
+}
+
+.home-session-card__count,
+.entry-card__metric {
+  background: rgba(240, 231, 213, 0.78);
+  border: 1px solid rgba(63, 61, 60, 0.08);
+  box-shadow: none;
+  color: var(--nouvelle-ink-soft) !important;
+}
+
+.home-session-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.home-session-card__meta span {
+  justify-content: flex-start;
+  padding: 0.48rem 0.78rem;
+}
+
+.home-session-card__readers {
+  background: rgba(240, 231, 213, 0.54);
+  border: 1px solid rgba(63, 61, 60, 0.08);
+  border-radius: 20px;
+  padding: 0.8rem 0.9rem;
+}
+
+.home-session-card__reader {
+  font-size: 0.9rem;
+}
+
+.home-session-card__actions,
+.entry-card__actions {
+  margin-top: 1rem;
+}
+
+.sessions-home__empty-state {
+  background: linear-gradient(180deg, rgba(250, 245, 238, 0.96), rgba(243, 236, 227, 0.92));
+  border-style: dashed;
+  display: grid;
+  gap: 0.65rem;
+  min-height: 100%;
+  position: relative;
+}
+
+.sessions-home__empty-state::after {
+  background: radial-gradient(circle, rgba(198, 169, 105, 0.18), transparent 70%);
+  content: "";
+  height: 10rem;
+  pointer-events: none;
+  position: absolute;
+  right: -2rem;
+  top: -2rem;
+  width: 10rem;
+}
+
+.sessions-home__empty-state > * {
+  position: relative;
+  z-index: 1;
+}
+
+.progress-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.progress-list__item {
+  align-items: baseline;
+  background: rgba(240, 231, 213, 0.7);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--nouvelle-text) !important;
+  display: inline-flex;
+  gap: 0.5rem;
+  padding: 0.65rem 0.9rem;
+}
+
+.progress-list__item strong {
+  color: var(--nouvelle-ink) !important;
+  font-family: var(--heading-font);
+  font-size: 1.12rem;
+  line-height: 1;
+}
+
+.secondary-surface-grid {
+  gap: 0.75rem;
+}
+
+.secondary-surface-card {
+  background: rgba(250, 245, 238, 0.78);
+  box-shadow: none;
+  min-height: 100%;
+}
+
+.secondary-surface-card__title {
+  font-size: 1.08rem;
+}
+
+.secondary-surface-card__copy {
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+
+.feed-teaser {
+  background: rgba(240, 231, 213, 0.52);
+  border: 1px solid rgba(63, 61, 60, 0.08);
+  border-radius: 20px;
+  padding: 0.95rem 1rem;
+}
+
+@media (max-width: 991.98px) {
+  .sessions-home {
+    gap: 1.25rem;
+  }
+
+  .sessions-home__hero-layout {
+    align-items: start;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .sessions-home__presence-people {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .sessions-home {
+    gap: 1rem;
+  }
+
+  .sessions-home__hero {
+    padding: 1.25rem;
+  }
+
+  .sessions-home__presence-cloud,
+  .sessions-home__hero-aside {
+    border-radius: 22px;
+    padding: 1rem;
+  }
+
+  .sessions-home__hero .sessions-home__title {
+    max-width: 9ch;
+  }
+
+  .progress-list {
+    flex-direction: column;
+  }
+
+  .progress-list__item {
+    width: 100%;
+  }
+}

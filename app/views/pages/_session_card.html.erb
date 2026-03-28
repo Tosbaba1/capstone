@@ -6,15 +6,15 @@
 <article class="home-session-card">
   <div class="home-session-card__top">
     <div>
-      <p class="home-session-card__eyebrow mb-1"><%= session.mode.titleize %> room</p>
+      <p class="home-session-card__eyebrow mb-1">Reading now</p>
       <h3 class="home-session-card__title mb-1"><%= "#{session.duration} quiet minutes" %></h3>
-      <p class="home-session-card__author mb-0">Hosted by <%= host_name %></p>
+      <p class="home-session-card__author mb-0"><%= "#{session.mode.titleize} Mode, hosted by #{host_name}" %></p>
     </div>
-    <span class="home-session-card__count"><%= pluralize(session.active_reader_count, "reader") %></span>
+    <span class="home-session-card__count">Open now</span>
   </div>
 
   <div class="home-session-card__meta">
-    <span><%= pluralize(session.active_reader_count, "person") %> present</span>
+    <span><%= pluralize(session.active_reader_count, "reader") %> settled in</span>
     <span>Ends in <%= pluralize([remaining_minutes, 1].max, "minute") %></span>
     <span><%= session.mode.titleize %> Mode</span>
   </div>
@@ -38,14 +38,14 @@
 
   <div class="home-session-card__actions">
     <% if current_session_id == session.id %>
-      <%= link_to "Return to Session", session_path(session), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+      <%= link_to "Return to Room", session_path(session), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
     <% else %>
-      <%= button_to "Join Session",
+      <%= button_to "Join This Room",
         join_session_path(session),
         method: :post,
         class: "sessions-home__primary-action sessions-home__primary-action--button sessions-home__primary-action--inline" %>
     <% end %>
 
-    <%= link_to "View session", session_path(session), class: "entry-card__link" %>
+    <%= link_to "View room", session_path(session), class: "entry-card__link" %>
   </div>
 </article>

@@ -1,10 +1,10 @@
 <section class="session-setup">
   <article class="session-setup__panel">
     <p class="sessions-home__section-eyebrow mb-1">Start Session</p>
-    <h1 class="session-setup__title mb-2">Open a Nouvelle reading room.</h1>
-    <p class="sessions-home__section-copy mb-4">This creates a real active session immediately, makes you the host, and starts the timer as soon as you enter.</p>
+    <h1 class="session-setup__title mb-2">Open a reading room.</h1>
+    <p class="sessions-home__section-copy mb-3">Starting creates a live session right away, makes you the host, and begins the timer as soon as you enter.</p>
     <p class="sessions-home__section-copy mb-4">
-      Experiment defaults are currently set to <%= feature_flags.session_length %> minutes and <%= feature_flags.session_type.titleize %> Mode for your account.
+      Set aside a little time. Your current default is <%= feature_flags.session_length %> minutes in <%= feature_flags.session_type.titleize %> Mode.
     </p>
 
     <%= form_with model: @session, url: sessions_path, local: true, class: "session-setup__form" do |form| %>
@@ -49,7 +49,7 @@
     <article class="session-setup__panel">
       <p class="sessions-home__section-eyebrow mb-1">Join Instead</p>
       <h2 class="session-setup__sidebar-title mb-2">Open sessions right now</h2>
-      <p class="sessions-home__section-copy mb-0">If a room is already active, you can step into it instead of creating another.</p>
+      <p class="sessions-home__section-copy mb-0">If a room is already active, you can settle into it instead of creating another.</p>
 
       <% if @active_sessions.any? %>
         <div class="session-stack">

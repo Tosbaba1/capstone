@@ -6,8 +6,8 @@
 <article class="home-session-card">
   <div class="home-session-card__top">
     <div>
-      <p class="home-session-card__eyebrow mb-1"><%= session.mode.titleize %> Mode</p>
-      <h3 class="home-session-card__title mb-1"><%= "#{session.duration}-minute reading session" %></h3>
+      <p class="home-session-card__eyebrow mb-1"><%= session.mode.titleize %> room</p>
+      <h3 class="home-session-card__title mb-1"><%= "#{session.duration} quiet minutes" %></h3>
       <p class="home-session-card__author mb-0">Hosted by <%= host_name %></p>
     </div>
     <span class="home-session-card__count"><%= pluralize(session.active_reader_count, "reader") %></span>
@@ -16,7 +16,7 @@
   <div class="home-session-card__meta">
     <span><%= pluralize(session.active_reader_count, "person") %> present</span>
     <span>Ends in <%= pluralize([remaining_minutes, 1].max, "minute") %></span>
-    <span><%= session.mode.titleize %></span>
+    <span><%= session.mode.titleize %> Mode</span>
   </div>
 
   <% if feature_flags.presence_visibility == "avatars" && active_readers.any? %>

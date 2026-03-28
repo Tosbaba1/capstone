@@ -15,3 +15,9 @@ default:
     variants:
       - avatars
       - count_only
+
+test:
+  presence_visibility:
+    default: avatars
+    variants:
+      - avatars

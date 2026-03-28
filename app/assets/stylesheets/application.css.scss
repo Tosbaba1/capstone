@@ -2,7 +2,7 @@
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * Any CSS (SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
  * vendor/assets/stylesheets directory can be referenced here using a relative path.
  *
  * You're free to add application-wide styles to this file and they'll appear at the bottom of the
@@ -15,68 +15,138 @@
 */
 
 :root {
-  --cb-1: #142032;
-  --cb-2: #1e3049;
-  --cb-3: #314864;
-  --light-grey: #fff9f1;
-  --charcoal: #36454F;
-  --warm-paper: #f4eade;
-  --warm-gold: #d1a170;
-  --warm-bronze: #8f5f3b;
+  --nouvelle-bg: #efd8c0;
+  --nouvelle-bg-soft: #f5f1e8;
+  --nouvelle-surface: #f0e7d5;
+  --nouvelle-surface-strong: #eadbc5;
+  --nouvelle-surface-overlay: rgba(240, 231, 213, 0.82);
+  --nouvelle-text: #3f3d3c;
+  --nouvelle-text-soft: #6a625c;
+  --nouvelle-ink: #212842;
+  --nouvelle-ink-soft: #3a4569;
+  --nouvelle-accent: #c6a969;
+  --nouvelle-accent-deep: #b1914c;
+  --nouvelle-border: rgba(63, 61, 60, 0.12);
+  --nouvelle-border-strong: rgba(33, 40, 66, 0.16);
+  --nouvelle-shadow: 0 20px 45px rgba(33, 40, 66, 0.11);
+  --nouvelle-shadow-soft: 0 12px 28px rgba(63, 61, 60, 0.08);
+  --nouvelle-radius-lg: 28px;
+  --nouvelle-radius-md: 22px;
+  --nouvelle-radius-sm: 16px;
   --app-bottom-nav-height: 5.75rem;
+  --heading-font: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Cormorant Garamond", Georgia, serif;
+  --body-font: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+html,
+body {
+  min-height: 100%;
 }
 
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
   background:
-    radial-gradient(circle at top, rgba(255, 236, 214, 0.08), transparent 26%),
-    linear-gradient(180deg, #101a29 0%, var(--cb-1) 24%, var(--cb-2) 62%, var(--cb-3) 100%);
-  color: var(--light-grey);
-  min-height: 100vh;
+    radial-gradient(circle at top left, rgba(198, 169, 105, 0.22), transparent 28%),
+    radial-gradient(circle at right 12%, rgba(33, 40, 66, 0.08), transparent 24%),
+    linear-gradient(180deg, #f5ecdf 0%, var(--nouvelle-bg) 48%, #ead7c2 100%);
+  color: var(--nouvelle-text);
+  font-family: var(--body-font);
+  line-height: 1.55;
+  margin: 0;
+  position: relative;
+}
+
+body::before,
+body::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  z-index: -1;
+}
+
+body::before {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.46), transparent 70%);
+  height: 24rem;
+  left: -8rem;
+  top: -7rem;
+  width: 24rem;
+}
+
+body::after {
+  background: radial-gradient(circle, rgba(33, 40, 66, 0.08), transparent 70%);
+  bottom: -10rem;
+  height: 28rem;
+  right: -7rem;
+  width: 28rem;
+}
+
+a {
+  color: var(--nouvelle-ink);
+  text-decoration-color: rgba(33, 40, 66, 0.28);
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--nouvelle-ink-soft);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--nouvelle-ink);
+  font-family: var(--heading-font);
+  letter-spacing: -0.02em;
+}
+
+img {
+  max-width: 100%;
 }
 
 .app-shell--immersive {
   background:
-    radial-gradient(circle at 15% 12%, rgba(244, 214, 181, 0.16), transparent 20%),
-    radial-gradient(circle at 82% 18%, rgba(255, 246, 234, 0.08), transparent 18%),
-    linear-gradient(180deg, #f6efe6 0%, #efe4d5 26%, #e7dac9 100%);
-}
-
-.app-shell--immersive {
-  color: #2d2118;
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.34), transparent 30%),
+    radial-gradient(circle at 84% 14%, rgba(33, 40, 66, 0.08), transparent 24%),
+    linear-gradient(180deg, #f6efe5 0%, #f0e5d4 42%, #e8d7c5 100%);
 }
 
 .bg-charcoal-gradient {
-  background: linear-gradient(to right, var(--cb-1), var(--cb-2), var(--cb-3));
+  background: linear-gradient(135deg, var(--nouvelle-ink), var(--nouvelle-ink-soft));
 }
 
 .notification-dot {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 8px;
-  height: 8px;
-  background-color: red;
+  background-color: #b85b4a;
   border-radius: 50%;
+  height: 8px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 8px;
 }
 
 .profile-banner {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
+  background-color: rgba(240, 231, 213, 0.9);
+  border-radius: 8px;
 }
 
 .content-box {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  background-color: rgba(240, 231, 213, 0.72);
+  border-radius: 12px;
 }
 
 .app-page {
   padding-bottom: 1.5rem;
-  padding-top: 0.35rem;
+  padding-top: 0.6rem;
+  position: relative;
+}
+
+.app-page.container {
+  max-width: 75rem;
 }
 
 .app-page--immersive {
-  max-width: 64rem;
+  max-width: 68rem;
   padding-bottom: 2rem;
   padding-top: 1rem;
 }
@@ -85,54 +155,73 @@ body {
   padding-bottom: calc(var(--app-bottom-nav-height) + 1.65rem + env(safe-area-inset-bottom));
 }
 
+.app-flash-stack {
+  margin-bottom: 0.9rem;
+}
+
 .app-flash {
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 240, 220, 0.14);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 18px;
+  box-shadow: var(--nouvelle-shadow-soft);
   font-size: 0.95rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 52rem;
   padding: 0.8rem 1rem;
 }
 
 .app-flash--notice {
-  background: rgba(133, 96, 61, 0.16);
-  color: #ffe6c8 !important;
+  background: rgba(240, 231, 213, 0.92);
+  color: var(--nouvelle-ink) !important;
 }
 
 .app-flash--alert {
-  background: rgba(128, 52, 45, 0.22);
-  color: #ffd4cc !important;
+  background: rgba(237, 214, 205, 0.95);
+  color: #6d372f !important;
 }
 
-/* Inputs should use dark text since they have light backgrounds */
 .form-control,
 .form-select {
-  color: var(--charcoal);
+  background: rgba(255, 250, 244, 0.92);
+  border: 1px solid rgba(63, 61, 60, 0.14);
+  border-radius: var(--nouvelle-radius-sm);
+  color: var(--nouvelle-text);
 }
 
-/* Ensure all text appears in white across the application */
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-span,
-label,
-a,
-li,
-dt,
-dd,
-th,
-td,
-small,
-button {
-  color: var(--light-grey) !important;
+.form-control:focus,
+.form-select:focus {
+  background: rgba(255, 250, 244, 0.98);
+  border-color: rgba(198, 169, 105, 0.9);
+  box-shadow: 0 0 0 0.2rem rgba(198, 169, 105, 0.18);
+  color: var(--nouvelle-text);
+}
+
+.text-muted {
+  color: var(--nouvelle-text-soft) !important;
 }
 
 @media (min-width: 992px) {
   .app-page--with-nav {
     padding-bottom: calc(var(--app-bottom-nav-height) + 2rem + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 575.98px) {
+  body::before {
+    height: 16rem;
+    left: -5rem;
+    top: -4rem;
+    width: 16rem;
+  }
+
+  body::after {
+    height: 18rem;
+    right: -5rem;
+    width: 18rem;
+  }
+
+  .app-page {
+    padding-top: 0.45rem;
   }
 }

@@ -1,35 +1,57 @@
 .btn-primary {
-  background-color: #4b3ecf;
-  border-color: #4b3ecf;
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--nouvelle-accent), var(--nouvelle-accent-deep));
+  border-color: var(--nouvelle-accent-deep);
+  color: var(--nouvelle-ink);
 }
 
-.btn-primary:hover {
-  background-color: #3d31a8;
-  border-color: #3d31a8;
-  color: #ffffff;
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: linear-gradient(135deg, #d3b77f, var(--nouvelle-accent-deep));
+  border-color: var(--nouvelle-accent-deep);
+  color: var(--nouvelle-ink);
+}
+
+.btn-primary:focus-visible {
+  box-shadow: 0 0 0 0.2rem rgba(198, 169, 105, 0.22);
+}
+
+.nav-tabs {
+  border-bottom: 0;
+  gap: 0.35rem;
 }
 
 .nav-tabs .nav-link {
-  color: #ffffff;
+  background: rgba(240, 231, 213, 0.58);
+  border: 1px solid rgba(63, 61, 60, 0.12);
+  border-radius: 999px;
+  color: var(--nouvelle-text);
+  margin: 0;
+}
+
+.nav-tabs .nav-link:hover,
+.nav-tabs .nav-link:focus-visible {
+  background: rgba(240, 231, 213, 0.88);
+  border-color: rgba(33, 40, 66, 0.14);
+  color: var(--nouvelle-ink);
 }
 
 .nav-tabs .nav-link.active {
-  background-image: linear-gradient(to right, #4169e1, #7851a9);
-  border-color: #4169e1 #7851a9 #fff;
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--nouvelle-ink), #344062);
+  border-color: rgba(33, 40, 66, 0.4);
+  color: #f8f2e8;
 }
 
-/* Button style using the same gradient as the tabs */
 .btn-royal {
-  background-image: linear-gradient(to right, #4169e1, #7851a9);
-  border-color: #4169e1 #7851a9 #7851a9;
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--nouvelle-ink), #344062);
+  border-color: rgba(33, 40, 66, 0.4);
+  color: #f8f2e8;
 }
 
-.btn-royal:hover {
-  color: #ffffff;
-  opacity: 0.9;
+.btn-royal:hover,
+.btn-royal:focus-visible {
+  background: linear-gradient(135deg, #2a3352, #40507a);
+  border-color: rgba(33, 40, 66, 0.5);
+  color: #f8f2e8;
 }
 
 .book-cover {

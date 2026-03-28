@@ -1,19 +1,19 @@
 .app-header {
-  padding: 1rem 0 0.4rem;
+  padding: 0.9rem 0 0.5rem;
 }
 
 .app-header__inner {
   align-items: center;
   background:
-    radial-gradient(circle at top left, rgba(255, 248, 238, 0.16), transparent 30%),
-    linear-gradient(135deg, rgba(12, 20, 33, 0.96), rgba(34, 49, 72, 0.94) 55%, rgba(98, 68, 43, 0.78));
-  border: 1px solid rgba(255, 242, 227, 0.14);
-  border-radius: 28px;
-  box-shadow: 0 18px 40px rgba(4, 9, 20, 0.22);
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.3), transparent 36%),
+    linear-gradient(135deg, rgba(33, 40, 66, 0.96), rgba(50, 59, 90, 0.94) 58%, rgba(103, 86, 73, 0.88));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 32px;
+  box-shadow: 0 24px 50px rgba(33, 40, 66, 0.16);
   display: grid;
   gap: 1rem;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  padding: 1rem 1.2rem;
+  padding: 1rem 1.25rem;
 }
 
 .app-header__lead,
@@ -29,7 +29,7 @@
 .nouvelle-mark {
   align-items: center;
   display: inline-flex;
-  gap: 0.85rem;
+  gap: 0.9rem;
   min-width: 0;
   text-decoration: none;
 }
@@ -37,12 +37,12 @@
 .nouvelle-mark__seal {
   align-items: center;
   background:
-    radial-gradient(circle at 30% 28%, #ffe6ca, #d0a06f 40%, #7d5236 66%, #1a2839 100%);
-  border: 1px solid rgba(255, 237, 214, 0.34);
+    radial-gradient(circle at 32% 30%, #f6ecd7, #d8bc88 42%, #8d735d 68%, #212842 100%);
+  border: 1px solid rgba(255, 255, 255, 0.34);
   border-radius: 50%;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.38),
-    0 12px 24px rgba(8, 13, 24, 0.28);
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 14px 30px rgba(17, 22, 36, 0.25);
   display: inline-flex;
   height: 3.3rem;
   justify-content: center;
@@ -50,13 +50,13 @@
 }
 
 .nouvelle-mark__glyph {
-  color: #1a2433 !important;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.9rem;
+  color: var(--nouvelle-ink) !important;
+  font-family: var(--heading-font);
+  font-size: 1.95rem;
   font-style: italic;
   font-weight: 700;
   line-height: 1;
-  transform: translateX(0.06rem);
+  transform: translateX(0.04rem);
 }
 
 .nouvelle-mark__wording {
@@ -66,19 +66,19 @@
 }
 
 .nouvelle-mark__name {
-  color: #fff6eb !important;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
-  letter-spacing: 0.12em;
+  color: #fbf5eb !important;
+  font-family: var(--heading-font);
+  font-size: clamp(1.2rem, 2.5vw, 1.52rem);
+  letter-spacing: 0.08em;
   line-height: 1;
   text-transform: uppercase;
 }
 
 .nouvelle-mark__tag {
-  color: rgba(255, 240, 220, 0.72) !important;
+  color: rgba(248, 242, 232, 0.7) !important;
   font-size: 0.68rem;
-  letter-spacing: 0.22em;
-  margin-top: 0.3rem;
+  letter-spacing: 0.2em;
+  margin-top: 0.32rem;
   text-transform: uppercase;
 }
 
@@ -88,30 +88,31 @@
   gap: 0.18rem;
   justify-self: center;
   min-width: 0;
+  max-width: 28rem;
   text-align: center;
-  width: min(100%, 28rem);
+  width: 100%;
 }
 
 .app-header__eyebrow {
-  color: rgba(255, 237, 214, 0.68) !important;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
+  color: rgba(248, 242, 232, 0.7) !important;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .app-header__title {
-  color: #fff6eb !important;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1rem, 2vw, 1.18rem);
-  letter-spacing: 0.04em;
+  color: #fbf5eb !important;
+  font-family: var(--heading-font);
+  font-size: clamp(1.02rem, 2vw, 1.24rem);
+  letter-spacing: 0.02em;
   line-height: 1.2;
 }
 
 .app-header__profile,
 .app-header__action {
   align-items: center;
-  background: rgba(255, 248, 238, 0.1);
-  border: 1px solid rgba(255, 240, 220, 0.18);
+  background: rgba(240, 231, 213, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
   display: inline-flex;
   justify-content: center;
@@ -125,7 +126,7 @@
 }
 
 .app-header__action {
-  color: #fff6eb !important;
+  color: #fbf5eb !important;
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -137,16 +138,16 @@
 .app-header__profile:focus-visible,
 .app-header__action:hover,
 .app-header__action:focus-visible {
-  background: rgba(255, 248, 238, 0.16);
-  border-color: rgba(255, 240, 220, 0.32);
+  background: rgba(240, 231, 213, 0.28);
+  border-color: rgba(255, 255, 255, 0.3);
   outline: none;
   transform: translateY(-1px);
 }
 
 .app-header__avatar {
-  border: 2px solid rgba(255, 242, 227, 0.42);
+  border: 2px solid rgba(255, 255, 255, 0.34);
   border-radius: 50%;
-  box-shadow: 0 10px 18px rgba(8, 13, 24, 0.2);
+  box-shadow: 0 10px 18px rgba(17, 22, 36, 0.16);
   height: 2.35rem;
   object-fit: cover;
   width: 2.35rem;
@@ -163,14 +164,13 @@
 
 .app-bottom-nav__surface {
   background:
-    radial-gradient(circle at top, rgba(255, 248, 238, 0.14), transparent 36%),
-    linear-gradient(135deg, rgba(14, 23, 35, 0.97), rgba(31, 44, 63, 0.96) 62%, rgba(88, 61, 38, 0.84));
-  border: 1px solid rgba(255, 240, 220, 0.14);
+    linear-gradient(180deg, rgba(240, 231, 213, 0.94), rgba(232, 217, 199, 0.96));
+  border: 1px solid rgba(63, 61, 60, 0.12);
   border-radius: 32px;
-  box-shadow: 0 20px 42px rgba(5, 10, 20, 0.28);
+  box-shadow: 0 20px 40px rgba(33, 40, 66, 0.12);
   margin: 0 auto;
   max-width: 46rem;
-  padding: 0.9rem 1rem 0.8rem;
+  padding: 0.88rem 1rem 0.82rem;
   position: relative;
 }
 
@@ -185,33 +185,12 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: 0.32rem;
+  gap: 0.35rem;
   min-width: 0;
   padding: 0.1rem 0.2rem;
   position: relative;
   text-decoration: none;
   transition: transform 160ms ease;
-}
-
-.app-bottom-nav__link--compose .app-bottom-nav__icon {
-  background: linear-gradient(135deg, #f4dcc0, #c98f5b);
-  border: 1px solid rgba(255, 239, 222, 0.34);
-  box-shadow:
-    0 14px 28px rgba(4, 9, 20, 0.26),
-    inset 0 1px 0 rgba(255, 255, 255, 0.34);
-  color: #172132 !important;
-  height: 2.95rem;
-  width: 2.95rem;
-}
-
-.app-bottom-nav__link--compose .app-bottom-nav__icon i {
-  transform: translateX(0.04rem);
-}
-
-.app-bottom-nav__link--compose .app-bottom-nav__label {
-  color: #fff3e0 !important;
-  font-weight: 600;
-  letter-spacing: 0.08em;
 }
 
 .app-bottom-nav__link:hover,
@@ -229,9 +208,9 @@
   align-items: center;
   background: transparent;
   border-radius: 50%;
-  color: rgba(255, 240, 220, 0.74) !important;
+  color: rgba(33, 40, 66, 0.68) !important;
   display: inline-flex;
-  font-size: 1.1rem;
+  font-size: 1.08rem;
   height: 2.6rem;
   justify-content: center;
   transition:
@@ -242,9 +221,9 @@
 }
 
 .app-bottom-nav__label {
-  color: rgba(255, 240, 220, 0.68) !important;
+  color: rgba(63, 61, 60, 0.78) !important;
   font-size: 0.72rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -252,28 +231,22 @@
 }
 
 .app-bottom-nav__link.is-active .app-bottom-nav__icon {
-  background: linear-gradient(135deg, #efd2ad, #c9955f);
-  box-shadow: 0 10px 22px rgba(10, 14, 24, 0.24);
-  color: #1a2433 !important;
+  background: linear-gradient(135deg, var(--nouvelle-ink), #394767);
+  box-shadow: 0 12px 22px rgba(33, 40, 66, 0.18);
+  color: #fbf5eb !important;
 }
 
 .app-bottom-nav__link.is-active .app-bottom-nav__label {
-  color: #fff6eb !important;
-}
-
-.app-bottom-nav__link--compose:hover .app-bottom-nav__icon,
-.app-bottom-nav__link--compose:focus-visible .app-bottom-nav__icon {
-  box-shadow:
-    0 16px 30px rgba(4, 9, 20, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.34);
+  color: var(--nouvelle-ink) !important;
+  font-weight: 600;
 }
 
 .app-bottom-nav__badge {
   align-items: center;
-  background: linear-gradient(135deg, #ffcf9d, #c96f47);
-  border: 1px solid rgba(26, 36, 51, 0.32);
+  background: linear-gradient(135deg, #d8b97d, var(--nouvelle-accent-deep));
+  border: 1px solid rgba(33, 40, 66, 0.22);
   border-radius: 999px;
-  color: #1a2433 !important;
+  color: var(--nouvelle-ink) !important;
   display: inline-flex;
   font-size: 0.62rem;
   font-weight: 700;
@@ -294,14 +267,15 @@
   .app-header__meta {
     grid-column: 1 / -1;
     order: 3;
+    max-width: 24rem;
     text-align: center;
-    width: min(100%, 24rem);
+    width: 100%;
   }
 }
 
 @media (max-width: 575.98px) {
   .app-header {
-    padding-top: 0.75rem;
+    padding-top: 0.7rem;
   }
 
   .app-header__inner {
@@ -330,11 +304,6 @@
   .app-bottom-nav__icon {
     height: 2.35rem;
     width: 2.35rem;
-  }
-
-  .app-bottom-nav__link--compose .app-bottom-nav__icon {
-    height: 2.68rem;
-    width: 2.68rem;
   }
 
   .app-bottom-nav__label {

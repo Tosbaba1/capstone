@@ -1,59 +1,80 @@
-<% live_presence_label = "Reading now: #{pluralize(@live_presence_count, 'person')}" %>
+<% live_presence_label = @live_presence_count.positive? ? "#{pluralize(@live_presence_count, 'reader')} reading now" : "The room is quiet right now" %>
 
 <section class="sessions-home">
   <header class="sessions-home__hero mb-4">
-    <div class="sessions-home__hero-copy">
-      <p class="sessions-home__eyebrow mb-2">Live Presence</p>
-      <h1 class="sessions-home__title mb-2"><%= live_presence_label %></h1>
-      <p class="sessions-home__lede mb-0">
-        A calm front door into reading. Step into an open session, or begin one and let the room fill around you.
-      </p>
+    <div class="sessions-home__hero-layout">
+      <div class="sessions-home__hero-copy">
+        <p class="sessions-home__eyebrow mb-2">Ready to read?</p>
+        <h1 class="sessions-home__title mb-2">Set aside a little time.</h1>
+        <p class="sessions-home__lede">
+          Read alongside others in a room that stays quiet, warm, and gently social. Start your own session or join one already in progress.
+        </p>
+      </div>
+
+      <aside class="presence-rail">
+        <p class="presence-rail__label mb-0">Presence</p>
+        <h2 class="presence-rail__summary mb-0"><%= live_presence_label %></h2>
+
+        <div class="presence-rail__row">
+          <div class="presence-rail__stat">
+            <span class="presence-rail__label">Open sessions</span>
+            <span class="presence-rail__value"><%= @active_sessions.count %></span>
+          </div>
+          <div class="presence-rail__stat">
+            <span class="presence-rail__label">Ready on your shelf</span>
+            <span class="presence-rail__value"><%= @progress_snapshot[:reading] + @progress_snapshot[:queued] %></span>
+          </div>
+        </div>
+
+        <% if feature_flags.presence_visibility == "avatars" && @presence_readers.any? %>
+          <div class="presence-rail__readers">
+            <div class="presence-avatars" aria-hidden="true">
+              <% @presence_readers.first(4).each do |reader| %>
+                <%= image_tag(reader.avatar.presence || "default_avatar.png", alt: "", class: "presence-avatars__image") %>
+              <% end %>
+            </div>
+            <% reader_names = @presence_readers.first(3).map { |reader| reader.name.presence || reader.username.presence || "A reader" } %>
+            <p class="presence-rail__caption mb-0">
+              <%= reader_names.to_sentence %>
+              <% if @live_presence_count > 3 %>
+                and others are already settled in.
+              <% else %>
+                are already settled in.
+              <% end %>
+            </p>
+          </div>
+        <% elsif @live_presence_count.positive? %>
+          <p class="presence-rail__caption mb-0">
+            <%= "#{pluralize(@live_presence_count, "reader")} are already sharing quiet reading time right now." %>
+          </p>
+        <% else %>
+          <p class="presence-rail__caption mb-0">The room is still for now. It is a good moment to begin.</p>
+        <% end %>
+      </aside>
     </div>
 
-    <div class="presence-rail">
-      <div class="presence-rail__stat">
-        <span class="presence-rail__label">Open sessions</span>
-        <span class="presence-rail__value"><%= @active_sessions.count %></span>
-      </div>
-      <div class="presence-rail__stat">
-        <span class="presence-rail__label">On your shelf</span>
-        <span class="presence-rail__value"><%= @progress_snapshot[:reading] + @progress_snapshot[:queued] %></span>
-      </div>
-
-      <% if feature_flags.presence_visibility == "avatars" && @presence_readers.any? %>
-        <div class="presence-rail__readers">
-          <div class="presence-avatars" aria-hidden="true">
-            <% @presence_readers.first(4).each do |reader| %>
-              <%= image_tag(reader.avatar.presence || "default_avatar.png", alt: "", class: "presence-avatars__image") %>
-            <% end %>
-          </div>
-          <% reader_names = @presence_readers.first(3).map { |reader| reader.name.presence || reader.username.presence || "A reader" } %>
-          <p class="presence-rail__caption mb-0">
-            <%= reader_names.to_sentence %>
-            <% if @live_presence_count > 3 %>
-              and others are already reading.
-            <% else %>
-              are already reading.
-            <% end %>
-          </p>
-        </div>
-      <% elsif @live_presence_count.positive? %>
-        <p class="presence-rail__caption mb-0">
-          <%= "#{pluralize(@live_presence_count, "reader")} are already in live sessions right now." %>
-        </p>
+    <div class="sessions-home__hero-actions">
+      <% if @current_session_participant.present? %>
+        <%= link_to "Return to Active Session", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
+        <%= link_to "Start New Session", new_session_path, class: "sessions-home__secondary-action" %>
       <% else %>
-        <p class="presence-rail__caption mb-0">The room is quiet right now, which makes it a good moment to begin.</p>
+        <%= link_to "Start Reading Session", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
+        <%= link_to "Open library", library_path, class: "sessions-home__secondary-action" %>
       <% end %>
     </div>
+
+    <p class="sessions-home__hero-note">
+      Your default start is <%= feature_flags.session_length %> quiet minutes in <%= feature_flags.session_type.titleize %> Mode.
+    </p>
   </header>
 
-  <div class="sessions-home__grid">
+  <div class="sessions-home__supporting-grid">
     <section class="sessions-home__panel">
       <div class="sessions-home__panel-head">
         <div>
-          <p class="sessions-home__section-eyebrow mb-1">Active Sessions</p>
-          <h2 class="sessions-home__section-title mb-1">Open tables you can join right now.</h2>
-          <p class="sessions-home__section-copy mb-0">These rooms now run on real session records, presence polling, and completion tracking.</p>
+          <p class="sessions-home__section-eyebrow mb-1">Reading now</p>
+          <h2 class="sessions-home__section-title mb-1">Open rooms you can join right away.</h2>
+          <p class="sessions-home__section-copy mb-0">Presence stays light here: who is reading, how long the room lasts, and a simple path to join.</p>
         </div>
       </div>
 
@@ -65,8 +86,8 @@
         </div>
       <% else %>
         <div class="sessions-home__empty-state">
-          <p class="mb-1">Be the first to start a session.</p>
-          <p class="mb-0">Once someone begins reading, the room will appear here with a join path for the next person.</p>
+          <p class="mb-1">No rooms are open yet.</p>
+          <p class="mb-0">Starting a session now will make a place for the next reader who arrives.</p>
         </div>
       <% end %>
     </section>
@@ -74,9 +95,9 @@
     <section class="sessions-home__panel">
       <div class="sessions-home__panel-head">
         <div>
-          <p class="sessions-home__section-eyebrow mb-1">Session Entry</p>
-          <h2 class="sessions-home__section-title mb-1">Choose the easiest book to sit down with.</h2>
-          <p class="sessions-home__section-copy mb-0">Home should shorten the distance between opening the app and actually reading.</p>
+          <p class="sessions-home__section-eyebrow mb-1">Pick up a book</p>
+          <h2 class="sessions-home__section-title mb-1">Choose the easiest next page.</h2>
+          <p class="sessions-home__section-copy mb-0">Home should shorten the distance between opening Nouvelle and settling into reading.</p>
         </div>
       </div>
 
@@ -118,13 +139,23 @@
       <% else %>
         <div class="sessions-home__empty-state">
           <p class="mb-1">Your shelf is still empty.</p>
-          <p class="mb-3">Add a book first, then Home can turn it into an immediate reading entry point.</p>
+          <p class="mb-3">Add a book first, then Home can turn it into an easy place to begin.</p>
           <div class="sessions-home__inline-actions">
             <%= link_to "Find a book", search_path(tab: "books"), class: "sessions-home__secondary-action sessions-home__secondary-action--compact" %>
             <%= link_to "Open library", library_path, class: "entry-card__link" %>
           </div>
         </div>
       <% end %>
+    </section>
+  </div>
+
+  <div class="sessions-home__secondary-grid">
+    <section class="sessions-home__panel">
+      <div>
+        <p class="sessions-home__section-eyebrow mb-1">Your rhythm</p>
+        <h2 class="sessions-home__section-title mb-1">Lightweight progress, kept in the background.</h2>
+        <p class="sessions-home__section-copy mb-0">Tracking stays available, but the focus remains on finding time to read.</p>
+      </div>
 
       <div class="progress-strip">
         <article class="progress-strip__card">
@@ -141,68 +172,49 @@
         </article>
       </div>
     </section>
-  </div>
 
-  <section class="sessions-home__panel sessions-home__panel--cta mt-4">
-    <div>
-      <p class="sessions-home__section-eyebrow mb-1">Primary Action</p>
-      <h2 class="sessions-home__section-title mb-1">Start reading before anything else competes for attention.</h2>
-      <p class="sessions-home__section-copy mb-0">Choose a duration, pick silent or structured mode, and step straight into the timer.</p>
-      <p class="sessions-home__section-copy mb-0">
-        Your current experiment defaults to <%= feature_flags.session_length %> minutes in <%= feature_flags.session_type.titleize %> Mode.
-      </p>
-    </div>
-
-    <div class="sessions-home__cta-actions">
-      <% if @current_session_participant.present? %>
-        <%= link_to "Return to Active Session", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
-        <%= link_to "Start New Session", new_session_path, class: "sessions-home__secondary-action" %>
-      <% else %>
-        <%= link_to "Start Reading Session", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
-        <%= link_to "Open library", library_path, class: "sessions-home__secondary-action" %>
-      <% end %>
-    </div>
-  </section>
-
-  <section class="sessions-home__panel mt-4">
-    <div class="sessions-home__panel-head">
-      <div>
-        <p class="sessions-home__section-eyebrow mb-1">Secondary Surfaces</p>
-        <h2 class="sessions-home__section-title mb-1">Library, discovery, and activity stay available without taking over Home.</h2>
-        <p class="sessions-home__section-copy mb-0">The social layer still exists, but it now sits behind the session loop instead of ahead of it.</p>
+    <section class="sessions-home__panel">
+      <div class="sessions-home__panel-head">
+        <div>
+          <p class="sessions-home__section-eyebrow mb-1">Elsewhere in Nouvelle</p>
+          <h2 class="sessions-home__section-title mb-1">Keep the rest of the app within easy reach.</h2>
+          <p class="sessions-home__section-copy mb-0">Library, discovery, and notes are still here, simply quieter on the page.</p>
+        </div>
       </div>
-    </div>
 
-    <div class="secondary-surface-grid">
-      <%= link_to library_path, class: "secondary-surface-card" do %>
-        <span class="secondary-surface-card__eyebrow">Library</span>
-        <strong class="secondary-surface-card__title">Manage your shelves</strong>
-        <span class="secondary-surface-card__copy">Adjust status, privacy, and progress when you need to.</span>
+      <div class="secondary-surface-grid mt-3">
+        <%= link_to library_path, class: "secondary-surface-card" do %>
+          <span class="secondary-surface-card__eyebrow">Library</span>
+          <strong class="secondary-surface-card__title">Manage your shelves</strong>
+          <span class="secondary-surface-card__copy">Adjust status, privacy, and progress when you need to.</span>
+        <% end %>
+
+        <%= link_to search_path(tab: "books"), class: "secondary-surface-card" do %>
+          <span class="secondary-surface-card__eyebrow">Discover</span>
+          <strong class="secondary-surface-card__title">Find your next book</strong>
+          <span class="secondary-surface-card__copy">Browse titles without breaking the calm session-first structure.</span>
+        <% end %>
+
+        <%= link_to posts_path, class: "secondary-surface-card" do %>
+          <span class="secondary-surface-card__eyebrow">Activity</span>
+          <strong class="secondary-surface-card__title">Reading notes and updates</strong>
+          <span class="secondary-surface-card__copy">Visit the social layer when you want it, not before you start reading.</span>
+        <% end %>
+      </div>
+
+      <% if @recent_post.present? %>
+        <% recent_author = @recent_post.creator.name.presence || @recent_post.creator.username.presence || "A reader" %>
+        <% recent_book = @recent_post.book&.title.presence || "their current read" %>
+        <article class="feed-teaser mt-3">
+          <p class="feed-teaser__eyebrow mb-0">Latest reading note</p>
+          <p class="feed-teaser__copy mb-0">
+            <strong><%= recent_author %></strong> shared an update about <strong><%= recent_book %></strong>.
+          </p>
+          <div class="sessions-home__inline-actions">
+            <%= link_to "Open activity", posts_path, class: "entry-card__link" %>
+          </div>
+        </article>
       <% end %>
-
-      <%= link_to search_path(tab: "books"), class: "secondary-surface-card" do %>
-        <span class="secondary-surface-card__eyebrow">Discover</span>
-        <strong class="secondary-surface-card__title">Find your next book</strong>
-        <span class="secondary-surface-card__copy">Browse titles without breaking the calm session-first structure.</span>
-      <% end %>
-
-      <%= link_to posts_path, class: "secondary-surface-card" do %>
-        <span class="secondary-surface-card__eyebrow">Activity</span>
-        <strong class="secondary-surface-card__title">Reading notes and updates</strong>
-        <span class="secondary-surface-card__copy">Activity is preserved as its own surface instead of driving the Home page.</span>
-      <% end %>
-    </div>
-
-    <% if @recent_post.present? %>
-      <% recent_author = @recent_post.creator.name.presence || @recent_post.creator.username.presence || "A reader" %>
-      <% recent_book = @recent_post.book&.title.presence || "their current read" %>
-      <article class="feed-teaser">
-        <p class="feed-teaser__eyebrow mb-1">Latest reading note</p>
-        <p class="feed-teaser__copy mb-2">
-          <strong><%= recent_author %></strong> shared an update about <strong><%= recent_book %></strong>.
-        </p>
-        <%= link_to "Open activity", posts_path, class: "entry-card__link" %>
-      </article>
-    <% end %>
-  </section>
+    </section>
+  </div>
 </section>

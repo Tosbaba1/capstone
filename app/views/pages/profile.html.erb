@@ -27,7 +27,7 @@
         <% if @current_session_participant.present? %>
           <%= link_to "Return to Session", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
         <% else %>
-          <%= link_to "Start Session", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+          <%= link_to "Start Reading Session", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
         <% end %>
         <%= link_to "Edit Profile", edit_user_registration_path, class: "sessions-home__secondary-action" %>
       </div>

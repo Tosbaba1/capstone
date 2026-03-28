@@ -37,20 +37,23 @@
       <div class="profile-progress__stat">
         <span class="profile-progress__stat-label">This week</span>
         <strong class="profile-progress__stat-value"><%= reading_time_label(@weekly_reading_time) %></strong>
+        <p class="profile-progress__stat-copy mb-0">Time you protected for reading.</p>
       </div>
       <div class="profile-progress__stat">
         <span class="profile-progress__stat-label">Sessions completed</span>
         <strong class="profile-progress__stat-value"><%= @sessions_completed %></strong>
+        <p class="profile-progress__stat-copy mb-0">Finished sessions, kept lightly.</p>
       </div>
       <div class="profile-progress__stat">
         <span class="profile-progress__stat-label">Current streak</span>
         <strong class="profile-progress__stat-value"><%= streak_label(@current_streak) %></strong>
+        <p class="profile-progress__stat-copy mb-0">A rhythm built by returning.</p>
       </div>
     </div>
   </article>
 
   <div class="profile-progress__grid">
-    <section class="profile-progress__panel">
+    <section class="profile-progress__panel profile-progress__panel--story">
       <p class="profile-progress__eyebrow mb-1">Identity through consistency</p>
       <h2 class="profile-progress__panel-title mb-2">
         <% if @current_streak.positive? %>
@@ -76,7 +79,7 @@
       </p>
     </section>
 
-    <section class="profile-progress__panel">
+    <section class="profile-progress__panel profile-progress__panel--timeline">
       <div class="profile-progress__panel-head">
         <div>
           <p class="profile-progress__eyebrow mb-1">Recent sessions</p>
@@ -90,7 +93,7 @@
           <% @recent_completed_sessions.each do |participant| %>
             <% companion_count = participant.session.other_reader_count_for(current_user) %>
             <article class="profile-progress__session-item">
-              <div>
+              <div class="profile-progress__session-main">
                 <p class="profile-progress__session-date mb-1"><%= participant.leave_time.in_time_zone.strftime("%b %-d") %></p>
                 <h3 class="profile-progress__session-title mb-1"><%= "#{participant.credited_minutes} minute #{participant.session.mode == "structured" ? "Structured" : "Silent"} session" %></h3>
                 <p class="profile-progress__session-copy mb-0">
@@ -101,7 +104,9 @@
                   <% end %>
                 </p>
               </div>
-              <span class="profile-progress__session-badge"><%= participant.leave_time.in_time_zone.strftime("%-I:%M %p") %></span>
+              <div class="profile-progress__session-meta">
+                <span class="profile-progress__session-badge"><%= participant.leave_time.in_time_zone.strftime("%-I:%M %p") %></span>
+              </div>
             </article>
           <% end %>
         </div>

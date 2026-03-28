@@ -15,29 +15,42 @@
     <% if @participant.leave_time.present? %>
       <% if @participant.completed? %>
         <div class="session-room__summary-shell session-room__summary-shell--completion">
-          <p class="session-room__summary-label mb-1"><%= participant_status %></p>
-          <h1 class="session-room__summary-title mb-2"><%= "You read for #{credited_minutes} minutes" %></h1>
-          <p class="session-room__summary-copy mb-0">
-            <% if other_reader_count.positive? %>
-              <%= "#{pluralize(other_reader_count, "other person")} read with you." %>
-            <% else %>
-              You read solo — great work.
-            <% end %>
-          </p>
-          <p class="session-room__summary-encouragement mb-0">Come back tomorrow.</p>
+          <div class="session-room__summary-header">
+            <div>
+              <p class="session-room__summary-label mb-1"><%= participant_status %></p>
+              <p class="session-room__summary-kicker mb-0">A quiet finish</p>
+            </div>
+            <div class="session-room__summary-seal" aria-hidden="true">N</div>
+          </div>
+
+          <div class="session-room__summary-reflection">
+            <h1 class="session-room__summary-title mb-0"><%= "You read for #{credited_minutes} minutes" %></h1>
+            <p class="session-room__summary-copy mb-0">
+              <% if other_reader_count.positive? %>
+                <%= "#{pluralize(other_reader_count, "other person")} read with you." %>
+              <% else %>
+                You read solo. A steady finish.
+              <% end %>
+            </p>
+            <p class="session-room__summary-encouragement mb-0">Come back tomorrow.</p>
+            <p class="session-room__summary-note mb-0">Let today's pages make it easier to return when you're ready.</p>
+          </div>
 
           <div class="session-room__summary-metrics">
             <div class="session-room__summary-metric">
               <span>This week</span>
               <strong><%= reading_time_label(current_user.reading_time_this_week) %></strong>
+              <small>Time you have made room for recently.</small>
             </div>
             <div class="session-room__summary-metric">
               <span>Sessions completed</span>
               <strong><%= pluralize(current_user.completed_session_count, "session") %></strong>
+              <small>Finished reading moments kept in your log.</small>
             </div>
             <div class="session-room__summary-metric">
               <span>Current streak</span>
               <strong><%= streak_label(current_streak) %></strong>
+              <small>The rhythm you are carrying forward.</small>
             </div>
           </div>
 

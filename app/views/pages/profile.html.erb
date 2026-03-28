@@ -1,28 +1,31 @@
 <% profile_name = current_user.name.presence || current_user.username.presence || "Reader" %>
 <% profile_handle = current_user.username.presence || current_user.email.to_s.split("@").first %>
 
-<section class="profile-progress">
+<section class="profile-progress app-page-stack">
   <article class="profile-progress__hero">
     <% if current_user.banner.present? %>
       <p class="profile-progress__banner mb-0"><%= current_user.banner %></p>
     <% end %>
 
-    <div class="profile-progress__hero-body">
-      <div class="profile-progress__identity">
-        <%= image_tag(current_user.avatar.presence || "default_avatar.png", alt: profile_name, class: "profile-progress__avatar") %>
+    <div class="profile-progress__identity">
+      <%= image_tag(current_user.avatar.presence || "default_avatar.png", alt: profile_name, class: "profile-progress__avatar") %>
 
-        <div class="profile-progress__identity-copy">
-          <p class="profile-progress__eyebrow mb-1">Profile</p>
-          <h1 class="profile-progress__title mb-1"><%= profile_name %></h1>
-          <p class="profile-progress__handle mb-2"><%= "@#{profile_handle}" %></p>
-          <% if current_user.bio.present? %>
-            <p class="profile-progress__bio mb-0"><%= current_user.bio %></p>
-          <% else %>
-            <p class="profile-progress__bio mb-0">A quiet place to keep your reading habit steady.</p>
-          <% end %>
-        </div>
+      <div class="profile-progress__identity-copy">
+        <p class="profile-progress__eyebrow mb-1">Profile</p>
+        <h1 class="profile-progress__title mb-1"><%= profile_name %></h1>
+        <p class="profile-progress__handle mb-2"><%= "@#{profile_handle}" %></p>
+        <% if current_user.bio.present? %>
+          <p class="profile-progress__bio mb-0"><%= current_user.bio %></p>
+        <% else %>
+          <p class="profile-progress__bio mb-0">A quiet place to keep your reading habit steady.</p>
+        <% end %>
       </div>
+    </div>
+  </article>
 
+  <section class="app-support-grid app-support-grid--split profile-progress__supporting">
+    <div class="page-panel page-panel--soft profile-progress__support-card">
+      <p class="page-eyebrow mb-2">Quick actions</p>
       <div class="profile-progress__actions">
         <% if @current_session_participant.present? %>
           <%= link_to "Return to Session", session_path(@current_session_participant.session), class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
@@ -32,26 +35,27 @@
         <%= link_to "Edit Profile", edit_user_registration_path, class: "sessions-home__secondary-action" %>
       </div>
     </div>
-  </article>
 
-  <section class="profile-progress__summary-grid">
-    <div class="profile-progress__stats">
-      <div class="profile-progress__stat">
-        <span class="profile-progress__stat-label">This week</span>
-        <strong class="profile-progress__stat-value"><%= reading_time_label(@weekly_reading_time) %></strong>
-        <p class="profile-progress__stat-copy mb-0">Time you protected for reading.</p>
+    <section class="page-panel page-panel--soft profile-progress__summary-grid">
+      <p class="page-eyebrow mb-2">Reading summary</p>
+      <div class="profile-progress__stats">
+        <div class="profile-progress__stat">
+          <span class="profile-progress__stat-label">This week</span>
+          <strong class="profile-progress__stat-value"><%= reading_time_label(@weekly_reading_time) %></strong>
+          <p class="profile-progress__stat-copy mb-0">Time you protected for reading.</p>
+        </div>
+        <div class="profile-progress__stat">
+          <span class="profile-progress__stat-label">Sessions completed</span>
+          <strong class="profile-progress__stat-value"><%= @sessions_completed %></strong>
+          <p class="profile-progress__stat-copy mb-0">Finished sessions, kept lightly.</p>
+        </div>
+        <div class="profile-progress__stat">
+          <span class="profile-progress__stat-label">Current streak</span>
+          <strong class="profile-progress__stat-value"><%= streak_label(@current_streak) %></strong>
+          <p class="profile-progress__stat-copy mb-0">A rhythm built by returning.</p>
+        </div>
       </div>
-      <div class="profile-progress__stat">
-        <span class="profile-progress__stat-label">Sessions completed</span>
-        <strong class="profile-progress__stat-value"><%= @sessions_completed %></strong>
-        <p class="profile-progress__stat-copy mb-0">Finished sessions, kept lightly.</p>
-      </div>
-      <div class="profile-progress__stat">
-        <span class="profile-progress__stat-label">Current streak</span>
-        <strong class="profile-progress__stat-value"><%= streak_label(@current_streak) %></strong>
-        <p class="profile-progress__stat-copy mb-0">A rhythm built by returning.</p>
-      </div>
-    </div>
+    </section>
   </section>
 
   <div class="profile-progress__grid">

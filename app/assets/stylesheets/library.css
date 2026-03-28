@@ -300,3 +300,59 @@
     flex-direction: column;
   }
 }
+
+.library-shell {
+  max-width: 72rem;
+}
+
+.library-shell > .app-tabs-row,
+.library-shell > .nav-tabs {
+  margin-bottom: 0;
+}
+
+.library-hero {
+  padding: 1.125rem 1.25rem;
+}
+
+.library-hero__header {
+  align-items: center;
+}
+
+.library-hero__title {
+  font-size: clamp(1.45rem, 2.7vw, 2rem);
+}
+
+.library-hero__copy {
+  max-width: 32rem;
+}
+
+.library-hero__actions .btn {
+  min-width: 0;
+}
+
+.library-shelf {
+  gap: 0.875rem;
+  padding: 1rem 1.125rem;
+}
+
+.library-shelf__title {
+  font-size: 1.3rem;
+}
+
+.library-book-card__top {
+  gap: 0.875rem;
+}
+
+.library-book-card__content {
+  gap: 0.75rem;
+}
+
+.library-book-card__title,
+.library-book-card__title a {
+  font-size: 1.08rem;
+}
+
+.library-book-card__review,
+.library-book-card__author {
+  line-height: 1.5;
+}

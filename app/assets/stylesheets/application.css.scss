@@ -886,3 +886,41 @@ h6 {
   background: rgba(255, 250, 243, 0.14);
   border-color: rgba(255, 250, 243, 0.22);
 }
+
+.app-page-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.app-page-stack > * {
+  min-width: 0;
+}
+
+.app-tabs-row {
+  margin: 0;
+}
+
+.app-tabs-row .nav-link {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.app-support-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.app-support-grid--split {
+  align-items: start;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+}
+
+.app-support-grid .page-panel {
+  padding: 1rem 1.125rem;
+}
+
+@media (max-width: 767.98px) {
+  .app-support-grid--split {
+    grid-template-columns: 1fr;
+  }
+}

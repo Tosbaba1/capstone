@@ -1,8 +1,8 @@
 <% explore_active = params[:tab] == 'explore' %>
 <% feed_path = explore_active ? posts_path(tab: 'explore') : posts_path %>
 
-<section class="feed-shell">
-  <ul class="nav nav-tabs feed-tabs mb-3">
+<section class="feed-shell app-page-stack">
+  <ul class="nav nav-tabs app-tabs-row feed-tabs mb-3">
     <li class="nav-item">
       <%= link_to 'Following', posts_path, class: "nav-link #{explore_active ? '' : 'active'}" %>
     </li>

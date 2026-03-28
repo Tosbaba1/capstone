@@ -1,5 +1,5 @@
 <% if @user == current_user %>
-  <ul class="nav nav-tabs mb-4">
+  <ul class="nav nav-tabs app-tabs-row mb-4">
     <li class="nav-item">
       <%= link_to 'Shared Shelf', library_path(tab: 'public'), class: "nav-link #{@active_tab == 'public' ? 'active' : ''}" %>
     </li>
@@ -13,7 +13,7 @@
 <% end %>
 
 <% if @active_tab == 'ai' %>
-  <section class="library-shell">
+  <section class="library-shell app-page-stack">
     <header class="library-hero mb-4">
       <p class="library-hero__eyebrow mb-2">Librarian</p>
       <div class="library-hero__header">
@@ -35,7 +35,7 @@
   <% library_title = editable ? 'Your Library' : "#{@user.name}'s Library" %>
   <% shelf_label = editable ? (@active_tab == 'private' ? 'Private shelf' : 'Public shelf') : 'Public shelf' %>
 
-  <section class="library-shell">
+  <section class="library-shell app-page-stack">
     <header class="library-hero mb-4">
       <p class="library-hero__eyebrow mb-2"><%= editable ? shelf_label : "Library" %></p>
       <div class="library-hero__header">

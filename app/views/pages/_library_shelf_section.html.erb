@@ -13,7 +13,7 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4">
       <% readings.each do |reading| %>
         <div class="col">
-          <%= render 'library_book_card', reading: reading, editable: editable %>
+          <%= render 'pages/library_book_card', reading: reading, editable: editable %>
         </div>
       <% end %>
     </div>

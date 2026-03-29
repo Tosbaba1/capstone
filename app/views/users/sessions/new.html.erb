@@ -6,7 +6,7 @@
       <p class="page-copy mb-0">Step back into your library, your progress, and the next quiet session.</p>
     </div>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "account-form" }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: user_session_path, html: { class: "account-form" }) do |f| %>
       <%= devise_error_messages! %>
 
       <div class="account-form__field">

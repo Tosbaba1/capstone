@@ -14,7 +14,7 @@
 
 <% if @active_tab == 'ai' %>
   <section class="library-shell app-page-stack">
-    <%= render 'library_ai_chat' %>
+    <%= render 'pages/library_ai_chat' %>
   </section>
 <% else %>
   <% editable = @user == current_user %>
@@ -41,19 +41,19 @@
       </div>
     </header>
 
-    <%= render 'library_shelf_section',
+    <%= render 'pages/library_shelf_section',
       title: 'Currently Reading',
       subtitle: 'In progress',
       readings: @reading_now,
       editable: editable %>
 
-    <%= render 'library_shelf_section',
+    <%= render 'pages/library_shelf_section',
       title: 'Want to Read',
       subtitle: 'Next up',
       readings: @want_to_read,
       editable: editable %>
 
-    <%= render 'library_shelf_section',
+    <%= render 'pages/library_shelf_section',
       title: 'Finished',
       subtitle: 'Completed',
       readings: @finished,

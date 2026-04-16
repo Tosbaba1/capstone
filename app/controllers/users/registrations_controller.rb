@@ -14,6 +14,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def after_sign_up_path_for(resource)
-    edit_user_registration_path
+    home_path
   end
 end

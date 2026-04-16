@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   post "/library/ai_chat", to: "pages#ai_chat", as: :library_ai_chat
   get "/notifications", to: "pages#notifications"
   get "/search", to: "search#index", as: :search
+  resource :onboarding_preferences, only: [:show, :update], controller: "onboarding_preferences" do
+    patch :skip, on: :collection
+  end
   resources :sessions, only: [:new, :create, :show] do
     member do
       post :join

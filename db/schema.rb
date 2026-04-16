@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_27_110000) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_15_000500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -217,6 +217,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_27_110000) do
     t.datetime "last_active"
     t.integer "total_reading_time", default: 0, null: false
     t.integer "sessions_completed", default: 0, null: false
+    t.text "preferred_genres", default: "[]"
+    t.string "reading_frequency"
+    t.string "social_reading_preference"
+    t.datetime "recommendation_onboarding_completed_at"
+    t.datetime "recommendation_onboarding_skipped_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

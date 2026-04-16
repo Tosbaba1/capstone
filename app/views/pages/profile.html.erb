@@ -38,6 +38,7 @@
           <% else %>
             <%= link_to "Start reading", new_session_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
           <% end %>
+          <%= link_to "Reading preferences", onboarding_preferences_path, class: "sessions-home__secondary-action" %>
           <%= link_to "Edit profile", edit_user_registration_path, class: "sessions-home__secondary-action" %>
         </div>
       </div>

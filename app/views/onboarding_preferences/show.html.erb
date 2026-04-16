@@ -1,0 +1,90 @@
+<section class="account-shell onboarding-flow">
+  <article class="account-panel onboarding-flow__panel">
+    <div class="onboarding-flow__header">
+      <div>
+        <p class="page-eyebrow mb-1">Optional</p>
+        <h1 class="page-title mb-2">A few quick reading preferences</h1>
+        <p class="page-copy mb-0">
+          This stays light on purpose. Answer what feels obvious, skip what does not, and get back to reading.
+        </p>
+      </div>
+
+      <%= button_to "Skip for now", skip_onboarding_preferences_path, method: :patch, class: "sessions-home__secondary-action sessions-home__secondary-action--button sessions-home__secondary-action--compact" %>
+    </div>
+
+    <%= form_with model: @user, url: onboarding_preferences_path, method: :patch, class: "account-form onboarding-flow__form", local: true do |f| %>
+      <%= hidden_field_tag "user[preferred_genres][]", "" %>
+
+      <section class="onboarding-flow__question">
+        <div class="onboarding-flow__question-head">
+          <span class="onboarding-flow__step">01</span>
+          <div>
+            <h2 class="onboarding-flow__title mb-1">Which genres pull you in most?</h2>
+            <p class="onboarding-flow__copy mb-0">Choose up to a few. We only need enough to learn your reading shape.</p>
+          </div>
+        </div>
+
+        <div class="onboarding-flow__chip-grid">
+          <% @genre_options.each do |genre| %>
+            <% field_id = "user_preferred_genres_#{genre.parameterize}" %>
+            <div class="onboarding-flow__chip">
+              <%= check_box_tag "user[preferred_genres][]", genre, @user.preferred_genres.include?(genre), id: field_id, class: "onboarding-flow__chip-input" %>
+              <%= label_tag field_id, genre, class: "onboarding-flow__chip-label" %>
+            </div>
+          <% end %>
+        </div>
+      </section>
+
+      <section class="onboarding-flow__question">
+        <div class="onboarding-flow__question-head">
+          <span class="onboarding-flow__step">02</span>
+          <div>
+            <h2 class="onboarding-flow__title mb-1">How often do you read?</h2>
+            <p class="onboarding-flow__copy mb-0">Pick the rhythm that feels most honest right now.</p>
+          </div>
+        </div>
+
+        <div class="onboarding-flow__option-list">
+          <% @reading_frequency_options.each do |option| %>
+            <% field_id = "user_reading_frequency_#{option[:value]}" %>
+            <label for="<%= field_id %>" class="onboarding-flow__option">
+              <%= f.radio_button :reading_frequency, option[:value], id: field_id, class: "onboarding-flow__option-input" %>
+              <span class="onboarding-flow__option-body">
+                <strong><%= option[:label] %></strong>
+                <small><%= option[:description] %></small>
+              </span>
+            </label>
+          <% end %>
+        </div>
+      </section>
+
+      <section class="onboarding-flow__question">
+        <div class="onboarding-flow__question-head">
+          <span class="onboarding-flow__step">03</span>
+          <div>
+            <h2 class="onboarding-flow__title mb-1">Do you prefer reading solo or with others nearby?</h2>
+            <p class="onboarding-flow__copy mb-0">This helps us understand whether recommendations should lean quiet, social, or both.</p>
+          </div>
+        </div>
+
+        <div class="onboarding-flow__option-list">
+          <% @social_reading_preference_options.each do |option| %>
+            <% field_id = "user_social_reading_preference_#{option[:value]}" %>
+            <label for="<%= field_id %>" class="onboarding-flow__option">
+              <%= f.radio_button :social_reading_preference, option[:value], id: field_id, class: "onboarding-flow__option-input" %>
+              <span class="onboarding-flow__option-body">
+                <strong><%= option[:label] %></strong>
+                <small><%= option[:description] %></small>
+              </span>
+            </label>
+          <% end %>
+        </div>
+      </section>
+
+      <div class="onboarding-flow__actions">
+        <%= f.submit "Save preferences", class: "sessions-home__primary-action sessions-home__primary-action--button" %>
+        <%= link_to "Back to home", home_path, class: "sessions-home__secondary-action" %>
+      </div>
+    <% end %>
+  </article>
+</section>

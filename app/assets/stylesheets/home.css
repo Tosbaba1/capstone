@@ -646,6 +646,214 @@
   margin-top: 1.25rem;
 }
 
+.sessions-home__onboarding-prompt,
+.onboarding-flow__question,
+.onboarding-flow__option,
+.onboarding-flow__chip-label {
+  border: 1px solid rgba(33, 40, 66, 0.08);
+}
+
+.sessions-home__onboarding-prompt {
+  align-items: center;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin: 1.1rem 0 1.2rem;
+  padding: 1.2rem;
+}
+
+.sessions-home__onboarding-copy {
+  display: grid;
+  gap: 0.25rem;
+  max-width: 38rem;
+}
+
+.sessions-home__onboarding-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.onboarding-flow {
+  max-width: 52rem;
+}
+
+.onboarding-flow__panel,
+.onboarding-flow__form,
+.onboarding-flow__question {
+  display: grid;
+  gap: 1rem;
+}
+
+.onboarding-flow__panel {
+  gap: 1.25rem;
+}
+
+.onboarding-flow__header {
+  align-items: start;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.onboarding-flow__header .button_to {
+  justify-self: end;
+  margin: 0;
+}
+
+.onboarding-flow__question {
+  background: rgba(255, 250, 244, 0.72);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+}
+
+.onboarding-flow__question-head {
+  align-items: start;
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.onboarding-flow__step {
+  align-items: center;
+  background: rgba(198, 169, 105, 0.18);
+  border-radius: var(--radius-pill);
+  color: var(--nouvelle-ink);
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 700;
+  height: 2rem;
+  justify-content: center;
+  letter-spacing: 0.08em;
+  width: 2rem;
+}
+
+.onboarding-flow__title {
+  font-size: 1.35rem;
+}
+
+.onboarding-flow__copy {
+  color: var(--nouvelle-text-soft) !important;
+}
+
+.onboarding-flow__chip-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+
+.onboarding-flow__chip {
+  min-width: 0;
+}
+
+.onboarding-flow__chip-input,
+.onboarding-flow__option-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.onboarding-flow__chip-label,
+.onboarding-flow__option {
+  background: rgba(240, 231, 213, 0.58);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  min-height: 100%;
+  transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.onboarding-flow__chip-label {
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.onboarding-flow__option {
+  align-items: start;
+  gap: 0.8rem;
+  padding: 0.95rem 1rem;
+}
+
+.onboarding-flow__option-list {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.onboarding-flow__option-body {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.onboarding-flow__option-body strong {
+  color: var(--nouvelle-ink) !important;
+}
+
+.onboarding-flow__option-body small {
+  color: var(--nouvelle-text-soft) !important;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.onboarding-flow__chip-input:checked + .onboarding-flow__chip-label,
+.onboarding-flow__option-input:checked + .onboarding-flow__option-body,
+.onboarding-flow__option:has(.onboarding-flow__option-input:checked) {
+  color: inherit;
+}
+
+.onboarding-flow__chip-input:checked + .onboarding-flow__chip-label,
+.onboarding-flow__option:has(.onboarding-flow__option-input:checked) {
+  background: rgba(206, 176, 121, 0.18);
+  border-color: rgba(177, 145, 76, 0.42);
+  box-shadow: 0 10px 18px rgba(198, 169, 105, 0.12);
+}
+
+.onboarding-flow__chip-label:hover,
+.onboarding-flow__option:hover {
+  transform: translateY(-1px);
+}
+
+.onboarding-flow__actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+@media (max-width: 991.98px) {
+  .sessions-home__onboarding-prompt,
+  .onboarding-flow__header {
+    grid-template-columns: 1fr;
+  }
+
+  .sessions-home__onboarding-actions {
+    justify-content: flex-start;
+  }
+
+  .onboarding-flow__header .button_to {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .onboarding-flow__question-head {
+    grid-template-columns: 1fr;
+  }
+
+  .onboarding-flow__step {
+    width: fit-content;
+    padding: 0 0.8rem;
+  }
+
+  .onboarding-flow__chip-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .secondary-surface-grid {
   display: grid;
   gap: 0.85rem;

@@ -29,5 +29,6 @@ FactoryBot.define do
     password { "password" }
     sequence(:name) { |n| "Reader #{n}" }
     sequence(:username) { |n| "reader#{n}" }
+    preferred_genres { [] }
   end
 end

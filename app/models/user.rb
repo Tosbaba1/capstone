@@ -9,11 +9,16 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  is_private             :boolean          default(FALSE)
+#  preferred_genres       :text             default([])
 #  name                   :string
 #  posts_count            :integer
+#  reading_frequency      :string
+#  recommendation_onboarding_completed_at :datetime
+#  recommendation_onboarding_skipped_at   :datetime
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  social_reading_preference :string
 #  username               :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -24,6 +29,30 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
+  ONBOARDING_GENRE_OPTIONS = [
+    "Literary fiction",
+    "Romance",
+    "Mystery",
+    "Fantasy",
+    "Science fiction",
+    "Memoir",
+    "History",
+    "Essays"
+  ].freeze
+
+  READING_FREQUENCY_OPTIONS = [
+    "daily",
+    "a_few_times_a_week",
+    "weekly",
+    "whenever_i_can"
+  ].freeze
+
+  SOCIAL_READING_PREFERENCE_OPTIONS = [
+    "mostly_solo",
+    "a_mix_of_both",
+    "mostly_social"
+  ].freeze
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
@@ -78,6 +107,12 @@ class User < ApplicationRecord
 
   scope :publicly_visible, -> { where(is_private: false) }
 
+  serialize :preferred_genres, coder: JSON, type: Array
+
+  def preferred_genres
+    super || []
+  end
+
   def random_currently_reading_book
     reading_books
       .joins(:readings)
@@ -92,8 +127,11 @@ class User < ApplicationRecord
 
   validates :name, presence: true, on: :update
   validates :username, presence: true, uniqueness: true, on: :update
+  validates :reading_frequency, inclusion: { in: READING_FREQUENCY_OPTIONS }, allow_blank: true
+  validates :social_reading_preference, inclusion: { in: SOCIAL_READING_PREFERENCE_OPTIONS }, allow_blank: true
 
   before_validation :downcase_email
+  before_validation :normalize_preferred_genres
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -157,10 +195,30 @@ class User < ApplicationRecord
     completed_session_participants_scope.order(leave_time: :desc).first
   end
 
+  def recommendation_onboarding_complete?
+    recommendation_onboarding_completed_at.present?
+  end
+
+  def recommendation_onboarding_skipped?
+    recommendation_onboarding_skipped_at.present?
+  end
+
+  def recommendation_onboarding_pending?
+    !recommendation_onboarding_complete? && !recommendation_onboarding_skipped?
+  end
+
   private
 
   def downcase_email
     self.email = email.downcase if email.present?
+  end
+
+  def normalize_preferred_genres
+    self.preferred_genres = Array(preferred_genres)
+      .map(&:presence)
+      .compact
+      .select { |genre| ONBOARDING_GENRE_OPTIONS.include?(genre) }
+      .uniq
   end
 
   def reading_time_for_range(range)

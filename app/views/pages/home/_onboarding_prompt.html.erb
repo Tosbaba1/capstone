@@ -1,0 +1,14 @@
+<section class="sessions-home__panel sessions-home__panel--quiet sessions-home__onboarding-prompt">
+  <div class="sessions-home__onboarding-copy">
+    <p class="sessions-home__section-eyebrow mb-1">Optional</p>
+    <h2 class="sessions-home__section-title mb-1">Shape future recommendations in under a minute</h2>
+    <p class="sessions-home__section-copy mb-0">
+      You already have rooms, books, and reader activity to explore. If you want, answer three quick questions and we'll keep the preferences ready for later.
+    </p>
+  </div>
+
+  <div class="sessions-home__onboarding-actions">
+    <%= link_to "Set preferences", onboarding_preferences_path, class: "sessions-home__primary-action sessions-home__primary-action--inline" %>
+    <%= button_to "Skip for now", skip_onboarding_preferences_path, method: :patch, class: "sessions-home__secondary-action sessions-home__secondary-action--button" %>
+  </div>
+</section>

@@ -42,6 +42,7 @@ RSpec.configure do |config|
   # Shoulda matchers for association accessor specs
   config.include(Shoulda::Matchers::ActiveRecord, type: :model)
   config.include FactoryBot::Syntax::Methods
+  config.include Devise::Test::IntegrationHelpers, type: :request
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

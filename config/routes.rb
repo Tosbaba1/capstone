@@ -3,7 +3,15 @@ Rails.application.routes.draw do
     sessions: "users/sessions",
     registrations: "users/registrations"
   }
-  root to: "pages#home"
+
+  authenticated :user do
+    root to: "pages#home", as: :authenticated_root
+  end
+
+  unauthenticated do
+    root to: "pages#landing"
+  end
+
   get "/home/deferred", to: "pages#home_deferred", as: :home_deferred
   get "/home", to: "pages#home"
   get "/library", to: "pages#library"

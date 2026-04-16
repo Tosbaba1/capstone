@@ -1,4 +1,10 @@
 class PagesController < ApplicationController
+  skip_before_action :authenticate_user!, only: :landing
+
+  def landing
+    @page_title = "Read with others"
+  end
+
   def home
     load_home_core_data
 

@@ -1,0 +1,18 @@
+<section class="landing-section" aria-labelledby="landing-sessions">
+  <div class="landing-section__header">
+    <p class="page-eyebrow mb-2">Reading rooms</p>
+    <h2 id="landing-sessions" class="landing-section__title mb-2">A few quiet sessions you might join.</h2>
+    <p class="landing-section__copy mb-0">Mock examples for now, just enough to show the rhythm.</p>
+  </div>
+
+  <div class="landing-session-grid">
+    <% landing_session_examples.each do |session_example| %>
+      <article class="secondary-surface-card landing-session-card">
+        <span class="secondary-surface-card__eyebrow"><%= session_example[:label] %></span>
+        <strong class="secondary-surface-card__title"><%= session_example[:title] %></strong>
+        <span class="secondary-surface-card__copy"><%= session_example[:detail] %></span>
+        <span class="landing-session-card__meta"><%= session_example[:meta] %></span>
+      </article>
+    <% end %>
+  </div>
+</section>

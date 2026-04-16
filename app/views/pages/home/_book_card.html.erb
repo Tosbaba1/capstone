@@ -1,0 +1,40 @@
+<article class="entry-card home-feature-card">
+  <div class="entry-card__top">
+    <div>
+      <p class="entry-card__eyebrow mb-1"><%= card.eyebrow %></p>
+      <h3 class="entry-card__title mb-1"><%= card.title %></h3>
+      <p class="entry-card__author mb-0"><%= card.subtitle %></p>
+    </div>
+
+    <% if card.badge.present? %>
+      <span class="entry-card__metric home-feature-card__badge"><%= card.badge %></span>
+    <% end %>
+  </div>
+
+  <p class="home-feature-card__meta mb-0"><%= card.meta %></p>
+  <p class="home-feature-card__summary mb-0"><%= card.summary %></p>
+
+  <div class="entry-card__actions home-feature-card__actions">
+    <% if card.primary_method.present? %>
+      <%= button_to card.primary_label,
+        card.primary_path,
+        method: card.primary_method,
+        params: card.primary_params || {},
+        class: "sessions-home__secondary-action sessions-home__secondary-action--button sessions-home__secondary-action--compact" %>
+    <% else %>
+      <%= link_to card.primary_label, card.primary_path, class: "sessions-home__secondary-action sessions-home__secondary-action--compact" %>
+    <% end %>
+
+    <% if card.secondary_label.present? && card.secondary_path.present? %>
+      <% if card.secondary_method.present? %>
+        <%= button_to card.secondary_label,
+          card.secondary_path,
+          method: card.secondary_method,
+          params: card.secondary_params || {},
+          class: "entry-card__link" %>
+      <% else %>
+        <%= link_to card.secondary_label, card.secondary_path, class: "entry-card__link" %>
+      <% end %>
+    <% end %>
+  </div>
+</article>

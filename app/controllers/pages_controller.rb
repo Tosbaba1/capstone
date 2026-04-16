@@ -6,7 +6,7 @@ class PagesController < ApplicationController
   end
 
   def home
-    load_home_core_data
+    load_home_data
 
     track_analytics_event(
       Analytics::EventNames::HOME_VIEWED,
@@ -16,12 +16,6 @@ class PagesController < ApplicationController
         has_active_session: @current_session_participant.present?
       }
     )
-  end
-
-  def home_deferred
-    load_home_core_data
-    load_home_deferred_data
-    render layout: false
   end
 
   def library
@@ -108,7 +102,7 @@ class PagesController < ApplicationController
 
   private
 
-  def load_home_core_data
+  def load_home_data
     SessionLifecycle.finalize_expired_sessions!
 
     @page_title = "Read"
@@ -118,31 +112,12 @@ class PagesController < ApplicationController
     snapshot = HomeSessionSnapshot.new(current_user: current_user)
     @live_presence_count = snapshot.live_presence_count
     @active_sessions = snapshot.active_sessions
-  end
-
-  def load_home_deferred_data
-    @current_readings = current_user.readings
-      .includes(book: :author)
-      .where(status: "reading")
-      .order(updated_at: :desc)
-      .limit(3)
-    @next_up_readings = current_user.readings
-      .includes(book: :author)
-      .where(status: "want_to_read")
-      .order(updated_at: :desc)
-      .limit(3)
-    @session_entry_readings = (@current_readings + @next_up_readings).uniq(&:id).first(3)
-
-    snapshot = HomeSessionSnapshot.new(current_user: current_user)
-    @presence_readers = snapshot.presence_readers
-    @recent_post = recent_posts.first
-    reading_counts = current_user.readings.where(status: %w[reading want_to_read finished]).group(:status).count
-    @progress_snapshot = {
-      reading: reading_counts.fetch("reading", 0),
-      queued: reading_counts.fetch("want_to_read", 0),
-      finished: reading_counts.fetch("finished", 0)
-    }
-    @yesterday_reading_minutes = reading_minutes_for_day(Time.zone.yesterday)
+    @home_experience = HomeExperiencePresenter.new(
+      current_user: current_user,
+      current_session_participant: @current_session_participant,
+      active_sessions: @active_sessions,
+      recent_posts: recent_posts.limit(HomeExperiencePresenter::ACTIVITY_LIMIT)
+    )
   end
 
   def recent_posts
@@ -156,11 +131,5 @@ class PagesController < ApplicationController
       .where(users: { is_private: false })
       .includes(:creator, { book: :author }, { comments: :commenter }, :likes, :renous, media_attachments: :blob)
       .order(created_at: :desc)
-  end
-
-  def reading_minutes_for_day(date)
-    range = date.beginning_of_day..date.end_of_day
-
-    (current_user.completed_session_participants_scope.where(leave_time: range).to_a.sum(&:credited_seconds) / 60.0).round
   end
 end

@@ -1,5 +1,55 @@
 <section class="sessions-home">
-  <%= render "pages/home/hero", current_session_participant: @current_session_participant %>
-  <%= render "pages/home/active_rooms", active_sessions: @active_sessions, current_session_participant: @current_session_participant %>
-  <%= turbo_frame_tag "home_deferred", src: home_deferred_path, loading: :lazy %>
+  <%= render "pages/home/hero",
+    home_experience: @home_experience,
+    current_session_participant: @current_session_participant %>
+
+  <div class="sessions-home__experience-grid">
+    <section id="live-sessions" class="sessions-home__panel sessions-home__panel--quiet sessions-home__section">
+      <header class="sessions-home__panel-head sessions-home__panel-head--stack">
+        <p class="sessions-home__section-eyebrow mb-1">Read now</p>
+        <h2 class="sessions-home__section-title mb-1">Live reading sessions</h2>
+        <p class="sessions-home__section-copy mb-0">Join readers already in motion, or start your own room in one tap.</p>
+      </header>
+
+      <div class="sessions-home__card-list">
+        <% @home_experience.sessions.each do |card| %>
+          <%= render "pages/home/session_card", card: card %>
+        <% end %>
+      </div>
+    </section>
+
+    <section id="popular-books" class="sessions-home__panel sessions-home__panel--quiet sessions-home__section">
+      <header class="sessions-home__panel-head sessions-home__panel-head--stack">
+        <div>
+          <p class="sessions-home__section-eyebrow mb-1">Pick a book</p>
+          <h2 class="sessions-home__section-title mb-1">Popular books</h2>
+          <p class="sessions-home__section-copy mb-0">Keep the page feeling full with real shelf items first and seeded book picks when needed.</p>
+        </div>
+        <%= link_to "Browse books", search_path(tab: "books"), class: "entry-card__link sessions-home__section-link" %>
+      </header>
+
+      <div class="sessions-home__card-list sessions-home__card-list--books">
+        <% @home_experience.books.each do |card| %>
+          <%= render "pages/home/book_card", card: card %>
+        <% end %>
+      </div>
+    </section>
+  </div>
+
+  <section class="sessions-home__panel sessions-home__panel--quiet sessions-home__section sessions-home__section--activity">
+    <header class="sessions-home__panel-head sessions-home__panel-head--stack">
+      <div>
+        <p class="sessions-home__section-eyebrow mb-1">See momentum</p>
+        <h2 class="sessions-home__section-title mb-1">Reader activity</h2>
+        <p class="sessions-home__section-copy mb-0">Fresh updates help brand new readers understand the social side of Nouvelle immediately.</p>
+      </div>
+      <%= link_to "Open activity", posts_path, class: "entry-card__link sessions-home__section-link" %>
+    </header>
+
+    <div class="sessions-home__card-list sessions-home__card-list--activity">
+      <% @home_experience.activity_items.each do |item| %>
+        <%= render "pages/home/activity_item", item: item %>
+      <% end %>
+    </div>
+  </section>
 </section>

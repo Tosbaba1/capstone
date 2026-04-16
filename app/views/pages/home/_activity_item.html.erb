@@ -1,0 +1,15 @@
+<article class="entry-card home-feature-card home-activity-card">
+  <div class="entry-card__top">
+    <div>
+      <p class="entry-card__eyebrow mb-1"><%= item.eyebrow %></p>
+      <h3 class="entry-card__title mb-1"><%= item.title %></h3>
+    </div>
+    <span class="home-feature-card__timestamp"><%= item.meta %></span>
+  </div>
+
+  <p class="home-feature-card__summary mb-0"><%= item.summary %></p>
+
+  <div class="entry-card__actions home-feature-card__actions">
+    <%= link_to "Open activity", item.path, class: "entry-card__link" %>
+  </div>
+</article>

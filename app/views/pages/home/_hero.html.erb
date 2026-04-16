@@ -1,12 +1,51 @@
-<% primary_path = current_session_participant.present? ? session_path(current_session_participant.session) : new_session_path %>
+<section class="sessions-home__hero sessions-home__hero--welcome">
+  <div class="sessions-home__hero-layout">
+    <div class="sessions-home__hero-copy">
+      <p class="sessions-home__eyebrow mb-1">Nouvelle</p>
+      <h1 class="sessions-home__title mb-0">Read with people already here.</h1>
+      <p class="sessions-home__lede">
+        Open Nouvelle and immediately see live sessions, strong book picks, and the reading activity that makes the app feel social before you do any setup.
+      </p>
 
-<section class="sessions-home__hero sessions-home__hero--simple">
-  <div class="sessions-home__hero-copy">
-    <h1 class="sessions-home__title mb-0">Start reading now.</h1>
-    <%= link_to "Start reading", primary_path, class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
+      <div class="sessions-home__hero-actions">
+        <%= link_to "Start reading", home_experience.primary_cta_path, class: "sessions-home__primary-action sessions-home__primary-action--hero" %>
+        <%= link_to "Join a session", home_experience.secondary_cta_path, class: "sessions-home__secondary-action" %>
+      </div>
 
-    <% if current_session_participant.present? %>
-      <p class="sessions-home__hero-note mb-0">Your current session is still active.</p>
-    <% end %>
+      <% if current_session_participant.present? %>
+        <p class="sessions-home__hero-note mb-0">Your session is live now. Start reading takes you straight back into it.</p>
+      <% else %>
+        <p class="sessions-home__hero-note mb-0">No empty shelves, no blank feed, and no setup wall before the app shows what Nouvelle is.</p>
+      <% end %>
+    </div>
+
+    <aside class="presence-rail sessions-home__hero-rail">
+      <p class="presence-rail__label mb-0">What you can do next</p>
+      <p class="presence-rail__summary mb-0">Jump in immediately, then decide how much context you want.</p>
+
+      <div class="presence-rail__row">
+        <div class="presence-rail__stat">
+          <span class="presence-rail__label">Sessions</span>
+          <strong class="presence-rail__value"><%= home_experience.sessions.size %></strong>
+          <span class="presence-rail__caption">ready on first open</span>
+        </div>
+
+        <div class="presence-rail__stat">
+          <span class="presence-rail__label">Books</span>
+          <strong class="presence-rail__value"><%= home_experience.books.size %></strong>
+          <span class="presence-rail__caption">to browse right away</span>
+        </div>
+      </div>
+
+      <div class="sessions-home__highlight-list" aria-label="Nouvelle preview">
+        <% home_experience.highlights.each do |highlight| %>
+          <article class="sessions-home__highlight-item">
+            <p class="sessions-home__section-eyebrow mb-1"><%= highlight.label %></p>
+            <h2 class="sessions-home__highlight-title mb-1"><%= highlight.title %></h2>
+            <p class="sessions-home__section-copy mb-0"><%= highlight.description %></p>
+          </article>
+        <% end %>
+      </div>
+    </aside>
   </div>
 </section>

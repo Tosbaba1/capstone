@@ -2991,3 +2991,175 @@ turbo-frame#home_deferred {
     grid-template-columns: 1fr;
   }
 }
+
+/* Authenticated home first-open refresh */
+.sessions-home {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 70rem;
+  padding-bottom: 2rem;
+}
+
+.sessions-home__hero--welcome,
+.sessions-home__section {
+  margin: 0 auto;
+  max-width: 68rem;
+  width: 100%;
+}
+
+.sessions-home__hero--welcome {
+  background:
+    radial-gradient(circle at 16% 18%, rgba(255, 255, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 82% 22%, rgba(198, 169, 105, 0.12), transparent 24%),
+    linear-gradient(140deg, rgba(46, 54, 71, 0.96), rgba(60, 67, 81, 0.92) 56%, rgba(99, 90, 81, 0.82));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 18px 34px rgba(33, 40, 66, 0.11);
+  min-height: 0;
+  padding: clamp(1.35rem, 3vw, 2.2rem);
+}
+
+.sessions-home__hero-copy {
+  display: grid;
+  gap: 0.85rem;
+  max-width: 35rem;
+}
+
+.sessions-home__hero--welcome .sessions-home__title {
+  color: var(--color-on-depth-primary) !important;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 0.98;
+  max-width: 10ch;
+}
+
+.sessions-home__hero--welcome .sessions-home__lede,
+.sessions-home__hero--welcome .sessions-home__hero-note {
+  color: var(--color-on-depth-secondary) !important;
+}
+
+.sessions-home__hero-rail {
+  align-content: start;
+}
+
+.sessions-home__experience-grid,
+.sessions-home__card-list,
+.sessions-home__highlight-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.sessions-home__card-list {
+  margin-top: 1rem;
+}
+
+.sessions-home__card-list--books,
+.sessions-home__card-list--activity {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.sessions-home__section-link {
+  flex-shrink: 0;
+}
+
+.sessions-home__highlight-list {
+  margin-top: 0.35rem;
+}
+
+.sessions-home__highlight-item {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 0.95rem 1rem;
+}
+
+.sessions-home__highlight-title {
+  color: var(--color-on-depth-primary) !important;
+  font-family: var(--heading-font);
+  font-size: 1.15rem;
+  line-height: 1.12;
+}
+
+.home-feature-card {
+  background: rgba(255, 250, 244, 0.72);
+  border: 1px solid rgba(33, 40, 66, 0.08);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 0.9rem;
+}
+
+.home-feature-card--active {
+  background:
+    radial-gradient(circle at top right, rgba(198, 169, 105, 0.12), transparent 28%),
+    rgba(255, 250, 244, 0.78);
+}
+
+.home-feature-card__badge,
+.home-feature-card__timestamp {
+  background: rgba(33, 40, 66, 0.08);
+  border-radius: 999px;
+  color: var(--nouvelle-ink) !important;
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.5rem 0.75rem;
+}
+
+.home-feature-card__timestamp {
+  white-space: nowrap;
+}
+
+.home-feature-card__meta,
+.home-feature-card__summary {
+  color: var(--nouvelle-text-soft) !important;
+}
+
+.home-feature-card__meta {
+  font-size: 0.92rem;
+}
+
+.home-feature-card__summary {
+  line-height: 1.65;
+}
+
+.home-feature-card__actions {
+  margin-top: auto;
+}
+
+.home-activity-card {
+  min-height: 100%;
+}
+
+.sessions-home__section--activity .sessions-home__panel-head {
+  margin-bottom: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .sessions-home__card-list--books,
+  .sessions-home__card-list--activity {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 992px) {
+  .sessions-home__experience-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 991.98px) {
+  .sessions-home__hero--welcome .sessions-home__hero-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .sessions-home__hero--welcome,
+  .sessions-home__panel {
+    padding: 1.15rem;
+  }
+
+  .sessions-home__panel-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

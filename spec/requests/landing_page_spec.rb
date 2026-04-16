@@ -22,6 +22,6 @@ RSpec.describe "Landing page", type: :request do
     get root_path
 
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include("Start reading now.")
+    expect(response.body).to include("Read with people already here.")
   end
 end

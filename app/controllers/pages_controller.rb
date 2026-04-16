@@ -2,7 +2,13 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: :landing
 
   def landing
-    @page_title = "Read with others"
+    @landing_page = true
+    @page_title = "Read quietly with others"
+    @landing_live_reader_count = Session.active
+      .joins(:session_participants)
+      .merge(SessionParticipant.active_now)
+      .distinct
+      .count("session_participants.user_id")
   end
 
   def home

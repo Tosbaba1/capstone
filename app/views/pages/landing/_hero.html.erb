@@ -1,19 +1,30 @@
 <section class="landing-hero">
   <div class="landing-hero__copy">
-    <p class="page-eyebrow mb-2">Read with others, not alone</p>
-    <h1 class="landing-hero__title mb-3">Find your place to begin</h1>
-    <p class="landing-hero__copy-text mb-0">Read quietly alongside others</p>
+    <%= link_to root_path, class: "landing-hero__brand nouvelle-mark", aria: { label: "Nouvelle home" } do %>
+      <span class="nouvelle-mark__seal" aria-hidden="true">
+        <span class="nouvelle-mark__glyph">N</span>
+      </span>
+      <span class="nouvelle-mark__wording">
+        <span class="nouvelle-mark__name">Nouvelle</span>
+      </span>
+    <% end %>
+
+    <p class="page-eyebrow mb-0"><%= landing_page_content[:hero_eyebrow] %></p>
+    <h1 class="landing-hero__title mb-0"><%= landing_page_content[:hero_title] %></h1>
+    <p class="landing-hero__copy-text mb-0"><%= landing_page_content[:hero_subtext] %></p>
 
     <div class="landing-hero__actions">
-      <%= link_to "Start reading", landing_primary_auth_path, class: "sessions-home__primary-action landing-hero__cta" %>
-      <p class="landing-hero__hint mb-0">
-        <%= landing_primary_auth_prompt %> to join your first room.
-      </p>
+      <%= link_to landing_page_content[:primary_cta_label], landing_primary_auth_path, class: "sessions-home__primary-action landing-cta landing-hero__cta" %>
+      <p class="landing-hero__hint mb-0"><%= landing_primary_auth_prompt %> to join your first quiet session.</p>
     </div>
+
+    <% if landing_social_signal.present? %>
+      <p class="landing-hero__signal mb-0"><%= landing_social_signal %></p>
+    <% end %>
   </div>
 
-  <aside class="landing-hero__aside content-box" aria-label="What Nouvelle feels like">
-    <p class="landing-hero__aside-label mb-2">Nouvelle</p>
-    <p class="landing-hero__aside-copy mb-0">A place where you read with others, not alone.</p>
+  <aside class="landing-hero__aside" aria-label="What Nouvelle feels like">
+    <p class="landing-hero__aside-label mb-0">Quietly together</p>
+    <p class="landing-hero__aside-copy mb-0"><%= landing_page_content[:hero_support] %></p>
   </aside>
 </section>

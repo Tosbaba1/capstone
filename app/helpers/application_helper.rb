@@ -33,47 +33,45 @@ module ApplicationHelper
     "Log in"
   end
 
+  def landing_page_content
+    {
+      hero_eyebrow: "A place where you read with others — quietly.",
+      hero_title: "Read… without doing it alone.",
+      hero_subtext: "Start a reading session, join others quietly, and build a habit that actually sticks.",
+      hero_support: "Quiet company for the pages you want to keep showing up for.",
+      experience_title: "Reading doesn't have to be a solo activity.",
+      experience_copy: "Nouvelle creates a quiet space where people read together.",
+      final_cta_title: "Ready to begin?",
+      primary_cta_label: "Start reading"
+    }
+  end
+
   def landing_how_it_works_steps
     [
       {
         number: "01",
-        title: "Choose a quiet room",
-        copy: "Pick a gentle reading session that fits your pace."
+        title: "Start a session",
+        copy: "Pick a time and begin reading."
       },
       {
         number: "02",
-        title: "Settle in together",
-        copy: "Arrive with other readers and keep the room calm."
+        title: "Read with others",
+        copy: "Quiet presence, no pressure."
       },
       {
         number: "03",
-        title: "Leave feeling held",
-        copy: "Finish a few pages with company instead of pressure."
+        title: "Come back tomorrow",
+        copy: "Build a simple habit."
       }
     ]
   end
 
-  def landing_session_examples
-    [
-      {
-        label: "Starting now",
-        title: "Morning chapter hour",
-        detail: "Quiet fiction, tea nearby, 14 readers.",
-        meta: "58 minutes"
-      },
-      {
-        label: "Later today",
-        title: "After work reset",
-        detail: "Bring your current book and read in peace.",
-        meta: "45 minutes"
-      },
-      {
-        label: "Tonight",
-        title: "Slow Sunday essays",
-        detail: "A soft room for thoughtful pages and shared focus.",
-        meta: "30 minutes"
-      }
-    ]
+  def landing_social_signal
+    return if @landing_live_reader_count.to_i <= 0
+
+    verb = @landing_live_reader_count == 1 ? "is" : "are"
+
+    "#{pluralize(@landing_live_reader_count, "person")} #{verb} reading right now"
   end
 
   def reading_time_label(total_seconds)

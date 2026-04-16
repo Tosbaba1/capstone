@@ -1,45 +1,44 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_user, only: %i[show followers following library]
 
   def show
-    @user = User.find(params[:id])
     @page_title = @user.name
-    allowed = @user == current_user || !@user.is_private || current_user.following.include?(@user)
+    allowed = allowed_to_view_user?(@user)
     @restricted = !allowed
     @posts = allowed ? @user.posts.order(created_at: :desc) : []
   end
 
   def followers
-    @user = User.find(params[:id])
-    allowed = @user == current_user || !@user.is_private || current_user.following.include?(@user)
-    unless allowed
-      redirect_to user_path(@user), alert: 'Not authorized to view followers.' and return
+    unless allowed_to_view_user?(@user)
+      redirect_to user_path(@user), alert: "Not authorized to view followers."
+      return
     end
+
     @followers = @user.followers
     @requests = @user.receivedfollowrequests.where(status: 'pending')
     @page_title = "Followers"
   end
 
   def following
-    @user = User.find(params[:id])
-    allowed = @user == current_user || !@user.is_private || current_user.following.include?(@user)
-    unless allowed
-      redirect_to user_path(@user), alert: 'Not authorized to view following.' and return
+    unless allowed_to_view_user?(@user)
+      redirect_to user_path(@user), alert: "Not authorized to view following."
+      return
     end
+
     @following = @user.following
     @requests = @user.sentfollowrequests.where(status: 'pending')
     @page_title = "Following"
   end
 
   def library
-    @user = User.find(params[:id])
-    allowed = @user == current_user || !@user.is_private || current_user.following.include?(@user)
-    unless allowed
-      redirect_to user_path(@user), alert: 'Not authorized to view library.' and return
+    unless allowed_to_view_user?(@user)
+      redirect_to user_path(@user), alert: private_library_message
+      return
     end
 
-    @page_title = "#{@user.name}'s Library"
-    @active_tab = params[:tab] || 'public'
+    @page_title = library_page_title
+    @active_tab = normalized_library_tab
     scope = @user.readings.includes(:book)
 
     if @user == current_user
@@ -47,7 +46,6 @@ class UsersController < ApplicationController
       scope = scope.where(is_private: false) if @active_tab == 'public'
     else
       scope = scope.where(is_private: false)
-      @active_tab = 'public'
     end
 
     @reading_now  = scope.where(status: 'reading')
@@ -55,5 +53,29 @@ class UsersController < ApplicationController
     @finished     = scope.where(status: 'finished')
 
     render template: 'pages/library'
+  end
+
+  private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def allowed_to_view_user?(user)
+    user == current_user || !user.is_private? || current_user.following.exists?(id: user.id)
+  end
+
+  def library_page_title
+    @user == current_user ? "Library" : "#{@user.name}'s Library"
+  end
+
+  def normalized_library_tab
+    return "public" unless @user == current_user
+
+    %w[public private ai].include?(params[:tab]) ? params[:tab] : "public"
+  end
+
+  def private_library_message
+    "This library is private. Follow #{@user.name} to view their public shelf."
   end
 end

@@ -6,7 +6,7 @@
 <article class="library-book-card h-100">
   <div class="library-book-card__body">
     <div class="library-book-card__top">
-      <%= link_to book_path(book), class: 'library-book-card__cover-link' do %>
+      <%= link_to library_book_path(book), class: 'library-book-card__cover-link' do %>
         <% if book.image_url.present? %>
           <%= image_tag(book.image_url, class: 'library-book-card__cover', alt: "#{book.title} cover") %>
         <% else %>
@@ -21,7 +21,7 @@
           <div>
             <p class="library-book-card__status mb-2"><%= status_label %></p>
             <h3 class="library-book-card__title mb-1">
-              <%= link_to book.title, book_path(book), class: 'text-decoration-none' %>
+              <%= link_to book.title, library_book_path(book), class: 'text-decoration-none' %>
             </h3>
             <% if author_name.present? %>
               <p class="library-book-card__author mb-0">by <%= author_name %></p>

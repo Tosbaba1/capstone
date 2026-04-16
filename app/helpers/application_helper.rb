@@ -1,4 +1,26 @@
 module ApplicationHelper
+  def library_owner?(user = @user)
+    user.present? && user == current_user
+  end
+
+  def library_path_for(user = @user, **params)
+    return library_path(**params) if library_owner?(user)
+
+    library_user_path(user, **params)
+  end
+
+  def library_book_path(book, return_to: request&.fullpath)
+    safe_return_to = normalize_library_return_path(return_to)
+    path_params = {}
+    path_params[:return_to] = safe_return_to if safe_return_to.present?
+
+    book_path(book, **path_params)
+  end
+
+  def library_back_path(return_to = params[:return_to])
+    normalize_library_return_path(return_to) || library_path
+  end
+
   def landing_primary_auth_path
     return new_user_registration_path if landing_sign_up_ready?
 
@@ -74,6 +96,14 @@ module ApplicationHelper
   end
 
   private
+
+  def normalize_library_return_path(return_to)
+    candidate = return_to.to_s.strip.sub(%r{\Ahttps?://[^/]+}i, "")
+    return if candidate.blank?
+
+    return candidate if candidate.match?(%r{\A/library(?:\?.*)?\z})
+    return candidate if candidate.match?(%r{\A/users/\d+/library(?:\?.*)?\z})
+  end
 
   def landing_sign_up_ready?
     Rails.root.join("app/views/users/registrations/new.html.erb").exist?

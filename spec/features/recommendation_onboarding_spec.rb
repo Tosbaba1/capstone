@@ -7,23 +7,25 @@ RSpec.describe "Recommendation onboarding", type: :feature do
     login_as(user, scope: :user)
   end
 
-  it "lets a user complete onboarding from the home prompt" do
+  it "redirects incomplete users into onboarding before home" do
     visit home_path
 
-    expect(page).to have_content("Shape future recommendations in under a minute")
+    expect(page).to have_current_path(onboarding_preferences_path)
+    expect(page).to have_content("Tell us enough to personalize Nouvelle before you jump in.")
+  end
 
-    click_link "Set preferences"
+  it "lets a user complete onboarding and unlock the app" do
+    visit home_path
 
     check "Literary fiction"
     check "Mystery"
     choose "A few times a week"
     choose "Mostly solo"
 
-    click_button "Save preferences"
+    click_button "Save and continue"
 
     expect(page).to have_current_path(home_path)
-    expect(page).to have_content("Preferences saved.")
-    expect(page).not_to have_content("Shape future recommendations in under a minute")
+    expect(page).to have_content("Preferences saved. Welcome to Nouvelle.")
 
     user.reload
 
@@ -34,21 +36,16 @@ RSpec.describe "Recommendation onboarding", type: :feature do
     expect(user.recommendation_onboarding_skipped_at).to be_nil
   end
 
-  it "lets a user skip onboarding without blocking reading" do
-    visit home_path
+  it "keeps incomplete users blocked until all onboarding fields are completed" do
+    visit onboarding_preferences_path
 
-    click_button "Skip for now"
+    click_button "Save and continue"
 
-    expect(page).to have_current_path(home_path)
-    expect(page).to have_content("Skipped for now.")
-    expect(page).to have_link("Start reading")
-    expect(page).not_to have_content("Shape future recommendations in under a minute")
-
-    user.reload
-
-    expect(user.recommendation_onboarding_skipped_at).to be_present
-    expect(user.recommendation_onboarding_completed_at).to be_nil
-    expect(user.preferred_genres).to eq([])
+    expect(page).to have_current_path(onboarding_preferences_path)
+    expect(page).to have_content("Please complete all three preference questions.")
+    expect(page).to have_content("Preferred genres must include at least one genre")
+    expect(page).to have_content("Reading frequency must be selected")
+    expect(page).to have_content("Social reading preference must be selected")
   end
 
   it "shows saved preferences when the user returns later" do
@@ -56,7 +53,8 @@ RSpec.describe "Recommendation onboarding", type: :feature do
       preferred_genres: ["Fantasy", "Memoir"],
       reading_frequency: "weekly",
       social_reading_preference: "a_mix_of_both",
-      recommendation_onboarding_completed_at: Time.current
+      recommendation_onboarding_completed_at: Time.current,
+      recommendation_onboarding_skipped_at: nil
     )
 
     visit onboarding_preferences_path
@@ -65,5 +63,6 @@ RSpec.describe "Recommendation onboarding", type: :feature do
     expect(page).to have_checked_field("Memoir")
     expect(page).to have_checked_field("Weekly")
     expect(page).to have_checked_field("A mix of both")
+    expect(page).to have_link("Back to home", href: home_path)
   end
 end

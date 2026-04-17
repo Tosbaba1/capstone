@@ -2,28 +2,24 @@ class OnboardingPreferencesController < ApplicationController
   def show
     @page_title = "Reading preferences"
     @user = current_user
+    @onboarding_locked = current_user.recommendation_onboarding_pending?
     load_onboarding_options
   end
 
   def update
     @user = current_user
+    @onboarding_locked = current_user.recommendation_onboarding_pending?
     @user.assign_attributes(onboarding_preferences_params)
     @user.recommendation_onboarding_completed_at = Time.current
     @user.recommendation_onboarding_skipped_at = nil
 
-    if @user.save
-      redirect_to home_path, notice: "Preferences saved. We'll use them when recommendations arrive."
+    if @user.save(context: :onboarding)
+      redirect_to home_path, notice: "Preferences saved. Welcome to Nouvelle."
     else
       @page_title = "Reading preferences"
       load_onboarding_options
       render :show, status: :unprocessable_entity
     end
-  end
-
-  def skip
-    current_user.update(recommendation_onboarding_skipped_at: Time.current) unless current_user.recommendation_onboarding_complete?
-
-    redirect_to home_path, notice: "Skipped for now. You can come back anytime from your profile."
   end
 
   private

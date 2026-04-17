@@ -129,6 +129,7 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true, on: :update
   validates :reading_frequency, inclusion: { in: READING_FREQUENCY_OPTIONS }, allow_blank: true
   validates :social_reading_preference, inclusion: { in: SOCIAL_READING_PREFERENCE_OPTIONS }, allow_blank: true
+  validate :require_onboarding_preferences, on: :onboarding
 
   before_validation :downcase_email
   before_validation :normalize_preferred_genres
@@ -204,7 +205,7 @@ class User < ApplicationRecord
   end
 
   def recommendation_onboarding_pending?
-    !recommendation_onboarding_complete? && !recommendation_onboarding_skipped?
+    !recommendation_onboarding_complete?
   end
 
   private
@@ -219,6 +220,12 @@ class User < ApplicationRecord
       .compact
       .select { |genre| ONBOARDING_GENRE_OPTIONS.include?(genre) }
       .uniq
+  end
+
+  def require_onboarding_preferences
+    errors.add(:preferred_genres, "must include at least one genre") if preferred_genres.blank?
+    errors.add(:reading_frequency, "must be selected") if reading_frequency.blank?
+    errors.add(:social_reading_preference, "must be selected") if social_reading_preference.blank?
   end
 
   def reading_time_for_range(range)

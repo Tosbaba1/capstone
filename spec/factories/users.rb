@@ -30,5 +30,13 @@ FactoryBot.define do
     sequence(:name) { |n| "Reader #{n}" }
     sequence(:username) { |n| "reader#{n}" }
     preferred_genres { [] }
+
+    trait :onboarding_complete do
+      preferred_genres { ["Fantasy"] }
+      reading_frequency { "weekly" }
+      social_reading_preference { "a_mix_of_both" }
+      recommendation_onboarding_completed_at { Time.current }
+      recommendation_onboarding_skipped_at { nil }
+    end
   end
 end

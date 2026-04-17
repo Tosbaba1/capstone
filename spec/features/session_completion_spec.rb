@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Session completion", type: :feature do
-  let(:user) { create(:user, name: "Maya") }
+  let(:user) { create(:user, :onboarding_complete, name: "Maya") }
 
   before do
     login_as(user, scope: :user)

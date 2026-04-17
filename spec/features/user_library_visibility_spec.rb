@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "User library visibility", type: :feature do
-  let(:viewer) { create(:user, name: "Maya", username: "maya") }
+  let(:viewer) { create(:user, :onboarding_complete, name: "Maya", username: "maya") }
 
   before do
     login_as(viewer, scope: :user)

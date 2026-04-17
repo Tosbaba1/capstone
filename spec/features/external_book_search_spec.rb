@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "External book search", type: :feature do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :onboarding_complete) }
 
   before do
     login_as(user, scope: :user)
@@ -48,4 +48,3 @@ RSpec.describe "External book search", type: :feature do
     expect(user.readings.last.book.title).to eq("Test Book")
   end
 end
-

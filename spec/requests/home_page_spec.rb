@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Authenticated home", type: :request do
   it "shows a populated first-open experience for a new user" do
-    sign_in create(:user)
+    sign_in create(:user, :onboarding_complete)
 
     get home_path
 
@@ -17,11 +17,11 @@ RSpec.describe "Authenticated home", type: :request do
   end
 
   it "prioritizes the user's real active session" do
-    user = create(:user)
+    user = create(:user, :onboarding_complete)
     current_session = create(:session, host_user: user, duration: 30, mode: "structured", created_at: 3.minutes.ago)
     create(:session_participant, session: current_session, user: user, join_time: 3.minutes.ago, updated_at: 5.seconds.ago)
 
-    other_host = create(:user, name: "Mira", username: "mira")
+    other_host = create(:user, :onboarding_complete, name: "Mira", username: "mira")
     other_session = create(:session, host_user: other_host, duration: 20, mode: "silent", created_at: 2.minutes.ago)
     create(:session_participant, session: other_session, user: other_host, join_time: 2.minutes.ago, updated_at: 5.seconds.ago)
 
@@ -37,7 +37,7 @@ RSpec.describe "Authenticated home", type: :request do
   end
 
   it "renders the primary and secondary home CTAs" do
-    sign_in create(:user)
+    sign_in create(:user, :onboarding_complete)
 
     get home_path
 

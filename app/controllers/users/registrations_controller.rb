@@ -12,8 +12,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
     params.delete(:current_password)
     resource.update_without_password(params)
   end
-
-  def after_sign_up_path_for(resource)
-    home_path
-  end
 end

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Profile progress", type: :feature do
   include ActiveSupport::Testing::TimeHelpers
 
-  let(:user) { create(:user, name: "Maya", username: "maya") }
+  let(:user) { create(:user, :onboarding_complete, name: "Maya", username: "maya") }
 
   around do |example|
     travel_to(Time.zone.local(2026, 3, 26, 12, 0, 0)) { example.run }

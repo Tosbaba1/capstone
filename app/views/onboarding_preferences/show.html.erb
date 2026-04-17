@@ -2,17 +2,26 @@
   <article class="account-panel onboarding-flow__panel">
     <div class="onboarding-flow__header">
       <div>
-        <p class="page-eyebrow mb-1">Optional</p>
+        <p class="page-eyebrow mb-1">Required</p>
         <h1 class="page-title mb-2">A few quick reading preferences</h1>
         <p class="page-copy mb-0">
-          This stays light on purpose. Answer what feels obvious, skip what does not, and get back to reading.
+          Tell us enough to personalize Nouvelle before you jump in.
         </p>
       </div>
-
-      <%= button_to "Skip for now", skip_onboarding_preferences_path, method: :patch, class: "sessions-home__secondary-action sessions-home__secondary-action--button sessions-home__secondary-action--compact" %>
     </div>
 
     <%= form_with model: @user, url: onboarding_preferences_path, method: :patch, class: "account-form onboarding-flow__form", local: true do |f| %>
+      <% if @user.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <p class="mb-2">Please complete all three preference questions.</p>
+          <ul class="mb-0">
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
       <%= hidden_field_tag "user[preferred_genres][]", "" %>
 
       <section class="onboarding-flow__question">
@@ -82,8 +91,10 @@
       </section>
 
       <div class="onboarding-flow__actions">
-        <%= f.submit "Save preferences", class: "sessions-home__primary-action sessions-home__primary-action--button" %>
-        <%= link_to "Back to home", home_path, class: "sessions-home__secondary-action" %>
+        <%= f.submit(@onboarding_locked ? "Save and continue" : "Save preferences", class: "sessions-home__primary-action sessions-home__primary-action--button") %>
+        <% unless @onboarding_locked %>
+          <%= link_to "Back to home", home_path, class: "sessions-home__secondary-action" %>
+        <% end %>
       </div>
     <% end %>
   </article>

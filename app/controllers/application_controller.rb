@@ -2,12 +2,25 @@ class ApplicationController < ActionController::Base
   skip_forgery_protection
 
   before_action :authenticate_user!
+  before_action :ensure_onboarding_complete
   before_action :track_last_active
   after_action :track_retention_signals
 
   helper_method :feature_flags
 
   private
+
+  def after_sign_in_path_for(resource_or_scope)
+    return onboarding_preferences_path if onboarding_redirect_required?(resource_or_scope)
+
+    super
+  end
+
+  def after_sign_up_path_for(resource)
+    return onboarding_preferences_path if onboarding_redirect_required?(resource)
+
+    super
+  end
 
   def feature_flags
     @feature_flags ||= FeatureFlags.new(user: current_user)
@@ -47,5 +60,20 @@ class ApplicationController < ActionController::Base
       occurred_at: Time.current,
       feature_flags: feature_flags
     ).track!
+  end
+
+  def ensure_onboarding_complete
+    return unless user_signed_in?
+    return if devise_controller?
+    return unless current_user.recommendation_onboarding_pending?
+    return if controller_path == "onboarding_preferences"
+
+    redirect_to onboarding_preferences_path, alert: "Complete your reading preferences to continue."
+  end
+
+  def onboarding_redirect_required?(resource_or_scope)
+    user = resource_or_scope.is_a?(User) ? resource_or_scope : current_user
+
+    user&.recommendation_onboarding_pending?
   end
 end

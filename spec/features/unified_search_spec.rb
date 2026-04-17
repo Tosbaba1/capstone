@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Unified search", type: :feature do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :onboarding_complete) }
 
   before do
     login_as(user, scope: :user)
@@ -49,7 +49,7 @@ RSpec.describe "Unified search", type: :feature do
   end
 
   scenario "search for users" do
-    target_user = create(:user, name: "Alice", username: "alice")
+    target_user = create(:user, :onboarding_complete, name: "Alice", username: "alice")
 
     visit "/search?tab=users"
     fill_in "q", with: "Alice"

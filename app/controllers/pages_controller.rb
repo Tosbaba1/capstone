@@ -13,7 +13,6 @@ class PagesController < ApplicationController
 
   def home
     load_home_data
-    @show_recommendation_onboarding_prompt = current_user.recommendation_onboarding_pending?
 
     track_analytics_event(
       Analytics::EventNames::HOME_VIEWED,

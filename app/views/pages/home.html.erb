@@ -3,10 +3,6 @@
     home_experience: @home_experience,
     current_session_participant: @current_session_participant %>
 
-  <% if @show_recommendation_onboarding_prompt %>
-    <%= render "pages/home/onboarding_prompt" %>
-  <% end %>
-
   <div class="sessions-home__experience-grid">
     <section id="live-sessions" class="sessions-home__panel sessions-home__panel--quiet sessions-home__section">
       <header class="sessions-home__panel-head sessions-home__panel-head--stack">

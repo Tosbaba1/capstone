@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Book details', type: :feature do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :onboarding_complete) }
   let(:author) { create(:author, name: 'Jane Doe') }
 
   before do

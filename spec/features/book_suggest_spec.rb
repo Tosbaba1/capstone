@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Book suggestions", type: :feature, js: true do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :onboarding_complete) }
 
   before do
     login_as(user, scope: :user)

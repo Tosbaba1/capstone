@@ -46,7 +46,7 @@ RSpec.describe "Landing page", type: :request do
   end
 
   it "keeps signed-in readers on the existing home experience" do
-    sign_in create(:user)
+    sign_in create(:user, :onboarding_complete)
 
     get root_path
 

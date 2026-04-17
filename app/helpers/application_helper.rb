@@ -27,22 +27,16 @@ module ApplicationHelper
     new_user_session_path
   end
 
-  def landing_primary_auth_prompt
-    return "Create an account" if landing_sign_up_ready?
-
-    "Log in"
-  end
-
   def landing_page_content
     {
-      hero_eyebrow: "A place where you read with others — quietly.",
-      hero_title: "Read… without doing it alone.",
+      hero_title: "Read with quiet company.",
       hero_subtext: "Start a reading session, join others quietly, and build a habit that actually sticks.",
-      hero_support: "Quiet company for the pages you want to keep showing up for.",
-      experience_title: "Reading doesn't have to be a solo activity.",
-      experience_copy: "Nouvelle creates a quiet space where people read together.",
+      hero_preview_title: "Quiet company, already in progress.",
+      hero_preview_note: "Start reading when you are ready.",
+      product_proof_line: "A reading room, not a feed.",
       final_cta_title: "Ready to begin?",
-      primary_cta_label: "Start reading"
+      primary_cta_label: "Start reading",
+      secondary_link_label: "See how it works"
     }
   end
 
@@ -51,17 +45,34 @@ module ApplicationHelper
       {
         number: "01",
         title: "Start a session",
-        copy: "Pick a time and begin reading."
+        copy: "Open a room for this reading block and begin when you are ready."
       },
       {
         number: "02",
         title: "Read with others",
-        copy: "Quiet presence, no pressure."
+        copy: "Share quiet presence with other readers while the page stays the focus."
       },
       {
         number: "03",
         title: "Come back tomorrow",
-        copy: "Build a simple habit."
+        copy: "Return for another session and let the habit get easier to keep."
+      }
+    ]
+  end
+
+  def landing_why_nouvelle_points
+    [
+      {
+        title: "Silent co-reading",
+        copy: "You share a room with readers, not a stream of interruptions."
+      },
+      {
+        title: "Low-pressure accountability",
+        copy: "Showing up feels easier when someone else is quietly there too."
+      },
+      {
+        title: "Reading-first design",
+        copy: "Everything on the screen points you back to your book instead of away from it."
       }
     ]
   end
@@ -69,9 +80,10 @@ module ApplicationHelper
   def landing_social_signal
     return if @landing_live_reader_count.to_i <= 0
 
-    verb = @landing_live_reader_count == 1 ? "is" : "are"
+    count = @landing_live_reader_count.to_i
+    label = count == 1 ? "person" : "people"
 
-    "#{pluralize(@landing_live_reader_count, "person")} #{verb} reading right now"
+    "#{count} #{label} reading now"
   end
 
   def reading_time_label(total_seconds)

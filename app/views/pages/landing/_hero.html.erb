@@ -1,30 +1,43 @@
-<section class="landing-hero">
-  <div class="landing-hero__copy">
-    <%= link_to root_path, class: "landing-hero__brand nouvelle-mark", aria: { label: "Nouvelle home" } do %>
-      <span class="nouvelle-mark__seal" aria-hidden="true">
-        <span class="nouvelle-mark__glyph">N</span>
-      </span>
-      <span class="nouvelle-mark__wording">
-        <span class="nouvelle-mark__name">Nouvelle</span>
-      </span>
+<section class="landing-hero" aria-labelledby="landing-hero-title">
+  <div class="landing-hero__panel landing-hero__panel--copy">
+    <% if landing_social_signal.present? %>
+      <p class="landing-hero__signal mb-0"><%= landing_social_signal %></p>
     <% end %>
 
-    <p class="page-eyebrow mb-0"><%= landing_page_content[:hero_eyebrow] %></p>
-    <h1 class="landing-hero__title mb-0"><%= landing_page_content[:hero_title] %></h1>
+    <h1 id="landing-hero-title" class="landing-hero__title mb-0"><%= landing_page_content[:hero_title] %></h1>
     <p class="landing-hero__copy-text mb-0"><%= landing_page_content[:hero_subtext] %></p>
 
     <div class="landing-hero__actions">
       <%= link_to landing_page_content[:primary_cta_label], landing_primary_auth_path, class: "sessions-home__primary-action landing-cta landing-hero__cta" %>
-      <p class="landing-hero__hint mb-0"><%= landing_primary_auth_prompt %> to join your first quiet session.</p>
+      <%= link_to landing_page_content[:secondary_link_label], "#landing-how-it-works", class: "landing-hero__secondary-link" %>
     </div>
-
-    <% if landing_social_signal.present? %>
-      <p class="landing-hero__signal mb-0"><%= landing_social_signal %></p>
-    <% end %>
   </div>
 
-  <aside class="landing-hero__aside" aria-label="What Nouvelle feels like">
-    <p class="landing-hero__aside-label mb-0">Quietly together</p>
-    <p class="landing-hero__aside-copy mb-0"><%= landing_page_content[:hero_support] %></p>
+  <aside class="landing-hero__panel landing-hero__panel--preview" aria-label="Product preview">
+    <div class="landing-preview-card landing-preview-card--hero">
+      <p class="landing-preview-card__eyebrow mb-0">Live reading room</p>
+      <h2 class="landing-preview-card__title mb-0"><%= landing_page_content[:hero_preview_title] %></h2>
+
+      <div class="landing-preview-card__meta" aria-label="Session details">
+        <span class="landing-preview-card__meta-item">25 min</span>
+        <span class="landing-preview-card__meta-item">3 readers</span>
+        <span class="landing-preview-card__meta-item">Silent</span>
+      </div>
+
+      <div class="landing-preview-card__list" aria-hidden="true">
+        <div class="landing-preview-card__list-row">
+          <span class="landing-preview-card__avatar">M</span>
+          <span class="landing-preview-card__reader">Maya is settled in</span>
+        </div>
+        <div class="landing-preview-card__list-row">
+          <span class="landing-preview-card__avatar">J</span>
+          <span class="landing-preview-card__reader">Jon is a few pages ahead</span>
+        </div>
+        <div class="landing-preview-card__list-row">
+          <span class="landing-preview-card__avatar landing-preview-card__avatar--soft">You</span>
+          <span class="landing-preview-card__reader"><%= landing_page_content[:hero_preview_note] %></span>
+        </div>
+      </div>
+    </div>
   </aside>
 </section>

@@ -1,0 +1,15 @@
+<section class="landing-section landing-section--why" aria-labelledby="landing-why-nouvelle">
+  <div class="landing-section__header">
+    <p class="landing-section__kicker mb-0">Why Nouvelle is different</p>
+    <h2 id="landing-why-nouvelle" class="landing-section__title mb-0">Built to support the reading habit itself.</h2>
+  </div>
+
+  <div class="landing-card-grid landing-card-grid--why">
+    <% landing_why_nouvelle_points.each do |point| %>
+      <article class="landing-card landing-card--why">
+        <h3 class="landing-card__title mb-0"><%= point[:title] %></h3>
+        <p class="landing-card__copy mb-0"><%= point[:copy] %></p>
+      </article>
+    <% end %>
+  </div>
+</section>

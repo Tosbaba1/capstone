@@ -1,15 +1,15 @@
 <section class="landing-section" aria-labelledby="landing-how-it-works">
   <div class="landing-section__header">
-    <p class="page-eyebrow mb-0">How it works</p>
-    <h2 id="landing-how-it-works" class="landing-section__title mb-0">Three simple steps.</h2>
+    <p class="landing-section__kicker mb-0">How it works</p>
+    <h2 id="landing-how-it-works" class="landing-section__title mb-0">Three simple steps to keep reading.</h2>
   </div>
 
-  <div class="landing-steps">
+  <div class="landing-card-grid landing-card-grid--steps">
     <% landing_how_it_works_steps.each do |step| %>
-      <article class="landing-step">
-        <p class="landing-step__number mb-0"><%= step[:number] %></p>
-        <h3 class="landing-step__title mb-0"><%= step[:title] %></h3>
-        <p class="landing-step__copy mb-0"><%= step[:copy] %></p>
+      <article class="landing-card landing-card--step">
+        <p class="landing-card__number mb-0"><%= step[:number] %></p>
+        <h3 class="landing-card__title mb-0"><%= step[:title] %></h3>
+        <p class="landing-card__copy mb-0"><%= step[:copy] %></p>
       </article>
     <% end %>
   </div>

@@ -5,7 +5,7 @@ RSpec.describe "Landing page", type: :request do
     get root_path
 
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include("Read… without doing it alone.")
+    expect(response.body).to include("Read with quiet company.")
     expect(response.body).to include("Start a reading session, join others quietly, and build a habit that actually sticks.")
   end
 
@@ -13,23 +13,44 @@ RSpec.describe "Landing page", type: :request do
     get root_path
 
     document = Nokogiri::HTML.parse(response.body)
-    primary_cta = document.at_css(".landing-hero__actions a")
+    hero_primary_cta = document.at_css(".landing-hero__cta")
+    final_primary_cta = document.at_css(".landing-final-cta__button")
+    secondary_link = document.at_css(".landing-hero__secondary-link")
 
-    expect(primary_cta).to be_present
-    expect(primary_cta.text.strip).to eq("Start reading")
-    expect(primary_cta["href"]).to eq(new_user_session_path)
+    expect(hero_primary_cta).to be_present
+    expect(hero_primary_cta.text.strip).to eq("Start reading")
+    expect(hero_primary_cta["href"]).to eq(new_user_session_path)
+
+    expect(final_primary_cta).to be_present
+    expect(final_primary_cta["href"]).to eq(new_user_session_path)
+
+    expect(secondary_link).to be_present
+    expect(secondary_link["href"]).to eq("#landing-how-it-works")
   end
 
-  it "renders the key landing sections for guests" do
+  it "renders the landing sections in the intended order for guests" do
     get root_path
-    page_text = Nokogiri::HTML.parse(response.body).text
+    page_text = Nokogiri::HTML.parse(response.body).text.squish
 
     expect(page_text).to include("How it works")
     expect(page_text).to include("Start a session")
     expect(page_text).to include("Read with others")
     expect(page_text).to include("Come back tomorrow")
-    expect(page_text).to include("Reading doesn't have to be a solo activity.")
+    expect(page_text).to include("Why Nouvelle is different")
+    expect(page_text).to include("Silent co-reading")
+    expect(page_text).to include("A reading room, not a feed.")
     expect(page_text).to include("Ready to begin?")
+
+    hero_index = page_text.index("Read with quiet company.")
+    how_it_works_index = page_text.index("How it works")
+    why_index = page_text.index("Why Nouvelle is different")
+    proof_index = page_text.index("A reading room, not a feed.")
+    final_cta_index = page_text.index("Ready to begin?")
+
+    expect(hero_index).to be < how_it_works_index
+    expect(how_it_works_index).to be < why_index
+    expect(why_index).to be < proof_index
+    expect(proof_index).to be < final_cta_index
   end
 
   it "shows a subtle live reading signal when readers are active" do
@@ -42,7 +63,7 @@ RSpec.describe "Landing page", type: :request do
 
     get root_path
 
-    expect(response.body).to include("2 people are reading right now")
+    expect(response.body).to include("2 people reading now")
   end
 
   it "keeps signed-in readers on the existing home experience" do

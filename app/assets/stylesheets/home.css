@@ -12,6 +12,8 @@
   --landing-text-soft: rgba(63, 61, 60, 0.76);
   --landing-border: rgba(63, 61, 60, 0.1);
   --landing-cta: #C89A6A;
+  --landing-brand-text: var(--color-depth);
+  --landing-brand-text-soft: var(--color-depth-emphasis);
   display: grid;
   gap: 1.5rem;
   margin: 0 auto;
@@ -55,6 +57,15 @@
 
 .landing-hero__brand {
   width: fit-content;
+}
+
+.landing-page .landing-hero__brand .nouvelle-mark__name {
+  color: var(--landing-brand-text) !important;
+  text-shadow: 0 1px 0 rgba(255, 250, 244, 0.45);
+}
+
+.landing-page .landing-hero__brand .nouvelle-mark__tag {
+  color: var(--landing-brand-text-soft) !important;
 }
 
 .landing-hero__title,
@@ -3301,6 +3312,14 @@ turbo-frame#home_deferred {
 }
 
 .sessions-home__hero--welcome {
+  --sessions-home-hero-copy-surface:
+    linear-gradient(180deg, rgba(246, 239, 228, 0.93), rgba(240, 231, 213, 0.78));
+  --sessions-home-hero-copy-border: rgba(33, 40, 66, 0.1);
+  --sessions-home-hero-title: var(--nouvelle-ink);
+  --sessions-home-hero-body: var(--nouvelle-ink-soft);
+  --sessions-home-hero-muted: var(--color-depth-emphasis);
+  --sessions-home-hero-panel-surface: rgba(255, 250, 244, 0.78);
+  --sessions-home-hero-panel-border: rgba(33, 40, 66, 0.08);
   background:
     radial-gradient(circle at 16% 18%, rgba(255, 255, 255, 0.18), transparent 24%),
     radial-gradient(circle at 82% 22%, rgba(198, 169, 105, 0.12), transparent 24%),
@@ -3317,8 +3336,22 @@ turbo-frame#home_deferred {
   max-width: 35rem;
 }
 
+.sessions-home__hero--welcome .sessions-home__hero-copy {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: var(--sessions-home-hero-copy-surface);
+  border: 1px solid var(--sessions-home-hero-copy-border);
+  border-radius: calc(var(--radius-lg) - 4px);
+  box-shadow: 0 16px 30px rgba(17, 22, 36, 0.08);
+  padding: clamp(1.1rem, 2vw, 1.6rem);
+}
+
+.sessions-home__hero--welcome .sessions-home__eyebrow {
+  color: var(--sessions-home-hero-muted) !important;
+}
+
 .sessions-home__hero--welcome .sessions-home__title {
-  color: var(--color-on-depth-primary) !important;
+  color: var(--sessions-home-hero-title) !important;
   font-size: clamp(2.2rem, 5vw, 4rem);
   line-height: 0.98;
   max-width: 10ch;
@@ -3326,11 +3359,19 @@ turbo-frame#home_deferred {
 
 .sessions-home__hero--welcome .sessions-home__lede,
 .sessions-home__hero--welcome .sessions-home__hero-note {
-  color: var(--color-on-depth-secondary) !important;
+  color: var(--sessions-home-hero-body) !important;
 }
 
 .sessions-home__hero-rail {
   align-content: start;
+}
+
+.sessions-home__hero--welcome .sessions-home__hero-rail {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: var(--sessions-home-hero-panel-surface);
+  border: 1px solid var(--sessions-home-hero-panel-border);
+  box-shadow: 0 16px 30px rgba(17, 22, 36, 0.08);
 }
 
 .sessions-home__experience-grid,
@@ -3362,6 +3403,29 @@ turbo-frame#home_deferred {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
   padding: 0.95rem 1rem;
+}
+
+.sessions-home__hero--welcome .presence-rail__label,
+.sessions-home__hero--welcome .sessions-home__section-eyebrow {
+  color: var(--sessions-home-hero-muted) !important;
+}
+
+.sessions-home__hero--welcome .presence-rail__summary,
+.sessions-home__hero--welcome .presence-rail__value,
+.sessions-home__hero--welcome .sessions-home__highlight-title {
+  color: var(--sessions-home-hero-title) !important;
+}
+
+.sessions-home__hero--welcome .presence-rail__caption,
+.sessions-home__hero--welcome .sessions-home__section-copy,
+.sessions-home__hero--welcome .sessions-home__hero-card-copy {
+  color: var(--sessions-home-hero-body) !important;
+}
+
+.sessions-home__hero--welcome .presence-rail__stat,
+.sessions-home__hero--welcome .sessions-home__highlight-item {
+  background: rgba(255, 255, 255, 0.66);
+  border: 1px solid rgba(33, 40, 66, 0.08);
 }
 
 .sessions-home__highlight-title {

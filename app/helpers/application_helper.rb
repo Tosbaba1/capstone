@@ -30,10 +30,10 @@ module ApplicationHelper
   def landing_page_content
     {
       hero_title: "Read with quiet company.",
-      hero_subtext: "Start a reading session, join others quietly, and build a habit that actually sticks.",
-      hero_preview_title: "Quiet company, already in progress.",
-      hero_preview_note: "Start reading when you are ready.",
-      product_proof_line: "A reading room, not a feed.",
+      hero_subtext: "Join a quiet room, read beside others, and make the habit easier to keep.",
+      hero_preview_title: "Quiet company, already here.",
+      hero_preview_note: "Begin when you're ready.",
+      product_proof_line: "A calm reading room, not a feed.",
       final_cta_title: "Ready to begin?",
       primary_cta_label: "Start reading",
       secondary_link_label: "See how it works"
@@ -45,17 +45,17 @@ module ApplicationHelper
       {
         number: "01",
         title: "Start a session",
-        copy: "Open a room for this reading block and begin when you are ready."
+        copy: "Open a room and begin your reading block."
       },
       {
         number: "02",
         title: "Read with others",
-        copy: "Share quiet presence with other readers while the page stays the focus."
+        copy: "Share quiet presence while your book stays central."
       },
       {
         number: "03",
         title: "Come back tomorrow",
-        copy: "Return for another session and let the habit get easier to keep."
+        copy: "Return tomorrow and let the rhythm build."
       }
     ]
   end
@@ -64,15 +64,15 @@ module ApplicationHelper
     [
       {
         title: "Silent co-reading",
-        copy: "You share a room with readers, not a stream of interruptions."
+        copy: "Share presence, not chatter or scrolling."
       },
       {
         title: "Low-pressure accountability",
-        copy: "Showing up feels easier when someone else is quietly there too."
+        copy: "Showing up feels easier when someone else is there too."
       },
       {
         title: "Reading-first design",
-        copy: "Everything on the screen points you back to your book instead of away from it."
+        copy: "The interface stays calm and points back to the page."
       }
     ]
   end

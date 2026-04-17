@@ -6,7 +6,7 @@ RSpec.describe "Landing page", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Read with quiet company.")
-    expect(response.body).to include("Start a reading session, join others quietly, and build a habit that actually sticks.")
+    expect(response.body).to include("Join a quiet room, read beside others, and make the habit easier to keep.")
   end
 
   it "routes the primary CTA to the supported auth entry point" do
@@ -38,13 +38,13 @@ RSpec.describe "Landing page", type: :request do
     expect(page_text).to include("Come back tomorrow")
     expect(page_text).to include("Why Nouvelle is different")
     expect(page_text).to include("Silent co-reading")
-    expect(page_text).to include("A reading room, not a feed.")
+    expect(page_text).to include("A calm reading room, not a feed.")
     expect(page_text).to include("Ready to begin?")
 
     hero_index = page_text.index("Read with quiet company.")
     how_it_works_index = page_text.index("How it works")
     why_index = page_text.index("Why Nouvelle is different")
-    proof_index = page_text.index("A reading room, not a feed.")
+    proof_index = page_text.index("A calm reading room, not a feed.")
     final_cta_index = page_text.index("Ready to begin?")
 
     expect(hero_index).to be < how_it_works_index
